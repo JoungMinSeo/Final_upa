@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{font-family: 'BMJUA';}
+body{
+    background-color: rgb(213, 232, 243);
+    display: flex;
+    justify-content: center;
+}
+.signUp-container{
+    margin-top: 20px;
+    width: 750px;
+    height: 850px;
+    background-color: white;
+    text-align: center;
+}
+#logo{
+    width: 140px;
+}
+.row{
+    display: inline-block;
+}
+.btn{
+    background-color: rgb(213, 232, 243);
+}
+#btn{
+    width: 100px;
+    height: 45px;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}

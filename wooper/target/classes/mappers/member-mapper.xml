@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="memberMapper">
+
+	<resultMap type="Member" id="member_rm">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberNm" column="MEMBER_NM" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberGrade" column="MEMBER_GRADE" />
+		<result property="memberNick" column="MEMBER_NICK"/>		
+	</resultMap>
+
+	<select id="login" parameterType="string" resultMap="member_rm">
+		SELECT * FROM MEMBER
+		WHERE
+		MEMBER_STATUS = 'Y'
+		AND MEMBER_ID = #{memberId}
+	</select>
+	
+	<select id="idDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_ID = #{id}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
