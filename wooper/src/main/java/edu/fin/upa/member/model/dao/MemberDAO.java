@@ -20,4 +20,9 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.idDupCheck",id);
 	}
 
+	public int signUp(Member inputMember) {
+		
+		return sqlSession.insert("memberMapper.signUp", inputMember);
+	}
+
 }

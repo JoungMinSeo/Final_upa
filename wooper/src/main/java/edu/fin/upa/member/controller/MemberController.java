@@ -57,17 +57,27 @@ public class MemberController {
 		 return "member/result";
 	}
 	
+	// 회원가입 전환
 	@RequestMapping(value="signUp", method=RequestMethod.GET)
 	public String signUp() {
 		
 		return "member/signUp";
 	}
 	
+	// 회원 가입 진행
 	@RequestMapping(value="signUp", method=RequestMethod.POST)
 	public String singUp(Member inputMember) {
 		
 		
-		return "redirect:/member/login";
+		int result = service.signUp(inputMember);
+		
+		if(result > 0) {
+			System.out.println("회원 가입 성공");
+		}else {
+			System.out.println("회원 가입 실패");
+		}
+		
+		return "redirect:/";
 	}
 	
 	@ResponseBody

@@ -35,6 +35,16 @@ public class MemberServiceImpl implements MemberService{
 	public int idDupCheck(String id) {
 		return dao.idDupCheck(id);
 	}
+
+	@Override
+	public int signUp(Member inputMember) {
+		
+		String encPwd = bCryptPasswordEncoder.encode(inputMember.getMemberPw());
+		
+		inputMember.setMemberPw(encPwd);
+		
+		return dao.signUp(inputMember);
+	}
 	
 
 }
