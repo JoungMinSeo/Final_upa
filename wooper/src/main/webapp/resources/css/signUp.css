@@ -13,7 +13,7 @@ body{
 .signUp-container{
     margin-top: 20px;
     width: 750px;
-    height: 850px;
+    height: 900px;
     background-color: white;
     text-align: center;
 }
@@ -26,10 +26,19 @@ body{
 .btn{
     background-color: rgb(213, 232, 243);
 }
+#hide-area{
+	display: none;
+}
 #btn{
     width: 100px;
-    height: 45px;
+    height: 40px;
     position: absolute;
-    top: 20px;
+    top: 23px;
     right: 5px;
+}
+#sign{
+	position: absolute;
+	left: 200px;
+	top: 23px;
+	width: 100px;
 }

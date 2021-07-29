@@ -8,4 +8,6 @@ public interface MemberService {
 
 	int idDupCheck(String id);
 
+	int signUp(Member inputMember);
+
 }

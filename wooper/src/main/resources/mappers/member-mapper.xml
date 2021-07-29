@@ -28,6 +28,12 @@
 		WHERE MEMBER_STATUS = 'Y'
 		AND MEMBER_ID = #{id}
 	</select>
+	
+	<insert id="signUp" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES( SEQ_MEM_NO.NEXTVAL , #{memberNo} , #{memberPw} ,#{memberNm}, #{memberPhone} , DEFAULT, DEFAULT, 
+						DEFAULT, #{memberNick})
+	</insert>
 
 </mapper>
 
