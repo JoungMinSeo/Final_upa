@@ -8,6 +8,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
-	${result}
+	로그인 성공!
 </body>
 </html>

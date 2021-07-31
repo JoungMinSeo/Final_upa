@@ -44,6 +44,11 @@ public class MemberController {
 		return "member/login";
 	}
 
+	@RequestMapping(value="result", method=RequestMethod.GET)
+	public String result() {
+		return "member/result";
+	}
+	
 	// 로그인
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(Member inputMember, Model model, RedirectAttributes ra,
@@ -93,9 +98,9 @@ public class MemberController {
 	    	  
 	      }
 		
-		
 		 return "redirect:/member/result";
 	}
+	
 	
 	// 회원가입 전환
 	@RequestMapping(value="signUp", method=RequestMethod.GET)
