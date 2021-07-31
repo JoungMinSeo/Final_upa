@@ -14,6 +14,10 @@ public class Member {
 	private String memberGrade;
 	private String memberNick;
 	
+	// 자동 로그인
+	private String sessionId;
+	private Date SessionLimit;
+	
 	public Member() {}
 
 	public int getMemberNo() {
@@ -87,13 +91,31 @@ public class Member {
 	public void setMemberNick(String memberNick) {
 		this.memberNick = memberNick;
 	}
+	
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public Date getSessionLimit() {
+		return SessionLimit;
+	}
+
+	public void setSessionLimit(Date sessionLimit) {
+		SessionLimit = sessionLimit;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPw=" + memberPw + ", memberNm="
 				+ memberNm + ", memberPhone=" + memberPhone + ", enrollDate=" + enrollDate + ", memberStatus="
-				+ memberStatus + ", memberGrade=" + memberGrade + ", memberNick=" + memberNick + "]";
+				+ memberStatus + ", memberGrade=" + memberGrade + ", memberNick=" + memberNick + ", sessionId="
+				+ sessionId + ", SessionLimit=" + SessionLimit + "]";
 	}
+
 	
 	
 }
