@@ -1,5 +1,7 @@
 package edu.fin.upa.member.model.service;
 
+import java.sql.Date;
+
 import edu.fin.upa.member.model.vo.Member;
 
 public interface MemberService {
@@ -8,4 +10,9 @@ public interface MemberService {
 
 	int idDupCheck(String id);
 
+	int signUp(Member inputMember);
+
+	void keepLogin(String loginId, Date limitDate, String inputId);
+	
+	
 }

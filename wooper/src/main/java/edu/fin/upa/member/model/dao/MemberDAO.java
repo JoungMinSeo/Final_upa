@@ -1,5 +1,7 @@
 package edu.fin.upa.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,4 +22,17 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.idDupCheck",id);
 	}
 
+	public int signUp(Member inputMember) {
+		
+		return sqlSession.insert("memberMapper.signUp", inputMember);
+	}
+
+	public int keepLogin(Map<String, Object> map) {
+		
+		
+		return sqlSession.update("memberMapper.keepLogin",map);
+	}
+
+
+	
 }
