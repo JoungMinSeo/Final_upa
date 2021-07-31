@@ -31,10 +31,17 @@
 	
 	<insert id="signUp" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES( SEQ_MEM_NO.NEXTVAL , #{memberNo} , #{memberPw} ,#{memberNm}, #{memberPhone} , DEFAULT, DEFAULT, 
-						DEFAULT, #{memberNick})
+		VALUES( SEQ_MNO.NEXTVAL , #{memberId} , #{memberPw} ,#{memberNm}, #{memberPhone}, 
+				DEFAULT, DEFAULT, DEFAULT, #{memberNick}, NULL, NULL)
 	</insert>
-
+	
+	<update id="keepLogin" parameterType="map">
+		UPDATE MEMBER SET
+		SESSION_KEY = #{inputId},
+		SESSION_LIMIT = #{limitDate}
+		WHERE MEMBER_ID = #{loginId}
+	</update>
+	
 </mapper>
 
 

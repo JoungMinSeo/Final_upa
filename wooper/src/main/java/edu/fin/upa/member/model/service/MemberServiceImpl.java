@@ -1,8 +1,14 @@
 package edu.fin.upa.member.model.service;
 
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.ibatis.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.fin.upa.member.model.dao.MemberDAO;
 import edu.fin.upa.member.model.vo.Member;
@@ -45,6 +51,19 @@ public class MemberServiceImpl implements MemberService{
 		
 		return dao.signUp(inputMember);
 	}
-	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public void keepLogin(String loginId, Date limitDate, String inputId) {
+		
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("memberId", loginId);
+		map.put("limitDate", limitDate);
+		map.put("inputId", inputId);
+		
+		dao.keepLogin(map);
+	}
+
+
 
 }

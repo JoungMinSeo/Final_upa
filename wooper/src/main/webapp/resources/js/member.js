@@ -207,7 +207,7 @@ function startTimer(count, display) {
     	     $('.btn_chk').attr("disabled","disabled");
     	     isRunning = false;
             }
-        }, 1000);
+        }, 10);
              isRunning = true;
 }
 
