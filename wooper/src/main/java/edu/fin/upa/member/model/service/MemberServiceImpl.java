@@ -51,10 +51,16 @@ public class MemberServiceImpl implements MemberService{
 		
 		return dao.signUp(inputMember);
 	}
+	
+	// 인터셉터 자동 로그인
+	@Override
+	public Member getMemberSessionId(String sessionId) {
+		return dao.getMemberSessionId(sessionId);
+	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void keepLogin(String loginId, Date limitDate, String inputId) {
-		
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("memberId", loginId);
@@ -63,7 +69,6 @@ public class MemberServiceImpl implements MemberService{
 		
 		dao.keepLogin(map);
 	}
-
 
 
 }

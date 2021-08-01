@@ -1,6 +1,7 @@
 package edu.fin.upa.member.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Member {
 	
@@ -13,10 +14,11 @@ public class Member {
 	private String memberStatus;
 	private String memberGrade;
 	private String memberNick;
-	
+	private String memberSign;
 	// 자동 로그인
+	private boolean memberCookie;
 	private String sessionId;
-	private Date SessionLimit;
+	private Timestamp sessionLimit;
 	
 	public Member() {}
 
@@ -100,20 +102,28 @@ public class Member {
 		this.sessionId = sessionId;
 	}
 
-	public Date getSessionLimit() {
-		return SessionLimit;
+	public Timestamp getSessionLimit() {
+		return sessionLimit;
 	}
 
-	public void setSessionLimit(Date sessionLimit) {
-		SessionLimit = sessionLimit;
+	public void setSessionLimit(Timestamp sessionLimit) {
+		this.sessionLimit = sessionLimit;
+	}
+
+	public String getMemberSign() {
+		return memberSign;
+	}
+
+	public void setMemberSign(String memberSign) {
+		this.memberSign = memberSign;
 	}
 
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPw=" + memberPw + ", memberNm="
 				+ memberNm + ", memberPhone=" + memberPhone + ", enrollDate=" + enrollDate + ", memberStatus="
-				+ memberStatus + ", memberGrade=" + memberGrade + ", memberNick=" + memberNick + ", sessionId="
-				+ sessionId + ", SessionLimit=" + SessionLimit + "]";
+				+ memberStatus + ", memberGrade=" + memberGrade + ", memberNick=" + memberNick + ", memberSign="
+				+ memberSign + ", sessionId=" + sessionId + ", SessionLimit=" + sessionLimit + "]";
 	}
 
 	

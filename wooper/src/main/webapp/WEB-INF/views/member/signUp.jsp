@@ -135,7 +135,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 				</div>
 				<div class="col-md-4" id="hide-area">
 					인증 번호
-					<input type="number" class="form-control phone" id="PhoneCheck" name="PhoneCheck">
+					<input type="number" class="form-control" id="phoneCheck" name="PhoneCheck">
 					<span class="time"></span>
 					<button class="btn" type="button" id="proof">인증하기</button>
 				</div>

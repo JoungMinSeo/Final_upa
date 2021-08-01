@@ -9,5 +9,7 @@
 </head>
 <body>
 	로그인 성공!
+	<a class="nav-link" href="logout">Logout</a>
+	${loginMember}
 </body>
 </html>
