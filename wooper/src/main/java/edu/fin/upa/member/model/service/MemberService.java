@@ -11,8 +11,12 @@ public interface MemberService {
 	int idDupCheck(String id);
 
 	int signUp(Member inputMember);
+	
+	
+	// 인터셉터 로그인 구문
+	Member getMemberSessionId(String sessionId);
 
 	void keepLogin(String loginId, Date limitDate, String inputId);
-	
+
 	
 }

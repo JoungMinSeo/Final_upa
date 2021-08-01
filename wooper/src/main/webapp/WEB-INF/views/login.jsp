@@ -34,7 +34,7 @@
                 <button type="button">네이버 로그인</button>
             </div>
             <div class="btn-area">
-                <input type="checkbox" id="autoLogin" name="autoLogin"> <span>&nbsp;로그인 유지</span>
+                <input type="checkbox" id="autoLogin" name="autoLogin" fw-filter="" fw-label="자동로그인" fw-msg="" value="T"> <span>&nbsp;로그인 유지</span>
             </div>
             <div class="btn-area" id="signUp-area">
                 <div class="signUp">

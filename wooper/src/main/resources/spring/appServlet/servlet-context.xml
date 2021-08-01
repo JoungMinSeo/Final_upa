@@ -46,4 +46,16 @@
 		Bean == 스프링 컨테이너(IoC 컨테이너)가 관리하는 객체
 			== 스프링이 마음대로 제어할 수 있는 객체	
 	 -->
+	      
+ 	<beans:bean id="autoLoginInterceptor" class="edu.fin.upa.member.commons.interceptor.AutoLoginInterceptor"/>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:ref bean="autoLoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
+	
+	 
 </beans:beans>
