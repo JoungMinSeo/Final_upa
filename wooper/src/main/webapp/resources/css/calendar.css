@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 /* classes attached to <body> */
 
@@ -7,6 +8,7 @@
     font-weight: normal;
     font-style: normal;
 }
+*{font-family: 'BMJUA';}
 
 .fc-not-allowed,
 .fc-not-allowed .fc-event { /* override events' custom cursors */
