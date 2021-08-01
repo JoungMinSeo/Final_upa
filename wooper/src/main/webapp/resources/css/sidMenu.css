@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 @font-face {
     font-family: 'BMJUA';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
@@ -5,6 +7,7 @@
     font-style: normal;
 }
 *{font-family: 'BMJUA'; color: white;}
+
 div{
     border: 1px solid black;
 }
