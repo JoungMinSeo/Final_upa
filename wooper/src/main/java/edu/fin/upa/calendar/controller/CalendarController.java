@@ -13,37 +13,26 @@ import com.google.gson.Gson;
 import edu.fin.upa.calendar.model.service.CalendarService;
 import edu.fin.upa.calendar.model.vo.CalendarTest;
 
-
 @RequestMapping("/calendar/*")
 @Controller
 public class CalendarController {
-	
+
 	@Autowired
 	private CalendarService service;
-	
-	   // 임시 화면
-//	   @RequestMapping(value = "calendar", method = RequestMethod.GET)
-//	   public String result() {
-//	      return "calendar";
-//	   }
-	
-	@RequestMapping("calMain")
-	public String calMain() {
-		return "cal/calMain";
+
+	// 임시 화면
+	@RequestMapping(value = "calendar", method = RequestMethod.GET)
+	public String result() {
+		return "/calendar/calendar";
 	}
+
 	
-	@RequestMapping("test1")
-	public String test1() {
-		return "cal/test1";
+	 @RequestMapping(value="selectCalendar",method=RequestMethod.POST)
+	 @ResponseBody
+	 public String selectCalTest(String startDate) {
+		 List<CalendarTest> list = service.selectCalTest(startDate);
+		 return new Gson().toJson(list); 
 	}
-	
-	@RequestMapping("selectCalTest")
-	@ResponseBody
-	public String selectCalTest(String startDate) {
-		
-		List<CalendarTest> list = service.selectCalTest(startDate);
-		
-		return new Gson().toJson(list);
-	}
-	
+	 
+
 }

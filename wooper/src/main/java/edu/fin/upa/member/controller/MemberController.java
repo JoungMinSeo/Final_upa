@@ -56,6 +56,7 @@ public class MemberController {
 	         // session에 loginMember 올리고 result로 보냄
 	         model.addAttribute("loginMember", loginMember);
 	         path = "redirect:/calendar/calendar";
+//	         redirect:/member/calendar/calendar.jsp
 	         
 		}else {// 로그인에 실패했을 경우
 			path = "redirect:/login";
