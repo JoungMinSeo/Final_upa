@@ -25,9 +25,8 @@ public class CalendarController {
 	public String result() {
 		return "/calendar/calendar";
 	}
-
 	
-	 @RequestMapping(value="selectCalendar",method=RequestMethod.POST)
+	@RequestMapping(value = "selectCalendar" ,method=RequestMethod.POST)
 	 @ResponseBody
 	 public String selectCalTest(String startDate) {
 		 List<CalendarTest> list = service.selectCalTest(startDate);

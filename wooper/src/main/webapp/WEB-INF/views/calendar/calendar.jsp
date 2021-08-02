@@ -5,20 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href='/api/resources/fullcalendar/main.css' rel='stylesheet' />
-<script src='/api/resources/fullcalendar/main.js'></script>
-<script src='/api/resources/fullcalendar/ko.js'></script>
+<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
+<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
+<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 
 <style>
 	@font-face {
-    font-family: 'KoreanFrenchTypewriter';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/KoreanFrenchTypewriter.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+	    font-family: 'KoreanFrenchTypewriter';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/KoreanFrenchTypewriter.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
 
 	.wrapper {
 		width: 1000px;
@@ -28,20 +28,20 @@
 </style>
 </head>
 <body>
-	<!-- <form method="POST" action="update" name="updateForm"> -->
 			<div class="wrapper">
 				<div id='calendar'></div>
 				로그인이 되었슴미다
 			</div>
-	<!-- </form> -->
 
 	<script>
 		$(function(){ // 레디 함수
 			
- 				/* function getToday(){
+ 				 <%-- 
+ 				 	function getToday(){
 					var date = new Date();
-					return date.getFullYear() + "-" + ("0"+(date.getMonth()+1)).slice(-2)  + "-" ("0" + date.getDate()).slice(-2);
-				} */
+					return date.getFullYear() + "-" + ("0"+(date.getMonth()+1)).slice(-2)  + "-" ("0" + date.getDate()).slice(-2); 
+ 				  --%>
+		
 			
 			// 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
 			$.ajax({ 
@@ -52,7 +52,7 @@
 				
 				success : function(list){
 					console.log(list);
-				createCalendar(list);
+					createCalendar(list);
 				}
 			});
 		});
