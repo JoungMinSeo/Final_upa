@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+        div{
+            /* border : 2px solid rgb(24, 64, 88); */
+            box-sizing:border-box;
+        }
+
+        @font-face {
+            font-family: 'BMJUA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        *{font-family: 'BMJUA';}
+
+        .calendarinsert{
+            width:500px;
+            height:100%;
+            border : 2px solid rgb(24, 64, 88);
+            box-sizing:border-box;
+        }
+
+        /* 카드타이틀 */
+        .calendartitle{
+            width:100%;
+        }
+        .calendartitle2{
+            width:95%;
+            float:left;
+        }
+        .calendartitle2 h1{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        .calendarexit{
+            width:5%;
+            height:67px;
+            float:left;
+        }
+        
+        /* 팀이름 */
+        .calendartn{
+            float:left;
+            width:100%;
+        }
+        .calendartn h3{
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        
+        /* 참여멤버 */
+        .calendarmember{
+            float:left;
+            width:100%;
+        }
+        .calendarmember select{
+            margin-top:5px;
+            color:rgb(24, 64, 88);
+        }
+        
+        
+        /* 상태변경 */
+        .calendarstatus{
+            float:left;
+            width:100%;
+        }
+        .calendarstatus select{
+            margin-top:3px;
+            color:rgb(24, 64, 88);
+        }
+
+        /* 날짜 추가 버튼 */
+        .adddate{
+            float:left;
+            width:100%;
+        }
+        .adddateimg{
+            width:50px;
+            float:left;
+        }
+        #adddatebtn{
+            float:left;
+            text-decoration-line:none;
+            background-color:rgb(24, 64, 88);
+            color:white;
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:7px;
+            padding-bottom:7px;
+            border-radius:5px;
+            font-size:15px;
+        }
+
+
+        /* 날짜변경 */
+        .addsedate{
+            float:left;
+            width:100%;
+            display:none;
+        }
+        .calendardatechange{
+            float:left;
+            width:100%;
+        }
+        .calendarstart, .calendarend{
+            float:left;
+            margin-top:10px;
+            margin-bottom:7px;
+            margin-right:10px;
+        }
+        .cstartdate, .cstarttime, .cenddate, .cendtime{
+            margin-top:5px;
+            float:left;
+        }
+        .cstarttimeimg{
+            float:left;
+            margin-left:10px;
+            margin-right:5px;
+        }
+      
+        /* 파일첨부 */
+        .calendarfile{
+            float:left;
+            width:100%;
+        }
+        .addfilec{
+            float:left;
+            width:100%;
+        }
+        .boardImg{
+            margin-left:20px;
+        }
+        /* 파일추가버튼 */
+        #addvalue{
+            background-color:rgb(24, 64, 88);
+            color:white;
+            border-radius:5px;
+            width:80px;
+
+            padding-top:7px;
+            padding-bottom:7px;
+        }
+        /* 삭제버튼 */
+        .fileaddbtn{
+            background-color:rgb(24, 64, 88);
+            color:white;
+            border-radius:5px;
+            width:80px;
+            margin-left:5px;
+
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:7px;
+            padding-bottom:7px;
+            
+        }
+
+        /* 색상표 */
+        /* 글자색 */
+        .fcoloradd{
+            width:100%;
+            height:100%;
+            float:left;
+        }
+        .fcoloradd h5{
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:20px;
+            color:rgb(24, 64, 88);
+        }
+        .fcolor{
+            float:left;
+        }
+        #fcolor-input{
+            float:left;
+            margin-top:5px;
+        }
+        /* 배경색 */
+        .bgcoloradd{
+            width:100%;
+            height:100%;
+            float:left;
+        }
+        .bgcoloradd h5{
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:20px;
+            color:rgb(24, 64, 88);
+        }
+        .bgcolor{
+            float:left;
+        }
+        #bgcolor-input{
+            float:left;
+            margin-top:5px;
+        }
+        /* 테두리색 */
+        .bdcoloradd{
+            width:100%;
+            height:100%;
+            float:left;
+        }
+        .bdcoloradd h5{
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:10px;
+            color:rgb(24, 64, 88);
+        }
+        .bdcolor{
+            float:left;
+        }
+        #bdcolor-input{
+            float:left;
+            margin-top:5px;
+        }
+        
+        /* 작성완료버튼 */
+        .calendarbutton{
+            float:left;
+            width:100%;
+            text-align:center;
+        }
+        .calendarbutton button{
+            background-color:rgb(24, 64, 88);
+            color:white;
+            border-radius: 5px;
+            width:500px;
+            font-size:20px;
+
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:7px;
+            padding-bottom:7px;
+        }
+        .calendarbutton button:hover{
+            background-color:rgb(42,111,154);
+        }
+
+        /* 위치 */
+        .calendarmemberimg, .calendarstatusimg, .calendardatechangeimg, .calendardatechangeimg{
+            width:50px;
+            float:left;
+        }
+        .calendarmemberip, .calendarstatusip, .calendardatechangeip, .calendardatechangeip{
+            width:440px;
+            float:left;
+        }
+

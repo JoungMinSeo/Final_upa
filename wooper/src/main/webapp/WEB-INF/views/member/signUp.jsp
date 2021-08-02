@@ -7,6 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>signUp</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
 	{
@@ -110,7 +111,6 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 						<span id="checkNickName">&nbsp;</span>
 					</div>
 				</div>
-
 				<div class="col mb-3 form-row">
 					<div class="col-md-2">
 						전화번호 <select class="custom-select" id="phone1" name="phone"
@@ -135,14 +135,14 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 				</div>
 				<div class="col-md-4" id="hide-area">
 					인증 번호
-					<input type="number" class="form-control phone" id="PhoneCheck" name="PhoneCheck">
+					<input type="number" class="form-control" id="phoneCheck" name="PhoneCheck">
 					<span class="time"></span>
 					<button class="btn" type="button" id="proof">인증하기</button>
 				</div>
 
 				<hr class="mb-4">
 				<button class="btn btn-lg btn-block" type="submit">가입하기</button>
-			</form>
+				</form>
 		</div>
 	</div>
 	<script src="${pageContext.request.contextPath}/resources/js/member.js"></script>

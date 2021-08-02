@@ -223,9 +223,32 @@ $("#btn").click(function(){
 	
 });
 
+// 휴대폰 인증 유효성 검사
 $("#proof").click(function(){
 	
-	checkObj.proof = true;
+	const certificationNo = $("#phoneCheck").val();
+	
+	$.ajax({
+		url: "phoneCheck",
+		data: {"certificationNo":certificationNo},
+		type: "post",
+		success:function(result){
+			consol.log(result);
+			
+			if(result > 0){
+				alert("인증번호가 알맞지 않습니다.");
+				checkObj.proof = false;
+			}else{
+				checkObj.proof = true;
+			}
+		},
+		error:function(e){
+			console.log("ajax 통신 실패");
+			console.log(e);
+			
+		}
+	})
+	
 	
 });
 

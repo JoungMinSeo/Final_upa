@@ -1,5 +1,9 @@
 package edu.fin.upa.member.model.dao;
 
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,5 +28,18 @@ public class MemberDAO {
 		
 		return sqlSession.insert("memberMapper.signUp", inputMember);
 	}
+
+
+	// 인터셉터 자동 로그인
+	public Member getMemberSessionId(String sessionId) {
+		return sqlSession.selectOne("memberMapper.getMemberSessionId",sessionId);
+	}
+
+	public int keepLogin(Map<String, Object> map) {
+			
+			
+		return sqlSession.update("memberMapper.keepLogin",map);
+	}
+
 
 }
