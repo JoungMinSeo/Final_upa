@@ -55,7 +55,7 @@ public class MemberController {
 		if(loginMember != null) {
 	         // session에 loginMember 올리고 result로 보냄
 	         model.addAttribute("loginMember", loginMember);
-	         path = "redirect:/board/calendar/calendar";
+	         path = "redirect:/calendar/calendar";
 	         
 		}else {// 로그인에 실패했을 경우
 			path = "redirect:/login";
