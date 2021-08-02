@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,12 +28,10 @@
 </style>
 </head>
 <body>
-	<!-- <form method="POST" action="update" name="updateForm"> -->
-			<div class="wrapper">
-				<div id='calendar'></div>
-				로그인이 되었슴미다
-			</div>
-	<!-- </form> -->
+	<div class="wrapper">
+		<div id='calendar'></div>
+	
+	</div>
 
 	<script>
 		$(function(){ // 레디 함수
@@ -45,13 +43,13 @@
 			
 			// 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
 			$.ajax({ 
-				url : 'selectCalendar', // 요청 주소 보내는곳
-				type : 'post', // 어떤 타입으로 보낼지
+				url : 'selectCalTest',
+				type : 'post',
 				data : {'startDate' : '2021-07'}, // 해당 월에 해당하는 데이터를 불러옴 -> db에 8월에 해당하는 데이터가 있어도 안 불러옴
-				dataType : "json", // 어떤 데이터(?)로 보낼지
+				dataType : "json",
 				
 				success : function(list){
-					console.log(list);
+				console.log(list);
 				createCalendar(list);
 				}
 			});
@@ -64,7 +62,7 @@
 				var calendarEl = document.getElementById('calendar');
 			
 				var calendar = new FullCalendar.Calendar(calendarEl, {
-					/* locale : 'ko', // 언어 선택 */
+					locale : 'ko',
 					
 					headerToolbar : { // 달력 위쪽 모양 지정
 						left : 'prev,next today',
