@@ -40,12 +40,6 @@ public class MemberController {
 		ra.addFlashAttribute("text", text);
 	}
 	
-	// 임시 화면
-	@RequestMapping(value = "result", method = RequestMethod.GET)
-	public String result() {
-		return "member/result";
-	}
-	
 	// 로그인
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(Member inputMember, Model model, RedirectAttributes ra,
@@ -61,7 +55,7 @@ public class MemberController {
 		if(loginMember != null) {
 	         // session에 loginMember 올리고 result로 보냄
 	         model.addAttribute("loginMember", loginMember);
-	         path = "redirect:/member/result";
+	         path = "redirect:/board/calendar/calendar";
 	         
 		}else {// 로그인에 실패했을 경우
 			path = "redirect:/login";
