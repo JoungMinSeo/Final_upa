@@ -1,7 +1,10 @@
+/target/
 .classpath
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,eclipse,java
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,eclipse,java
+/META-INF/
+
+# Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,windows
 
 ### Eclipse ###
 .metadata
@@ -63,7 +66,7 @@ local.properties
 
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
+.project
 
 ### Eclipse Patch ###
 # Spring Boot Tooling
@@ -83,7 +86,6 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -120,4 +122,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java
+# End of https://www.toptal.com/developers/gitignore/api/java,eclipse,windows
