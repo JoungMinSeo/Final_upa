@@ -43,7 +43,7 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 					// session에 loginMember 올리기
 					session.setAttribute("loginMember", loginMember);
 					// 성공 시 result로 보냄
-					response.sendRedirect(request.getContextPath() + "/member/result");
+					response.sendRedirect(request.getContextPath() + "/calendar/calendar");
 					return true;
 				}
 			}
