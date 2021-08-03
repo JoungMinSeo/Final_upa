@@ -163,12 +163,6 @@ public class MemberController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	// 휴대폰 인증
 	@RequestMapping(value="phoneCheck", method=RequestMethod.POST)
 	public String phoneCheck(@RequestParam("certificationNo") int certificationNo) {
