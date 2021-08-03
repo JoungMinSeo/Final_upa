@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{font-family: 'BMJUA'; color: white;}
+div{
+    border: 1px solid black;
+}
+hr{
+    width: 150px;
+    height: 3px;
+    background-color: gray;
+    position: absolute;
+    top: 75px;
+    left: 30px;
+    border: 0;
+}
+.sidMenu-container{
+    width: 200px;
+    height: 900px;
+    background-color: rgb(24, 64, 88);
+}
+.sidMenu-container ul{
+    list-style:none;
+}
+.sidMenu{
+    line-height: 50px;
+}

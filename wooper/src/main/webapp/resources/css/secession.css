@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: "BMJUA";
+}
+body{
+    background-color: rgb(213, 232, 243);
+}
+#content-main {
+    padding-left: 150px;
+   
+    display: flex;
+    justify-content: center;
+}
+#btn{
+    background-color: rgb(24, 64, 88);
+    cursor: pointer;
+    color: white;
+}

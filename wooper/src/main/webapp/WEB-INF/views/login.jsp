@@ -41,7 +41,7 @@
                     <a href="member/signUp"><button type="button">회원가입</button></a>
                 </div>
                 <div class="signUp">
-                    <a href=""><button type="button">아이디/비밀번호 찾기</button></a>
+                    <a href="member/findId"><button type="button">아이디/비밀번호 찾기</button></a>
                 </div>
             </div>
         </form>

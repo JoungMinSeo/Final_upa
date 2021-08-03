@@ -149,6 +149,25 @@ public class MemberController {
 		return "redirect:/login";
 	}
 	
+	// 아이디 찾기 화면 전환
+	@RequestMapping("findId")
+	public String findId() {
+		
+		return "member/findId";
+	}
+	// 비밀번호 찾기 화면 전환
+	@RequestMapping("findPw")
+	public String findPw() {
+		
+		return "member/findPw";
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	// 휴대폰 인증
 	@RequestMapping(value="phoneCheck", method=RequestMethod.POST)
@@ -158,6 +177,8 @@ public class MemberController {
 		
 		return null;
 	}
+	
+	
 	
 }
 
