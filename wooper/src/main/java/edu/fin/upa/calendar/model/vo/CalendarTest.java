@@ -5,11 +5,11 @@ public class CalendarTest {
 	private String title;
 	private String start;
 	private String end;
-	private String color;
+	private String textColor;
+	private String backgroundColor;
+	private String borderColor;
 	
-	public CalendarTest() {
-		// TODO Auto-generated constructor stub
-	}
+	public CalendarTest() {}
 
 	public int getCalNo() {
 		return calNo;
@@ -43,19 +43,38 @@ public class CalendarTest {
 		this.end = end;
 	}
 
-	public String getbColor() {
-		return color;
+	public String getTextColor() {
+		return textColor;
 	}
 
-	public void setbColor(String bColor) {
-		this.color = bColor;
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public String getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
 	}
 
 	@Override
 	public String toString() {
-		return "CalendarTest [calNo=" + calNo + ", title=" + title + ", start=" + start + ", end=" + end + ", bColor="
-				+ color + "]";
+		return "CalendarTest [calNo=" + calNo + ", title=" + title + ", start=" + start + ", end=" + end
+				+ ", textColor=" + textColor + ", backgroundColor=" + backgroundColor + ", borderColor=" + borderColor
+				+ "]";
 	}
+	
+
 	
 	
 	

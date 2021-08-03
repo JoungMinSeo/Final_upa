@@ -8,7 +8,9 @@
 		<result property="title" column="TITLE"/>
 		<result property="start" column="START_DATE"/>
 		<result property="end" column="END_DATE"/>
-		<result property="color" column="B_COLOR"/>
+		<result property="backgroundColor" column="B_COLOR"/>
+		<result property="textColor" column="T_COLOR"/>
+		<result property="borderColor" column="BD_COLOR"/>
 	</resultMap>
 	
 	<select id="selectCalTest" parameterType="string" resultMap="cal_rm">
