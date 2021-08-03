@@ -13,24 +13,15 @@
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 
 <style>
-	@font-face {
-	    font-family: 'KoreanFrenchTypewriter';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/KoreanFrenchTypewriter.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-
 	.wrapper {
 		width: 1000px;
 		height: 800px;
-		font-family: KoreanFrenchTypewriter;
 	}
 </style>
 </head>
 <body>
 			<div class="wrapper">
 				<div id='calendar'></div>
-				로그인이 되었슴미다
 			</div>
 
 	<script>
