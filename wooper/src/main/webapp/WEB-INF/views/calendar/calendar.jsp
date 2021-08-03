@@ -20,22 +20,27 @@
 </style>
 </head>
 <body>
+
 			<div class="wrapper">
+				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/logout">Logout</a></li>
 				<div id='calendar'></div>
 			</div>
 
+
 	<script>
 		$(function(){ // 레디 함수
-			
- 				 <%-- 
+/* 			
  				 	function getToday(){
 					var date = new Date();
-					return date.getFullYear() + "-" + ("0"+(date.getMonth()+1)).slice(-2)  + "-" ("0" + date.getDate()).slice(-2); 
- 				  --%>
-		
-			
+					return date.getFullYear() + "-" + ("0"+(date.getMonth()+1)).slice(-2) + "-" ("0" + date.getDate()).slice(-2); 
+					
+					};
+					 */
+
+					 
 			// 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
 			$.ajax({ 
+
 				url : 'selectCalendar', // 요청 주소 보내는곳
 				type : 'post', // 어떤 타입으로 보낼지
 				data : {'startDate' : '2021-07'}, // 해당 월에 해당하는 데이터를 불러옴 -> db에 8월에 해당하는 데이터가 있어도 안 불러옴
