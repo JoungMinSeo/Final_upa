@@ -24,6 +24,11 @@
 	</select>
 	
 	
+	<select id="selectCalendar" parameterType="string" resultMap="cal_rm">
+
+	</select>
+	
+	
 	
 <!-- 
 	<select id="selectCalendar" parameterType="string" resultMap="cal_rm">

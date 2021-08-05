@@ -36,6 +36,13 @@ public class CalendarController {
 		 
 		 return new Gson().toJson(list); 
 	}
+	
+	
+	// 팀캘린더 연동테스트 
+	@RequestMapping(value = "teamScheduler", method = RequestMethod.GET)
+	public String test() {
+		return "/teamScheduler";
+	}
 	 
 
 }

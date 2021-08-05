@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>알림</title>
     
-    <link href='${pageContext.request.contextPath}/resources/css/notification.css' rel='stylesheet' />
+    <link href='${pageContext.request.contextPath}/resources/css/notification/notification.css' rel='stylesheet' />
 
 </head>
 <body>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채팅목록2</title>
 
-	<link href='${pageContext.request.contextPath}/resources/css/chatList2.css' rel='stylesheet' />
+	<link href='${pageContext.request.contextPath}/resources/css/chat/chatList2.css' rel='stylesheet' />
 
 </head>
 
