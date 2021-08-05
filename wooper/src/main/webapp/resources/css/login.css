@@ -56,3 +56,6 @@ input[type=checkbox] {
     position: relative;
     left: 10px;
 }
+.main-btn{
+	cursor: pointer;
+}

@@ -11,7 +11,7 @@ margin: 0;
 }
 *{font-family: 'BMJUA';}
 body{
-    background-color: rgb(193, 229, 250);
+    background-color: rgb(223, 237, 245);
 }
 .container{
     margin-top:150px;
@@ -26,7 +26,7 @@ body{
     height: 600px;
 }
 .f-btn{
-    background: rgb(213, 232, 243);
+    background: rgb(196, 224, 240);
 }
 .find-btn{
     width: 300px;
@@ -34,7 +34,7 @@ body{
     margin-left: 140px;
 }
 #findPw{
-    background-color: rgb(165, 212, 248);
+    background-color: rgb(169, 213, 238);
 }
 #btn{
     width: 100px;

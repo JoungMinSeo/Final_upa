@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>findId</title>
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -20,7 +21,6 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/findId.css">
-
 <body>
     <div class="container">
         <div class="p-5">
@@ -72,19 +72,19 @@
                         <input type="number" class="form-control phone" id="phone3" name="phone" required>
                     </div>
                     <button class="btn f-btn" type="button" id="btn">인증</button>
-
-                    <div class="col-md-6 offset-md-3">
-                        <span id="checkPhone">&nbsp;</span>
-                    </div>
-                </div>
-                <div class="col-md-6 offset-md-3">
-                    <span id="showId">&nbsp;</span>
+					<div class="col-md-4" id="hide-area">
+					<br>
+						인증 번호
+						<input type="number" class="form-control" id="phoneCheck" name="PhoneCheck">
+						<button class="btn" type="button" id="proof">인증하기</button>
+						<span class="time"></span>
+					</div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-lg f-btn" type="button" id="login">로그인 하러 가기</button>
+                <a href="login"><button class="btn btn-lg f-btn" type="button" id="login">로그인 하러 가기</button></a>
             </form>
         </div>
     </div>
 </body>
-
+<script src="${pageContext.request.contextPath}/resources/js/findId.js"></script>
 </html>

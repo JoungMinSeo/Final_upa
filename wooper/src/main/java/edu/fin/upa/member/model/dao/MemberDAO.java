@@ -1,7 +1,5 @@
 package edu.fin.upa.member.model.dao;
 
-import java.sql.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;

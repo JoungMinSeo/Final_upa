@@ -11,12 +11,13 @@ margin: 0;
 }
 *{font-family: 'BMJUA';}
 body{
-    background-color: rgb(213, 232, 243);
+    background-color: rgb(223, 237, 245);
 }
 .container{
     margin-top:150px;
     background-color: white;
     border-radius: 6px;
+    height: 620px;
 }
 #span{
     font-size: 21px; 
@@ -26,8 +27,7 @@ body{
     height: 600px;
 }
 .f-btn{
-    background: rgb(153, 181, 197);
-    color: white;
+    background: rgb(196, 224, 240);
 }
 .find-btn{
     width: 300px;
@@ -35,7 +35,7 @@ body{
     margin-left: 140px;
 }
 #findId{
-    background-color: rgb(24, 64, 88);
+    background-color: rgb(169, 213, 238);
 }
 #btn{
     width: 100px;
@@ -46,4 +46,14 @@ body{
 }
 #login{
     float: right;
+}
+#hide-area{
+	display: none;
+}
+#proof{
+	background: rgb(196, 224, 240);
+	position: absolute;
+	left: 350px;
+	top: 50px;
+	width: 100px;
 }

@@ -18,6 +18,7 @@
 </head>
 <link rel="stylesheet" href="css/secession.css">
 <body>
+<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
     <div class="container" id="content-main">
 
         <div class="row my-5">

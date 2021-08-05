@@ -15,45 +15,45 @@ import edu.fin.upa.member.model.vo.Member;
 
 public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 
-	@Inject
-	private MemberService service;
+   @Inject
+   private MemberService service;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+   @Override
+   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+         throws Exception {
 
-		HttpSession session = request.getSession();
+      HttpSession session = request.getSession();
 
-		Object obj = session.getAttribute("loginMember");
+      Object obj = session.getAttribute("loginMember");
 
-		if (obj == null) { // 로그인이 되어있지 않은 경우
-			// 웹에서 autoLogin 쿠키 가져옴
-			Cookie autoLogin = WebUtils.getCookie(request, "autoLogin");
-			
-			
-			if (autoLogin != null) { // 쿠키가 있을 경우
-				// 쿠키에서 sessionID를 가져옴
-				String sessionId = autoLogin.getValue();
-				
-				// 인터셉터 자동 로그인
-				Member loginMember = service.getMemberSessionId(sessionId);
-				
-				System.out.println(loginMember);
-				if (loginMember != null) {// 자동 로그인이 되었다면
-					// session에 loginMember 올리기
-					session.setAttribute("loginMember", loginMember);
-					// 성공 시 result로 보냄
-					response.sendRedirect(request.getContextPath() + "/calendar/calendar");
-					return true;
-				}
-			}
-			// 로그인도안되어있고 쿠키도 존재 하지않음 다시 로그인 화면으로 돌려보내야함
-			return true;
-		}
-		
-		return true;
+      if (obj == null) { // 로그인이 되어있지 않은 경우
+         // 웹에서 autoLogin 쿠키 가져옴
+         Cookie autoLogin = WebUtils.getCookie(request, "autoLogin");
+         
+         
+         if (autoLogin != null) { // 쿠키가 있을 경우
+            // 쿠키에서 sessionID를 가져옴
+            String sessionId = autoLogin.getValue();
+            
+            // 인터셉터 자동 로그인
+            Member loginMember = service.getMemberSessionId(sessionId);
+            
+            System.out.println("인터셉터 자동 로그인 됌 : " + loginMember);
+            if (loginMember != null) {// 자동 로그인이 되었다면
+               // session에 loginMember 올리기
+               session.setAttribute("loginMember", loginMember);
+               // 성공 시 result로 보냄
+               response.sendRedirect(request.getContextPath() + "/calendar/calendar");
+               return true;
+            }
+         }
+         // 로그인도안되어있고 쿠키도 존재 하지않음 다시 로그인 화면으로 돌려보내야함
+         return true;
+      }
+      
+      return true;
 
-	}
+   }
 
    @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception 
@@ -62,4 +62,4 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
     }
  
 }
-	
+   
