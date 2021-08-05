@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import edu.fin.upa.calendar.model.service.CalendarService;
-import edu.fin.upa.calendar.model.vo.CalendarTest;
+import edu.fin.upa.calendar.model.vo.Calendar;
 
 @RequestMapping("/calendar/*")
 @Controller
@@ -28,8 +28,12 @@ public class CalendarController {
 	
 	@RequestMapping(value = "selectCalendar" ,method=RequestMethod.POST)
 	 @ResponseBody
-	 public String selectCalTest(String startDate) {
-		 List<CalendarTest> list = service.selectCalTest(startDate);
+	 public String selectCalendar(String startDate) {
+		
+		System.out.println(startDate);
+
+		List<Calendar> list = service.selectCalendar(startDate);
+		 
 		 return new Gson().toJson(list); 
 	}
 	 

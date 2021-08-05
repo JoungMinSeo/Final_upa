@@ -2,10 +2,10 @@ package edu.fin.upa.calendar.model.service;
 
 import java.util.List;
 
-import edu.fin.upa.calendar.model.vo.CalendarTest;
+import edu.fin.upa.calendar.model.vo.Calendar;
 
 public interface CalendarService {
 
-	List<CalendarTest> selectCalTest(String startDate);
+	List<Calendar> selectCalendar(String startDate);
 	
 }

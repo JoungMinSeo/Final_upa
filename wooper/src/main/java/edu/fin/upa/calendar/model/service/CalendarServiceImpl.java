@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.fin.upa.calendar.model.dao.CalendarDAO;
-import edu.fin.upa.calendar.model.vo.CalendarTest;
+import edu.fin.upa.calendar.model.vo.Calendar;
 
 
 
@@ -17,8 +17,8 @@ public class CalendarServiceImpl implements CalendarService{
 	private CalendarDAO dao;
 	
 	@Override
-	public List<CalendarTest> selectCalTest(String startDate) {
-		return dao.selectCalTest(startDate);
+	public List<Calendar> selectCalendar(String startDate) {
+		return dao.selectCalendar(startDate);
 	}
 	
 }
