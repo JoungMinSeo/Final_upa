@@ -2,21 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="calMapper">
 	
-	<resultMap type="CalendarTest" id="cal_rm">
-		<id property="calNo" column="CAL_NO"/>
+	<resultMap type="Calendar" id="cal_rm">
+		<id property="listNo" column="LIST_NO"/>
 		
-		<result property="title" column="TITLE"/>
-		<result property="start" column="START_DATE"/>
-		<result property="end" column="END_DATE"/>
-		<result property="backgroundColor" column="B_COLOR"/>
-		<result property="textColor" column="T_COLOR"/>
-		<result property="borderColor" column="BD_COLOR"/>
+		<result property="title" column="LIST_NM"/>
+		<result property="start" column="LIST_START_DT"/>
+		<result property="end" column="LIST_END_DT"/>
+		<result property="textColor" column="LIST_TCOLOR"/>
+		<result property="backgroundColor" column="LIST_BGCOLOR"/>
+		<result property="borderColor" column="LIST_BDCOLOR"/>
 	</resultMap>
 	
-	<select id="selectCalTest" parameterType="string" resultMap="cal_rm">
-		SELECT * FROM CAL_TEST
-		WHERE SUBSTR(START_DATE, 0, 7) = #{startDate}
+
+	<select id="selectCalendar" parameterType="string" resultMap="cal_rm">
+	      SELECT LIST_NM, 
+	               TO_CHAR(LIST_START_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_START_DT, 
+	               TO_CHAR(LIST_END_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_END_DT, 
+	               LIST_TCOLOR, LIST_BGCOLOR, LIST_BDCOLOR 
+	      FROM C_LIST_I
+	      WHERE TO_CHAR(LIST_START_DT, 'YYYY-MM')= #{startDate}
 	</select>
 	
+	
+	
+<!-- 
+	<select id="selectCalendar" parameterType="string" resultMap="cal_rm">
+	      SELECT LIST_NM, 
+	               TO_CHAR(LIST_START_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_START_DT, 
+	               TO_CHAR(LIST_END_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_END_DT, 
+	               LIST_TCOLOR, LIST_BGCOLOR, LIST_BDCOLOR 
+	      FROM C_LIST_I
+	      WHERE MEMBER_NO = #{memberNo}
+	      AND  TO_CHAR(LIST_START_DT, 'YYYY-MM')= #{startDate}
+	</select>
+ -->
+ 
+
 
 </mapper>

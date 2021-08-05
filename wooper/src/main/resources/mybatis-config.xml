@@ -15,6 +15,7 @@
 	<typeAliases>
 		<typeAlias type="edu.fin.upa.member.model.vo.Member" alias="Member" />
 		<typeAlias type="edu.fin.upa.calendar.model.vo.CalendarTest" alias="CalendarTest" />
+		<typeAlias type="edu.fin.upa.calendar.model.vo.Calendar" alias="Calendar" />
 	</typeAliases>
 
 	<!-- mapper 파일(SQL 작성되는파일) 위치 등록 부분 -->

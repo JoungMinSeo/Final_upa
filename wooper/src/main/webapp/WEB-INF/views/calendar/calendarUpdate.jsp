@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -66,18 +66,20 @@
                 <div class="calendardatechangeimg"><img src="../common/icon/calendar1.png" style="width:30px;"></div>
                 <div class="calendardatechangeip">
                     <h5 class="calendarstart">시작일자</h5>
-                    <input class="cstartdate" type="date">
-                    <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
-                    <input class="cstarttime" type="time">
+                    <input class="cstartdate" id="currentStartDT" type="datetime-local">
+                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+                    <input class="cstarttime" type="time"> -->
                 </div>
             </div>
+
+            <!-- datetime-local -->
             <div class="calendardatechange" id="calendardatechange">
                 <div class="calendardatechangeimg"><img src="../common/icon/calendar1.png" style="width:30px;"></div>
                 <div class="calendardatechangeip">
                     <h5 class="calendarend">종료일자</h5>
-                    <input class="cenddate" type="date">
-                    <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
-                    <input class="cendtime" type="time">
+                    <input class="cenddate" id="currentEndDT" type="datetime-local">
+                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+                    <input class="cendtime" type="time"> -->
                 </div>
             </div>
         </div>
@@ -194,6 +196,10 @@
                 $('#coloradd').css('background-color', event.color.toString());
             });
         });
+
+        /* 일정에 현재 시간 자동 세팅 */
+        document.getElementById('currentStartDT').value= new Date().toISOString().slice(0, 19);
+        document.getElementById('currentEndDT').value= new Date().toISOString().slice(0, 19);
 
     </script>
 </body>

@@ -16,11 +16,11 @@
         }
 
         div{
-            border:1px solid black;
+            /* border:1px solid black; */
             box-sizing:border-box;
         }
         .upasidemenucontainer{
-            width:200px;
+            width:60px;
             height:935px;
         }
         .left_menu_container{
