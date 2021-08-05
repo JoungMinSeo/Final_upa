@@ -17,6 +17,9 @@ public class Calendar {
 	private String backgroundColor;
 	private String borderColor;
 	
+	private int workNo;
+	private String workNm;
+	
 	public Calendar() {}
 
 	public int getCardNo() {
@@ -107,12 +110,30 @@ public class Calendar {
 		this.borderColor = borderColor;
 	}
 
+	public int getWorkNo() {
+		return workNo;
+	}
+
+	public void setWorkNo(int workNo) {
+		this.workNo = workNo;
+	}
+
+	public String getWorkNm() {
+		return workNm;
+	}
+
+	public void setWorkNm(String workNm) {
+		this.workNm = workNm;
+	}
+
 	@Override
 	public String toString() {
 		return "Calendar [cardNo=" + cardNo + ", listNo=" + listNo + ", title=" + title + ", listStatus=" + listStatus
 				+ ", start=" + start + ", end=" + end + ", listMDt=" + listMDt + ", listDDt=" + listDDt + ", textColor="
-				+ textColor + ", backgroundColor=" + backgroundColor + ", borderColor=" + borderColor + "]";
+				+ textColor + ", backgroundColor=" + backgroundColor + ", borderColor=" + borderColor + ", workNo="
+				+ workNo + ", workNm=" + workNm + "]";
 	}
+
 
 	
 	

@@ -1,6 +1,7 @@
 package edu.fin.upa.calendar.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,10 @@ public class CalendarServiceImpl implements CalendarService{
 	@Autowired
 	private CalendarDAO dao;
 	
+
 	@Override
-	public List<Calendar> selectCalendar(String startDate) {
-		return dao.selectCalendar(startDate);
+	public List<Calendar> selectCalendar(Map<String, Object> map) {
+		return dao.selectCalendar(map);
 	}
 	
 }
