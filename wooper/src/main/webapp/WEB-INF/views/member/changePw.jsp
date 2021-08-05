@@ -18,6 +18,7 @@
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/changePw.css">
 <body>
+<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
 	<div class="container" id="content-main">
 		<div class="row my-5">
 			<div class="col-sm-offset-2 col-sm-8">

@@ -1,16 +1,24 @@
 
 package edu.fin.upa.member.controller;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Random;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
+
 
 import edu.fin.upa.member.model.service.MemberService;
 import edu.fin.upa.member.model.vo.Member;
@@ -32,7 +42,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
-
+	
 	public static void swalSetMessage(RedirectAttributes ra, String icon, String title, String text) {
 
 		ra.addFlashAttribute("icon", icon);
@@ -40,12 +50,19 @@ public class MemberController {
 		ra.addFlashAttribute("text", text);
 	}
 	
+	// 로그인 화면 전환
+	@RequestMapping("login")
+	public String login(Model model) {
+		
+		return "redirect:/login";
+	}
+	
 	// 로그인
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(Member inputMember, Model model, RedirectAttributes ra,
 			 			@RequestParam(value="autoLogin", required=false) String autoLogin,
 			 			SessionStatus status,HttpServletRequest request, HttpServletResponse response) {
-
+		
 		// 로그인 진행
 		Member loginMember = service.login(inputMember);
 		
@@ -53,15 +70,15 @@ public class MemberController {
 		
 		// 로그인이 되었다면
 		if(loginMember != null) {
-	         // session에 loginMember 올리고 result로 보냄
 	         model.addAttribute("loginMember", loginMember);
-	         path = "redirect:/calendar/calendar";
-//	         redirect:/member/calendar/calendar.jsp
-	         
-		}else {// 로그인에 실패했을 경우
-			path = "redirect:/login";
-		}
 
+	         ra.addFlashAttribute("icon", "success");
+	         ra.addFlashAttribute("title", "로그인 성공");
+	         ra.addFlashAttribute("text", "아이디 또는 비밀번호가 일치하지않습니다");
+	         
+	         path = "redirect:/calendar/calendar";
+	         
+	         
 			Cookie cookie = new Cookie("autoLogin", loginMember.getMemberId());
 	         // 자동 로그인을 체크한 경우
 	         if(autoLogin != null) { 
@@ -88,9 +105,17 @@ public class MemberController {
 	         // if else 문이 끝나고 요청에 담아 보내기
 	         cookie.setPath(request.getContextPath());
 	         response.addCookie(cookie);
+		}else {// 로그인에 실패했을 경우
+			path = "redirect:/login";
+			
+			ra.addFlashAttribute("icon", "error");
+			ra.addFlashAttribute("title", "로그인 실패");
+			ra.addFlashAttribute("text", "아이디 또는 비밀번호가 일치하지않습니다");
+		}
 	         
 		 return path;
 	}
+	
 	
 	
 	// 회원가입 전환
@@ -153,6 +178,7 @@ public class MemberController {
 	@RequestMapping("findId")
 	public String findId() {
 		
+		
 		return "member/findId";
 	}
 	// 비밀번호 찾기 화면 전환
@@ -162,18 +188,26 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
-	
-	// 휴대폰 인증
-	@RequestMapping(value="phoneCheck", method=RequestMethod.POST)
-	public String phoneCheck(@RequestParam("certificationNo") int certificationNo) {
+	@ResponseBody
+	@RequestMapping(value="sendSMS",method=RequestMethod.POST)
+	public String sendSMS(@RequestParam("memberPhone") String memberPhone) {
 		
-		System.out.println(certificationNo);
+		Random rand = new Random();
+		String numStr = "";
+		for(int i=0; i<4; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr += ran;
+		}
 		
-		return null;
+		System.out.println("수신자 번호" + memberPhone);
+		System.out.println("인증 번호" + numStr);
+		
+		service.certifiedPhoneNumber(memberPhone,numStr);
+		
+		return numStr;
 	}
 	
-	
-	
+
 }
 
 

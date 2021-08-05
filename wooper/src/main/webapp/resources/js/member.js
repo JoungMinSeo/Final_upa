@@ -171,7 +171,6 @@ function validate() {
 var timer = null;
 var isRunning = false;
 $(function(){
-
 	    $(".btn_recive_num").click(function(e){
     	var display = $('.time');
     	var leftSec = 300;

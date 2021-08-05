@@ -1,6 +1,7 @@
 package edu.fin.upa.member.model.service;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import edu.fin.upa.member.model.vo.Member;
 
@@ -18,5 +19,7 @@ public interface MemberService {
 
 	void keepLogin(String loginId, Date limitDate, String inputId);
 
+	void certifiedPhoneNumber(String memberPhone, String numStr);
+	
 	
 }

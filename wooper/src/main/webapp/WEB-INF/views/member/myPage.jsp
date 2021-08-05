@@ -23,6 +23,7 @@
 </head>
 <link rel="stylesheet" href="css/myPage.css">
 <body>
+<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
     <div>
         <div class="bg-white rounded shadow-sm container p-2" id="content">
             <form action="update" method="POST">
