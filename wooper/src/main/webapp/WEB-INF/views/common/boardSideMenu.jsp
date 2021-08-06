@@ -62,16 +62,10 @@
         }
         
         /* 프로필 사이드메뉴 */
-        .left_menu_container2{
-            float:left;
-            width:135px;
-            height:935px;
-            display:none;
-        }
-        .left_menu2_null{
-            width:100%;
-            height:92%;
-        }
+        .mypagemove .dropdown-toggle::after {
+        	display: none !important;
+		}        
+        
         .left_menu2_profile{
             border:3px solid rgb(24,64,88);
             width:100%;
@@ -144,28 +138,22 @@
                  
             <!-- 프로필(마이페이지 + 로그아웃) -->   
             <div class="mypagemove" >
-                <a class="myprofile" href="#" onclick="mypageside('left_menu_container2');">
-                	<img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;">
-                </a>
-            </div>        
-        </div>
-        <div class="left_menu_container2" id="left_menu_container2">
-            <div class="left_menu2_null"></div>
-            <div class="left_menu2_profile">
-                <div class="side_mypage"><a href="#">마이페이지</a></div>
-                <div class="side_logout"><a href="#">로그아웃</a></div>
-            </div>
+                <div class="btn-group dropright">
+					<button type="button" id="profile" class="btn myprofile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;">
+					</button>
+					<div class="dropdown-menu">
+					    <!-- Dropdown menu links -->
+				        <div class="left_menu2_profile">
+				        	<div class="side_mypage"><a href="#">마이페이지</a></div>
+				            <div class="side_logout"><a href="#">로그아웃</a></div>
+				        </div>
+					</div>
+				</div>
+            </div>     
         </div>
     </div>
 
-    <script>
-
-        function mypageside(idMyDiv){
-            var objDiv = document.getElementById(idMyDiv);
-            if(objDiv.style.display=="block"){ objDiv.style.display = "none"; }
-            else{ objDiv.style.display = "block"; }
-        }
-    </script>
     
 </body>
 </html>
