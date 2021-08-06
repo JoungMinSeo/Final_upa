@@ -10,17 +10,18 @@ import edu.fin.upa.calendar.model.dao.CalendarDAO;
 import edu.fin.upa.calendar.model.vo.Calendar;
 
 
-
 @Service
 public class CalendarServiceImpl implements CalendarService{
 
 	@Autowired
 	private CalendarDAO dao;
 	
-
+	// 캘린더 조회 
 	@Override
 	public List<Calendar> selectCalendar(Map<String, Object> map) {
 		return dao.selectCalendar(map);
 	}
+
+
 	
 }

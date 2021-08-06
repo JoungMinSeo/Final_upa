@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import edu.fin.upa.calendar.model.service.CalendarService;
 import edu.fin.upa.calendar.model.vo.Calendar;
+import edu.fin.upa.calendar.model.vo.Workspace;
 import edu.fin.upa.member.model.vo.Member;
 
 @RequestMapping("/calendar/*")
@@ -26,7 +27,6 @@ public class CalendarController {
 	@Autowired
 	private CalendarService service;
 
-	// 임시 화면
 	@RequestMapping(value = "calendar", method = RequestMethod.GET)
 	public String result() {
 		return "/calendar/calendar";
@@ -47,5 +47,4 @@ public class CalendarController {
 		 return new Gson().toJson(list); 
 	}
 	
-
 }

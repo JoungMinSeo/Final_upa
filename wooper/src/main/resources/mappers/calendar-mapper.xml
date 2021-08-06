@@ -32,7 +32,11 @@
 			                                                    WHERE MEMBER_NO = #{memberNo} )))
 	</select>
 	
-	
+
+   <select id="selectWorkSpace" parameterType="string">
+      SELECT WORK_NO FROM WORKSPACE_JOIN
+	  WHERE MEMBER_NO = #{memberNo}
+   </select>	
 <!-- 	
 	<select id="selectCalendar" parameterType="map" resultMap="cal_rm">
 	     SELECT LIST_NM, 
@@ -46,7 +50,7 @@
 			AND LIST_NO IN(SELECT LIST_NO FROM LIST
 			                WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
 			                                  WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
-			                                                    WHERE MEMBER_NO = #{memberNo} )))
+			                                                    WHERE WORK_NO = #{workNo} )))
 	</select>
 	
 	 -->

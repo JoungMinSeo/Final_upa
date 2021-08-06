@@ -32,8 +32,6 @@
 
                 <h1 class="font projectName">@@@님의 프로젝트</h1>
 
-                <h2 class="font">나의 프로젝트</h2>
-
             </div>
             <div class="col py-3 px-lg-5">
                 <button type="button" class="btn btn-info logout font" onclick="location.href='${pageContext.request.contextPath}/member/logout'">로그아웃</button>
