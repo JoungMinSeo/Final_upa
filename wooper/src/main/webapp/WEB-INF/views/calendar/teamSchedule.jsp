@@ -22,7 +22,7 @@
 	href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css'
 	rel='stylesheet'>
 
-		<jsp:include page="../workSpace/workSpace.jsp" />
+		
 
 
 <style>
@@ -37,7 +37,21 @@
 </head>
 <body>
 
-
+	<div class="container" id="calendarc">
+		<div>
+			<jsp:include page="../common/boardSideMenu.jsp" />
+		</div>
+		<div>
+			<div>
+				<jsp:include page="../workSpace/workSpace.jsp" />
+			</div>
+			<div>
+				<div id='calendar'></div>
+			</div>
+		</div>
+	</div>
+	
+	
 	<!-- 모달창 -->
 	<div class="modal fade" tabindex="-1" id="calendarDetail">
 		<div class="modal-dialog modal-dialog-centered">

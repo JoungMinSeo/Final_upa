@@ -40,9 +40,7 @@
 </head>
 <body>
 
-	<div class="container" id="calendarc">
-		<div id='calendar'></div>
-	</div>
+
 
 	<!-- 모달창 -->
 	<div class="modal fade" tabindex="-1" id="calendarDetail">
