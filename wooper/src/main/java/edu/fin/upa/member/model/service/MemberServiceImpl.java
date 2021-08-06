@@ -98,5 +98,14 @@ public class MemberServiceImpl implements MemberService{
         }
 
     }
-
+	
+	/*
+	 * // 카카오 회원 조회 Service 구현
+	 * 
+	 * @Override public Member selectKakaoMember(String id) { return
+	 * dao.selectKakaoMember(id); }
+	 * 
+	 * @Override public int selectMemberNo() { return dao.selectMemberNo(); }
+	 */
+	
 }

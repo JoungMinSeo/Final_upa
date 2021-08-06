@@ -38,6 +38,19 @@ public class MemberDAO {
 			
 		return sqlSession.update("memberMapper.keepLogin",map);
 	}
+	
+	/** 카카오 회원 조회 DAO
+	 * @param id
+	 * @return member
+	 */
+	public Member selectKakaoMember(String id) {
+		//return sqlSession.selectOne("memberMapper.selectKakoMember", id);
+		return null;
+	}
 
+	public int selectMemberNo() {
+		//return sqlSession.selectOne("memberMapper.selectMemberNo");
+		return 0;
+	}
 
 }
