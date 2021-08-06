@@ -16,12 +16,20 @@
 		<typeAlias type="edu.fin.upa.member.model.vo.Member" alias="Member" />
 		<typeAlias type="edu.fin.upa.calendar.model.vo.CalendarTest" alias="CalendarTest" />
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Calendar" alias="Calendar" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.PurchaseList" alias="PurchaseList" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.Sign" alias="Sign" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.SignLine" alias="SignLine" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.Vacation" alias="Vacation" />
 	</typeAliases>
 
 	<!-- mapper 파일(SQL 작성되는파일) 위치 등록 부분 -->
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/calendar-mapper.xml" />
+		<mapper resource="/mappers/sign-mapper.xml" />
 	</mappers>
 	
 </configuration>
