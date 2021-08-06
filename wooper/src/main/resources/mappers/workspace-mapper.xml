@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="workspaceMapper">
+
+	<resultMap type="Workspace" id="workspace_rm">
+		<id property="workNo" column="WORK_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNm" column="WORK_NM"/>
+		<result property="workInfo" column="WORK_INFO"/>
+		<result property="workStatus" column="WORK_STATUS"/>
+	</resultMap>
+	
+	
+	<select id="selectWorkList" parameterType="_int" resultMap="workspace_rm">
+		SELECT WORK_NO, WORK_NM
+		FROM WORKSPACE
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectWorkspace" parameterType="_int" resultMap="workspace_rm">
+		SELECT WORK_NM, WORK_INFO
+		FROM WORKSPACE
+		WHERE WORK_NO = #{workNo}
+	
+	</select>
+
+</mapper>
