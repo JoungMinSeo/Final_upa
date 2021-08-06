@@ -1,6 +1,7 @@
 package edu.fin.upa.member.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -14,16 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.fin.upa.member.model.service.MemberService;
 import edu.fin.upa.member.model.vo.KakaoProfile;
+import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.member.model.vo.OAuthToken;
 
 @Controller
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoController {
 	
 	@Autowired
@@ -76,7 +79,7 @@ public class KakaoController {
 		
 		System.out.println("카카오 엑세스 토큰 : "+oauthToken.getAccess_token());
 		
-RestTemplate rt2 = new RestTemplate();
+		RestTemplate rt2 = new RestTemplate();
 		
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers2 = new HttpHeaders();
@@ -97,20 +100,48 @@ RestTemplate rt2 = new RestTemplate();
 		System.out.println(response2.getBody());
 		
 		ObjectMapper objectMapper2 = new ObjectMapper();
+		
 		KakaoProfile kakaoProfile = null;
 		
-			try {
-				kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonParseException e) {
 			
-		System.out.println(kakaoProfile);
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
 			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		System.out.println("id" + kakaoProfile.getId());
+		System.out.println("email : " + kakaoProfile.getKakao_account().getEmail());
+		
+		UUID garbagePassword = UUID.randomUUID();
+		System.out.println("memberId : " + kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
+		System.out.println("memberPw : " + garbagePassword);
+		System.out.println("memberNm " + kakaoProfile.getProperties().getNickname());
+		System.out.println("memberImg" + kakaoProfile.getProperties().getProfile_image());
+		
+		Member kakaoMember = new Member();
+		kakaoMember.setMemberId(kakaoProfile.getKakao_account().getEmail());
+		kakaoMember.setMemberPw(garbagePassword.toString());
+		kakaoMember.setMemberNm(kakaoProfile.getProperties().getNickname());
+		kakaoMember.setMemberNick(kakaoProfile.getProperties().getNickname());
+		kakaoMember.setMemberImg(kakaoProfile.getProperties().getProfile_image());
+		
+		// 가입자 혹은 비가입자 체크해서 처리
+		
+		int kakaoId = kakaoProfile.getId();
+		
+		service.selectMember(kakaoId);
+		
+		
+		service.kakaoSignUp(kakaoMember);
+		
+		
 		return response2.getBody();
 	}
 	

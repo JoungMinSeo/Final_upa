@@ -15,6 +15,7 @@ public class Member {
 	private String memberGrade;
 	private String memberNick;
 	private String memberSign;
+	private String memberImg;
 	// 자동 로그인
 	private boolean memberCookie;
 	private String sessionId;
@@ -116,6 +117,23 @@ public class Member {
 
 	public void setMemberSign(String memberSign) {
 		this.memberSign = memberSign;
+	}
+
+	
+	public String getMemberImg() {
+		return memberImg;
+	}
+
+	public void setMemberImg(String memberImg) {
+		this.memberImg = memberImg;
+	}
+
+	public boolean isMemberCookie() {
+		return memberCookie;
+	}
+
+	public void setMemberCookie(boolean memberCookie) {
+		this.memberCookie = memberCookie;
 	}
 
 	@Override

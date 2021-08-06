@@ -6,6 +6,8 @@ public class KakaoProfile {
 	public String connected_at;
 	public Properties properties;
 	public KakaoAccount kakao_account;
+	public Boolean profile_nickname_needs_agreement;
+	public Boolean profile_image_needs_agreement;
 	
 	
 	
@@ -41,6 +43,22 @@ public class KakaoProfile {
 		this.kakao_account = kakao_account;
 	}
 
+	public Boolean getProfile_nickname_needs_agreement() {
+		return profile_nickname_needs_agreement;
+	}
+
+	public void setProfile_nickname_needs_agreement(Boolean profile_nickname_needs_agreement) {
+		this.profile_nickname_needs_agreement = profile_nickname_needs_agreement;
+	}
+
+	public Boolean getProfile_image_needs_agreement() {
+		return profile_image_needs_agreement;
+	}
+
+	public void setProfile_image_needs_agreement(Boolean profile_image_needs_agreement) {
+		this.profile_image_needs_agreement = profile_image_needs_agreement;
+	}
+
 	public class Properties {
 		public String nickname;
 		public String profile_image;
@@ -65,12 +83,14 @@ public class KakaoProfile {
 		}
 		
 		
+		
 	}
-
+	
 	public class KakaoAccount {
+		
+		public Profile profile;
 		public Boolean profile_nickname_needs_agreement;
 		public Boolean profile_image_needs_agreement;
-		public Profile profile;
 		public Boolean has_email;
 		public Boolean email_needs_agreement;
 		public Boolean is_email_valid;
@@ -79,26 +99,36 @@ public class KakaoProfile {
 		
 		
 
-		public Boolean getProfile_needs_agreement() {
+		public Profile getProfile() {
+			return profile;
+		}
+
+		public void setProfile(Profile profile) {
+			this.profile = profile;
+		}
+
+
+
+		public Boolean getProfile_nickname_needs_agreement() {
 			return profile_nickname_needs_agreement;
 		}
 
 
 
-		public void setProfile_needs_agreement(Boolean profile_nickname_needs_agreement) {
+		public void setProfile_nickname_needs_agreement(Boolean profile_nickname_needs_agreement) {
 			this.profile_nickname_needs_agreement = profile_nickname_needs_agreement;
 		}
 
 
 
-		public Profile getProfile() {
-			return profile;
+		public Boolean getProfile_image_needs_agreement() {
+			return profile_image_needs_agreement;
 		}
 
 
 
-		public void setProfile(Profile profile) {
-			this.profile = profile;
+		public void setProfile_image_needs_agreement(Boolean profile_image_needs_agreement) {
+			this.profile_image_needs_agreement = profile_image_needs_agreement;
 		}
 
 
@@ -164,9 +194,11 @@ public class KakaoProfile {
 
 
 		public class Profile {
+			
 			public String nickname;
 			public String thumbnail_image_url;
 			public String profile_image_url;
+			public Boolean is_default_image;
 			public String getNickname() {
 				return nickname;
 			}
@@ -185,6 +217,14 @@ public class KakaoProfile {
 			public void setProfile_image_url(String profile_image_url) {
 				this.profile_image_url = profile_image_url;
 			}
+			public Boolean getIs_default_image() {
+				return is_default_image;
+			}
+			public void setIs_default_image(Boolean is_default_image) {
+				this.is_default_image = is_default_image;
+			}
+			
+			
 			
 			
 		}
