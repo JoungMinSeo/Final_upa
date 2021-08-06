@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 추가, 수정, 삭제</title>
 
-    <link href='${pageContext.request.contextPath}/resources/css/calendarInsert.css' rel='stylesheet' />
+    <link href='${pageContext.request.contextPath}/resources/css/calendar/calendarInsert.css' rel='stylesheet' />
     <link href="../lib/bootstrap-colorpicker.css" rel="stylesheet">
 
     <script src="//code.jquery.com/jquery-3.4.1.js"></script>
