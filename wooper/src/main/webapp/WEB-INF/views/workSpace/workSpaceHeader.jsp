@@ -31,8 +31,8 @@
     <div class="row mx-lg-n5">
       <div class="col py-3 px-lg-5 ">
       
-        <h2 class="font">프로젝트 명</h2>
-        <h5 class="font">프로젝트 소개글</h5>
+        <h2 class="font">${work.workNm}</h2>
+        <h5 class="font">${work.workInfo}</h5>
 
       </div>
       <div class="col py-3 px-lg-5">

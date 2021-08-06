@@ -7,22 +7,28 @@
 <title>Insert title here</title>
 
 	<style>
-		div{float:left;}
+		.side{float:left;} 
 	</style>
+	
 </head>
 <body>
-	<div>
-		<div>
+
+	<div class="container">
+		<div class="side">
 			<jsp:include page="../common/boardSideMenu.jsp"/>
 		
 		</div>
 		
+	
 		<div>
 			<div>
 				<jsp:include page="workSpaceHeader.jsp"/>
 			</div>
-			<div></div>
+			<div>
+				<jsp:include page="card.jsp"/>
+			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

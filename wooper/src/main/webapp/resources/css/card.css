@@ -1,0 +1,101 @@
+/* @font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .font {
+    font-family: "BMJUA";
+    color: black;
+  } */
+
+/*   body{
+    background-color: rgb(213,232,243);
+    
+} */
+
+.top{
+    height: 10%;
+}
+
+.container{
+    display: inline-block;
+    white-space: nowrap;
+    height: auto;
+}
+
+.empty{
+    display: inline-block;
+    width: 200px;
+    height: auto;
+    margin-left: 10px;
+    padding: 10px;
+    border: 3px rgb(42,111,154) solid;
+    background-color: white;
+    top: 0;
+    vertical-align: top;
+}
+
+.bottom{
+    height: 10%;
+}
+
+
+.addCard{
+    display: inline-block;
+    border: 1px solid rgb(42,111,154);
+    margin-left: 10px;
+}
+
+.undo{
+    display: inline-block;
+}
+
+.addList{
+    width: 150px;
+    height: 20px;
+    float: bottom;
+}
+
+
+/* ****************************************************** */
+
+.addList{
+    width: 130px;
+    height: 20px;
+}
+
+.name{
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.cardName{
+    width: 150px;
+    border: none;
+}
+
+.top{
+    height: 10%;
+}
+
+.list{
+    height: 80%;
+}
+
+.bottom{
+    height: 10%;
+}
+/* *********************************************************************** */
+
+
+/* 리스트 모달 css */
+
+.pofileImg {
+    display: inline-block;
+}
+
+.fileNone {
+    display: none;
+}
