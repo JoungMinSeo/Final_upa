@@ -21,5 +21,9 @@ public interface MemberService {
 
 	void certifiedPhoneNumber(String memberPhone, String numStr);
 	
-	
+	/*
+	 * //카카오 회원 조회 Member selectKakaoMember(String id);
+	 * 
+	 * public abstract int selectMemberNo();
+	 */
 }

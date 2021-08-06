@@ -29,10 +29,8 @@
                 <button class="main-btn" type="submit">LOGIN</button>
             </div>
             <div class="btn-area">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=6caa5f8c1a7322cc5a6efe9757e2b243&redirect_uri=	
-http://localhost:8080/auth/kakao/callback&response_type=code">
-                <img src="${pageContext.request.contextPath}/resources/img/kakao.png">
-            </a>
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=553db56a5579581d35b20b05bdcdb925&redirect_uri=http://localhost:8080/wooper/kakaoLogin&response_type=code">
+                <img src="${pageContext.request.contextPath}/resources/img/kakao.png"></a>
             </div>
             <div class="btn-area">
                 <input type="checkbox" id="autoLogin" name="autoLogin" value="T"> <span>&nbsp;로그인 유지</span>
@@ -48,6 +46,46 @@ http://localhost:8080/auth/kakao/callback&response_type=code">
         </form>
     </section>
 </body>
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+/* Kakao.init('7b058e03d9b36f55cb2ad0c4fd9e3fc9'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+//카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }   */
+</script>
 </html>
 
 
