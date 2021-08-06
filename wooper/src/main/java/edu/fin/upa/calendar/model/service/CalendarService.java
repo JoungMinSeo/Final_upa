@@ -7,6 +7,11 @@ import edu.fin.upa.calendar.model.vo.Calendar;
 
 public interface CalendarService {
 
-	List<Calendar> selectCalendar(Map<String, Object> map);
 	
+	/** 캘린더 조회
+	 * @param map
+	 * @return
+	 */
+	List<Calendar> selectCalendar(Map<String, Object> map);
+
 }

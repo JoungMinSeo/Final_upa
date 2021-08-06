@@ -7,8 +7,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사이드메뉴</title>
 
-	<link href='${pageContext.request.contextPath}/resources/css/common/boardSideMenu.css' rel='stylesheet' />
+	<link href='css/common/boardSideMenu.css' rel='stylesheet' />
 
+	<style>
+		@font-face {
+		    font-family: 'BMJUA';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		*{font-family: 'BMJUA';}
+
+        @font-face {
+            font-family: 'BMJUA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        div{
+            /* border:1px solid black; */
+            box-sizing:border-box;
+        }
+        .upasidemenucontainer{
+            width:100%;
+            height:100%;
+        }
+        .left_menu_container{
+            background-color:rgb(24,64,88);
+            width:100%;
+            height:935px;
+            float:left;
+        }
+        
+        .mainmove, .workspacemove, .messagemove, .noticemove, .calendermove, .informationmove, .mypagemove{
+            position:relative;
+            float:left;
+            width:100%;
+            height:6%;
+        }
+        
+        .left_menu_container > div > a > img{
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
+            position:absolute;
+        }
+        
+        .informationmove, .mypagemove{
+            top:530px;
+            float:right;
+        }
+        
+        /* 프로필 사이드메뉴 */
+        .left_menu_container2{
+            float:left;
+            width:135px;
+            height:935px;
+            display:none;
+        }
+        .left_menu2_null{
+            width:100%;
+            height:92%;
+        }
+        .left_menu2_profile{
+            border:3px solid rgb(24,64,88);
+            width:100%;
+            height:8%;
+            font-family:BMJUA;
+            text-align:center;
+            font-size:25px;
+        }
+        .left_menu2_profile a{
+            text-decoration-line : none;
+            color:rgb(24,64,88);
+        }
+        .side_mypage, .side_logout{
+            margin-top:4px;
+        }
+/*         
+        .mypagemove img, informationmove img{
+        	float:right;
+        }
+		 */
+	</style>
 </head>
 <body>
     <div class="upasidemenucontainer">

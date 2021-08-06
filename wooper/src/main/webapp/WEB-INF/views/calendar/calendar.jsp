@@ -5,25 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href='${pageContext.request.contextPath}/resources/fullcalendar/main.css'
-	rel='stylesheet' />
-<script
-	src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
-<script
-	src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-	crossorigin="anonymous"></script>
-<link
-	href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css'
-	rel='stylesheet' />
-<link
-	href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css'
-	rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.js"></script>
 
-<%-- 	<jsp:include page="../common/boardSideMenu.jsp"/> --%>
-<jsp:include page="../workSpace/workSpace.jsp" />
+	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar/main.css' rel='stylesheet' />
+	<script src='${pageContext.request.contextPath}/resources/css/fullcalendar/main.js'></script>
+	<script src='${pageContext.request.contextPath}/resources/css/fullcalendar/ko.js'></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			   crossorigin="anonymous"></script>
+	<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
+	<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+
+	<%-- 	<jsp:include page="../common/boardSideMenu.jsp"/> --%>
+	<jsp:include page="../workSpace/workSpace.jsp" />
 
 <style>
 #calendarc {
@@ -40,14 +35,18 @@
 </head>
 <body>
 
-
+	<div class="container" id="calendarc">
+		<div id='calendar'></div>
+	</div>
 
 	<!-- 모달창 -->
 	<div class="modal fade" tabindex="-1" id="calendarDetail">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Modal title</h5>
+					<h5 class="modal-title">
+						<input type="text" value="" />
+					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -153,13 +152,23 @@
 					// attr : attribute
 					// 2021-08-05T23:11:00+09:00 
 					const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
-					const li4 = $("<li>").text( "시작 : ").append(start);
+					const li4 = $("<li>").text( "시작일자 : ").append(start);
 					
 					const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
-					const li5 = $("<li>").text( "종료 : ").append(end);
+					const li5 = $("<li>").text( "종료일자 : ").append(end);
+					
+					const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
+					const li6 = $("<li>").text( "리스트타이틀 : ").append(title);
+					
+					const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
+					const li7 = $("<li>").text( "글자색 : ").append(textColor);
+					const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor"}).val(info.event.backgroundColor);
+					const li8 = $("<li>").text( "배경색 : ").append(backgroundColor);
+					const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
+					const li9 = $("<li>").text( "테두리색 : ").append(borderColor);
 					
 					
-					ul.append(li1, li2, li3, li4, li5);
+					ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, );
 					$("#detailBody").append(ul);
 				},
 
@@ -223,6 +232,32 @@
 					});
 
 				})
+				
+				
+		// 색상표		
+        $(function () {
+            // 기본 인스턴스화: 
+            $('#fcolor-input').colorpicker();
+            
+            // 이벤트를 사용하여 #demo div 배경색을 변경하는 예 : 
+            $('#textColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
+        $(function () {
+            $('#bgcolor-input').colorpicker();
+            
+            $('#backgroundColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
+        $(function () {
+            $('#bdcolor-input').colorpicker();
+            
+            $('#borderColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
 	</script>
 </body>
 </html>
