@@ -43,11 +43,13 @@
             </div>    
              
             <!-- 캘린더 지울 예정-->    
+<%--             
             <div class="calendermove">
                 <a href="calendar/teamScheduler">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/calendar.png" style="height:50px;">
                 </a>
             </div>        
+              --%>
              
             <!-- 도움말 -->
             <div class="informationmove">

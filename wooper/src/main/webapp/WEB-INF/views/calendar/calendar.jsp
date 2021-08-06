@@ -22,8 +22,7 @@
 	href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css'
 	rel='stylesheet'>
 
-<%-- 	<jsp:include page="../common/boardSideMenu.jsp"/> --%>
-<jsp:include page="../workSpace/workSpace.jsp" />
+
 
 <style>
 #calendarc {
@@ -41,7 +40,15 @@
 <body>
 
 	<div class="container" id="calendarc">
-		<div id='calendar'></div>
+		<div>
+			<jsp:include page="../common/boardSideMenu.jsp"/>
+		</div>
+		<div>
+			<div>
+				<jsp:include page="../workSpace/workSpace.jsp" />
+			</div>
+			<div></div>
+		</div>
 	</div>
 
 	<!-- 모달창 -->
