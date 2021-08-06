@@ -30,7 +30,7 @@
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/calendar-mapper.xml" />
-		<mapper resource="/mappers/sign-mapper.xml" />
+<!-- 		<mapper resource="/mappers/sign-mapper.xml" /> -->
 		<mapper resource="/mappers/workspace-mapper.xml" />
 	</mappers>
 	
