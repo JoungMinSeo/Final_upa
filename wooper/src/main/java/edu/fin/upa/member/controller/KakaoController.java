@@ -9,11 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -27,14 +29,14 @@ import edu.fin.upa.member.model.vo.OAuthToken;
 
 @Controller
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SessionAttributes("loginMember")
 public class KakaoController {
 	
 	@Autowired
 	private MemberService service;
 	
 	@RequestMapping(value="kakaoLogin")
-	@ResponseBody
-	public String kakaoCallback(String code) {
+	public String kakaoCallback(String code, Model model, RedirectAttributes ra) {
 		
 		
 		// POST 방식으로 key=value 데이터를 요청(카카오쪽으로)
@@ -77,7 +79,6 @@ public class KakaoController {
 			e.printStackTrace();
 		}
 		
-		System.out.println("카카오 엑세스 토큰 : "+oauthToken.getAccess_token());
 		
 		RestTemplate rt2 = new RestTemplate();
 		
@@ -116,14 +117,8 @@ public class KakaoController {
 			e.printStackTrace();
 		}
 		
-		System.out.println("id" + kakaoProfile.getId());
-		System.out.println("email : " + kakaoProfile.getKakao_account().getEmail());
 		
 		UUID garbagePassword = UUID.randomUUID();
-		System.out.println("memberId : " + kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
-		System.out.println("memberPw : " + garbagePassword);
-		System.out.println("memberNm " + kakaoProfile.getProperties().getNickname());
-		System.out.println("memberImg" + kakaoProfile.getProperties().getProfile_image());
 		
 		Member kakaoMember = new Member();
 		kakaoMember.setMemberId(kakaoProfile.getKakao_account().getEmail());
@@ -131,18 +126,26 @@ public class KakaoController {
 		kakaoMember.setMemberNm(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMemberNick(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMemberImg(kakaoProfile.getProperties().getProfile_image());
-		
+		kakaoMember.setKakaoId(kakaoProfile.getId());
 		// 가입자 혹은 비가입자 체크해서 처리
 		
 		int kakaoId = kakaoProfile.getId();
 		
-		service.selectMember(kakaoId);
+		Member member = service.selectKakaoMember(kakaoId);
+		
+		String path = "redirect:/";
+		
+		path = "calendar/calendar";
+		if (member == null) { // 아이디가 없으므로 회원 가입 진행
+			
+			service.insertKakaoMember(kakaoMember);
+			
+		}else { // 세션에 kakaoMember 올리기
+			model.addAttribute("loginMember", member);
+		}
 		
 		
-		service.kakaoSignUp(kakaoMember);
-		
-		
-		return response2.getBody();
+		return path;
 	}
 	
 

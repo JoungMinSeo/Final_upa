@@ -2,6 +2,7 @@ package edu.fin.upa.member.model.vo;
 
 
 public class KakaoProfile {
+	
 	public Integer id;
 	public String connected_at;
 	public Properties properties;

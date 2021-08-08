@@ -20,8 +20,6 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/findPw.css">
-
-
 <body>
     <div class="container">
         <div class="p-5">
@@ -34,11 +32,24 @@
                 <br>
                 <hr>
                 <span style="font-size: 21px; font-weight: bold;" id="span">비밀번호를 잊으셨나요?</span> <br>
-                <span>이메일로 전성된 임시 비밀번호로 비밀번호를 재설정 해주세요</span>
+                <span>이메일로 전송된 임시 비밀번호로 비밀번호를 재설정 해주세요</span>
             </div>
             <form method="POST" action="signUp" class="needs-validation" name="signUpForm"
                 onsubmit="return validate();">
+                
+                <div class="col form-col">
+                    <div class="col-md-3">
+                        <label for="name">이름</label>
+                    </div>
+                    <div class="col-md">
+                        <input type="text" class="form-control" id="name" name="memberName" required>
+                    </div>
 
+                    <div class="col-md-6 offset-md-3">
+                        <span id="checkName">&nbsp;</span>
+                    </div>
+                </div>
+                
                 <div class="col form-col">
                     <div class="col-md-3">
                         <label for="email">이메일 주소</label>

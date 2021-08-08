@@ -45,6 +45,7 @@ public class MemberServiceImpl implements MemberService{
 		return dao.idDupCheck(id);
 	}
 	
+	// 회원가입
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int signUp(Member inputMember) {
@@ -86,7 +87,7 @@ public class MemberServiceImpl implements MemberService{
         params.put("to", phoneNumber);    // 수신전화번호
         params.put("from", "010-9070-3879");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
         params.put("type", "SMS");
-        params.put("text", "아이디를 까먹다니 멍청이시군요? 인증번호는" + "["+cerNum+"]" + "입니다.");
+        params.put("text", "우파루파에서 보낸 메세지 입니다. 인증번호는" + "["+cerNum+"]" + "입니다.");
         params.put("app_version", "test app 1.2"); // application name and version
 
         try {
@@ -99,18 +100,27 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
+	// 카카오 회원 정보 조회
 	@Override
-	public void kakaoSignUp(Member kakaoMember) {
-
+	public Member selectKakaoMember(int kakaoId) {
 		
+		return dao.selectKakaoMember(kakaoId);
+	}
+	
+	// 카카오 회원 가입
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int insertKakaoMember(Member kakaoMember) {
+
+		String encPwd = bCryptPasswordEncoder.encode(kakaoMember.getMemberPw());
+		
+		kakaoMember.setMemberPw(encPwd);
+		
+		
+		return dao.insertKakaoMember(kakaoMember);
 	}
 
-	@Override
-	public void selectMember(int kakaoId) {
-		
-		//return dao.selectM
-		
-	}
+	
 	
 	
 }
