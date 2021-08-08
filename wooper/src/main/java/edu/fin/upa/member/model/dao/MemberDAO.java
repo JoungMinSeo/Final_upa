@@ -32,25 +32,24 @@ public class MemberDAO {
 	public Member getMemberSessionId(String sessionId) {
 		return sqlSession.selectOne("memberMapper.getMemberSessionId",sessionId);
 	}
-
+	
+	// 자동 로그인
 	public int keepLogin(Map<String, Object> map) {
-			
-			
 		return sqlSession.update("memberMapper.keepLogin",map);
 	}
-	
-	/** 카카오 회원 조회 DAO
-	 * @param id
-	 * @return member
-	 */
-	public Member selectKakaoMember(String id) {
-		//return sqlSession.selectOne("memberMapper.selectKakoMember", id);
-		return null;
-	}
 
-	public int selectMemberNo() {
-		//return sqlSession.selectOne("memberMapper.selectMemberNo");
-		return 0;
+	// 카카오 회원 조회
+	public Member selectKakaoMember(int kakaoId) {
+		return sqlSession.selectOne("memberMapper.selectKakaoMember", kakaoId);
 	}
+	
+	// 카카오 회원가입
+	public int insertKakaoMember(Member kakaoMember) {
+		return sqlSession.insert("memberMapper.insertKakaoMember", kakaoMember);
+	}
+	
+
+
+
 
 }

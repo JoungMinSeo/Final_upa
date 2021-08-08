@@ -34,6 +34,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/signUp.css">
 <body>
+<jsp:include page="${pageContext.request.contextPath}/resources/WEB-INF/views/common/memberSideMenu.jsp"/>
 	<div class="signUp-container">
 		<div class="p-6">
 			<img id="logo"

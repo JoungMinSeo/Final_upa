@@ -20,10 +20,15 @@ public interface MemberService {
 	void keepLogin(String loginId, Date limitDate, String inputId);
 
 	void certifiedPhoneNumber(String memberPhone, String numStr);
+	
+	
+	// 카카오 로그인 회원 조회
+	Member selectKakaoMember(int kakaoId);
 
-	void kakaoSignUp(Member kakaoMember);
+	// 카카오 회원 정보 삽입
+	int insertKakaoMember(Member kakaoMember);
 
-	void selectMember(int kakaoId);
+
 
 	
 }

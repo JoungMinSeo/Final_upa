@@ -21,6 +21,9 @@ public class Member {
 	private String sessionId;
 	private Timestamp sessionLimit;
 	
+	// 카카오 로그인
+	private int kakaoId;
+	
 	public Member() {}
 
 	public int getMemberNo() {
@@ -135,15 +138,25 @@ public class Member {
 	public void setMemberCookie(boolean memberCookie) {
 		this.memberCookie = memberCookie;
 	}
+	
+	
+	public int getKakaoId() {
+		return kakaoId;
+	}
+
+	public void setKakaoId(int kakaoId) {
+		this.kakaoId = kakaoId;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPw=" + memberPw + ", memberNm="
 				+ memberNm + ", memberPhone=" + memberPhone + ", enrollDate=" + enrollDate + ", memberStatus="
 				+ memberStatus + ", memberGrade=" + memberGrade + ", memberNick=" + memberNick + ", memberSign="
-				+ memberSign + ", sessionId=" + sessionId + ", SessionLimit=" + sessionLimit + "]";
+				+ memberSign + ", memberImg=" + memberImg + ", memberCookie=" + memberCookie + ", sessionId="
+				+ sessionId + ", sessionLimit=" + sessionLimit + ", kakaoId=" + kakaoId + "]";
 	}
-
+	
 	
 	
 }
