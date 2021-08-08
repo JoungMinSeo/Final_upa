@@ -22,7 +22,7 @@ hr{
 }
 .sidMenu-container{
     width: 200px;
-    height: 900px;
+    height:100vh;
     background-color: rgb(24, 64, 88);
 }
 .sidMenu-container ul{
