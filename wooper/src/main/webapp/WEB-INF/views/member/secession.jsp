@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <meta charset="UTF-8">
+    <title>secession</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -13,19 +15,25 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 <head>
-    <meta charset="UTF-8">
-    <title>secession</title>
+
+<style>
+	#include{
+		float:left;
+	}
+</style>
 </head>
 <link rel="stylesheet" href="css/secession.css">
 <body>
-<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
+<div id="include">
+		<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
+	</div>
+	<div>
     <div class="container" id="content-main">
 
         <div class="row my-5">
             <div class="col-sm-offset-2 col-sm-8">
                 <div class="bg-white rounded shadow-sm container p-3">
                 <h4>회원 탈퇴</h4>
-                <hr>
                     <form method="POST" action="secession" onsubmit="return secessionValidate();"
                         class="form-horizontal" role="form">
 
@@ -58,7 +66,6 @@
                                     </div>
                                     <div class="checkbox pull-right">
                                         <div class="custom-checkbox">
-                                            <hr class="mb-4">
                                             <div class="row mb-3 form-row">
                                                 <div class="col-md-3">
                                                 비밀번호 입력
@@ -83,6 +90,7 @@
                 </div>
             </div>
         </div>
+	</div>
     </div>
     <script>
         function secessionValidate() {

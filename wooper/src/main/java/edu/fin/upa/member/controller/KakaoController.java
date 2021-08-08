@@ -138,7 +138,17 @@ public class KakaoController {
 		path = "calendar/calendar";
 		if (member == null) { // 아이디가 없으므로 회원 가입 진행
 			
-			service.insertKakaoMember(kakaoMember);
+			int result = service.insertKakaoMember(kakaoMember);
+			
+			if (result > 0) {
+				
+				Member kMember = service.selectKakaoMember(kakaoId);
+				model.addAttribute("loginMember", kMember);
+				System.out.println("kMember : " + kMember);
+				
+			}else {
+				MemberController.swalSetMessage(ra, "error", "카카오 서버 오류", null);
+			}
 			
 		}else { // 세션에 kakaoMember 올리기
 			model.addAttribute("loginMember", member);

@@ -8,13 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sidMenu</title>
-    <link rel="stylesheet" href="css/mSidMenu.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mSidMenu.css">
 </head>
 <body>
-    <div class="sidMenu-container">
+    <div class="sideMenu-container">
         <ul>
+        	<br>
             <h1>우파루파</h1>
-            <br>
+            <br> <br>
             <hr>
             <h3>마이페이지</h3>
             <li class="sidMenu"><a href="myPage">내정보</a></li>

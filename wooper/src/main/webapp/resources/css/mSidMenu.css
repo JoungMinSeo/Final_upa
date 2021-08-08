@@ -4,10 +4,7 @@
     font-weight: normal;
     font-style: normal;
 }
-*{font-family: 'BMJUA'; color: white;}
-div{
-    border: 1px solid black;
-}
+*{font-family: 'BMJUA';}
 hr{
     width: 150px;
     height: 3px;
@@ -17,13 +14,15 @@ hr{
     left: 30px;
     border: 0;
 }
-.sidMenu-container{
+.sideMenu-container{
     width: 200px;
-    height: 900px;
+    height:100vh;
     background-color: rgb(24, 64, 88);
+    border: 1px solid black;
 }
 .sidMenu-container ul{
     list-style:none;
+  
 }
 .sidMenu{
     line-height: 50px;
