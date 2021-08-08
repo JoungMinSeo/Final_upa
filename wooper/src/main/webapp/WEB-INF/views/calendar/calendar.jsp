@@ -27,10 +27,8 @@
 	background-color: rgb(236, 245, 250);
 	/* background-color:rgb(242, 248, 252); */
 }
-
-#calendar {
-	
-}
+ul{list-style:none;}
+li{list-style-type : none;}
 </style>
 </head>
 <body>
@@ -45,7 +43,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">
-						<input type="text" value="" />
+						리스트상세보기 & 수정
 					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
@@ -59,8 +57,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+						data-dismiss="modal">취소</button>
+					<button type="submit" class="btn btn-primary">내용수정</button>
 				</div>
 			</div>
 		</div>
@@ -145,30 +143,30 @@
 					
 					$("#detailBody").empty(); // 모달에 작성되어있는 이 전 내용 삭제
 					const ul = $("<ul>");
-					const li1 = $("<li>").text( $(info.el).attr("workNm") );
-					const li2 = $("<li>").text( $(info.el).attr("workNo") );
-					const li3 = $("<li>").text( $(info.el).attr("listNo") );
+					const li1 = $("<li>").text( $(info.el).attr("workNm") ); // 워크스페이스팀이름
+					const li2 = $("<li>").text( $(info.el).attr("workNo") ); // 워크스페이스번호
+					const li3 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 					
 					// attr : attribute
 					// 2021-08-05T23:11:00+09:00 
 					const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
-					const li4 = $("<li>").text( "시작일자 : ").append(start);
+					const li4 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
 					
 					const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
-					const li5 = $("<li>").text( "종료일자 : ").append(end);
+					const li5 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
 					
 					const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
-					const li6 = $("<li>").text( "리스트타이틀 : ").append(title);
+					const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
 					
 					const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
-					const li7 = $("<li>").text( "글자색 : ").append(textColor);
+					const li7 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
 					const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor"}).val(info.event.backgroundColor);
-					const li8 = $("<li>").text( "배경색 : ").append(backgroundColor);
+					const li8 = $("<li>").text( "배경색 : ").append(backgroundColor); // 배경색 
 					const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
-					const li9 = $("<li>").text( "테두리색 : ").append(borderColor);
+					const li9 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
 					
 					
-					ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, );
+					ul.append(li6, li1, li4, li5, li7, li8, li9);
 					$("#detailBody").append(ul);
 				},
 

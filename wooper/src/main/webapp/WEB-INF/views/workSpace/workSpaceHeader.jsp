@@ -43,11 +43,11 @@
             더보기
           </button>
           <div class="dropdown-menu font" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item font" href="#">팀캘린더</a>
+            <a class="dropdown-item font" href="${contextPath}/workspace/${workNo}/teamcal">팀캘린더</a>
             <a class="dropdown-item font" href="#">결재</a>
             <a class="dropdown-item font" href="#">히스토리</a>
             <a class="dropdown-item font" href="#">파일</a>
-            <a class="dropdown-item font" href="#">멤버</a>
+            <a class="dropdown-item font" href="${contextPath}/workspace/${workNo}/member">멤버</a>
           </div>
         </div>
 

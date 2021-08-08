@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사이드메뉴</title>
 
-	<link href='css/common/boardSideMenu.css' rel='stylesheet' />
+<!--  	<link href='css/common/boardSideMenu.css' rel='stylesheet' /> -->
 
 	<style>
 		@font-face {
@@ -18,26 +18,18 @@
 		}
 		*{font-family: 'BMJUA';}
 
-        @font-face {
-            font-family: 'BMJUA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         div{
             /* border:1px solid black; */
             box-sizing:border-box;
         }
         .upasidemenucontainer{
-            width:100%;
-            height:100%;
+            width:60px;
+            height:935px;
         }
         .left_menu_container{
             background-color:rgb(24,64,88);
-            width:100%;
+            width:60px;
             height:935px;
-            float:left;
         }
         
         .mainmove, .workspacemove, .messagemove, .noticemove, .calendermove, .informationmove, .mypagemove{
@@ -81,6 +73,11 @@
         .side_mypage, .side_logout{
             margin-top:4px;
         }
+        
+        .myprofile{
+        	padding:0;
+        }
+
 /*         
         .mypagemove img, informationmove img{
         	float:right;
@@ -94,28 +91,28 @@
         
            	<!-- 메인(워크스페이스 + 캘린더)으로 이동 -->
             <div class="mainmove">
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/calendar/calendar">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/upalupa.png" style="width:60px;">
                 </a>
             </div>        
             
             <!-- 워크스페이스(보드메인) -->
             <div class="workspacemove">
-                <a href="#">
+                <a href="${contextPath}/workspace/${workNo}/boardMain">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/workspace.png" style="height:50px;">
                 </a>
             </div>   
             
             <!-- 채팅 -->     
             <div class="messagemove">
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/chat/chatRoom">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/message.png" style="height:50px;">
                 </a>
             </div>  
             
             <!-- 알림 -->      
             <div class="noticemove">
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/notification/notification">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/notice.png" style="height:40px;">
                 </a>
             </div>    
@@ -145,8 +142,9 @@
 					<div class="dropdown-menu">
 					    <!-- Dropdown menu links -->
 				        <div class="left_menu2_profile">
-				        	<div class="side_mypage"><a href="#">마이페이지</a></div>
-				            <div class="side_logout"><a href="#">로그아웃</a></div>
+				        	<div class="side_mypage"><a href="${pageContext.request.contextPath}/member/myPage">마이페이지</a></div>
+				            <div class="side_logout"><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></div>
+				            			
 				        </div>
 					</div>
 				</div>
