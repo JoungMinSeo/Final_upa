@@ -180,6 +180,29 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
+	// 마이페이지 화면 전환
+	@RequestMapping("myPage")
+	public String myPage() {
+		
+		return "member/myPage";
+	}
+	
+	// 비밀번호 변경 화면 전환
+	@RequestMapping("changePwd")
+	public String changePw() {
+		
+		return "member/changePw";
+	}
+	
+	// 마이페이지 화면 전환
+	@RequestMapping("secession")
+	public String secession() {
+		
+		return "member/secession";
+	}
+	
+	
+	// 휴대폰 인증
 	@ResponseBody
 	@RequestMapping(value="sendSMS",method=RequestMethod.POST)
 	public String sendSMS(@RequestParam("memberPhone") String memberPhone) {

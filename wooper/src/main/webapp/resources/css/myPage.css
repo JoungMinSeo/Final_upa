@@ -1,5 +1,54 @@
-.myPage-container{
-    border: 1px solid black;
-    width: 1200px;
-    height: 900px;
+#include{
+		float:left;
+	}
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: "BMJUA";
+    font-size: 18px;
+}
+#content{
+    width: 700px;
+}
+body{
+    background-color: rgb(213, 232, 243);
+}
+form{
+    padding: 30px;
+    padding-left: 60px;
+}
+.img-class {
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    margin-left: 185px;
+}
+#img{
+    width: 200px;
+    height: 200px;
+}
+.name-rank {
+    width: 49%;
+    float: left;
+}
+label {
+    width: 49%;
+    font-size: 25px;
+}
+.area {padding: 15px;}
+.form-control {width: 600px;}
+.btn {
+    background-color: rgb(24, 64, 88);
+    cursor: pointer;
+    color: white;
+    width: 550px;
+}
+#nickName{
+    width: 500px;
 }
