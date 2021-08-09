@@ -10,7 +10,9 @@
 
 * {
     font-family: "BMJUA";
-    font-size: 18px;
+}
+#all{
+	padding: 50px;
 }
 #content{
     width: 700px;

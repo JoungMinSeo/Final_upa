@@ -98,7 +98,6 @@ public class KakaoController {
 				kakaoProfileRequest2,
 				String.class
 		);
-		System.out.println(response2.getBody());
 		
 		ObjectMapper objectMapper2 = new ObjectMapper();
 		
@@ -144,7 +143,6 @@ public class KakaoController {
 				
 				Member kMember = service.selectKakaoMember(kakaoId);
 				model.addAttribute("loginMember", kMember);
-				System.out.println("kMember : " + kMember);
 				
 			}else {
 				MemberController.swalSetMessage(ra, "error", "카카오 서버 오류", null);
@@ -153,7 +151,7 @@ public class KakaoController {
 		}else { // 세션에 kakaoMember 올리기
 			model.addAttribute("loginMember", member);
 		}
-		
+		System.out.println("카카오 로그인 : " + member);
 		
 		return path;
 	}

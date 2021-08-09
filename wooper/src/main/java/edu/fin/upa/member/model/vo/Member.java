@@ -147,6 +147,8 @@ public class Member {
 	public void setKakaoId(int kakaoId) {
 		this.kakaoId = kakaoId;
 	}
+	
+	
 
 	@Override
 	public String toString() {

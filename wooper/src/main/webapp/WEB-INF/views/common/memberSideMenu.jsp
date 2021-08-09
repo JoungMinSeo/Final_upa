@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +12,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mSidMenu.css">
 </head>
 <body>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div class="sideMenu-container">
         <ul>
         	<br>
             <h1>우파루파</h1>
             <br> <br>
-            <hr>
+            <hr id="hr">
             <h3>마이페이지</h3>
             <li class="sidMenu"><a href="myPage">내정보</a></li>
             <li class="sidMenu"><a href="changePwd">비밀번호 변경</a></li>
@@ -24,5 +26,14 @@
         </ul>
     </div>
 </body>
-
+<c:if test="${ !empty title }">
+<script>
+	<%-- alert("${text}"); --%>
+	swal({
+		"icon" :  "${icon}",
+		"title" :  "${title}",
+		"text" :  "${text}"
+	});
+</script>	
+</c:if>
 </html>
