@@ -47,7 +47,7 @@
             <a class="dropdown-item font" href="#">결재</a>
             <a class="dropdown-item font" href="#">히스토리</a>
             <a class="dropdown-item font" href="#">파일</a>
-            <a class="dropdown-item font" href="${contextPath}/management/${workNo}/member">멤버</a>
+            <a class="dropdown-item font" href="${contextPath}/management/${workNo}/member/list">멤버</a>
           </div>
         </div>
 

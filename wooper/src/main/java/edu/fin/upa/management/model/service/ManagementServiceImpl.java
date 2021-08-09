@@ -49,11 +49,16 @@ public class ManagementServiceImpl implements ManagementService{
 	@Override
 	public int deleteJoinMember(int workNo, Management management) {
 		
-		int result = 0;
-		
-		result=mDao.deleteJoinMember(workNo, management);
+		int result=mDao.deleteJoinMember(workNo, management);
 		
 		return result;
+	}
+
+	// 팀 회원 추가
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public int addJoinMember(Management inputAddEmail) {
+		return mDao.addJoinMember(inputAddEmail);
 	}
 	
 	

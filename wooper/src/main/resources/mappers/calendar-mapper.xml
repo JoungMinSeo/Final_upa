@@ -54,6 +54,23 @@
 	</select>
 	
 	 -->
+	 
+	 	<select id="selectTeamCal" parameterType="map" resultMap="cal_rm">
+	     SELECT LIST_NM, 
+			    TO_CHAR(LIST_START_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_START_DT, 
+			    TO_CHAR(LIST_END_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_END_DT, 
+			    LIST_TCOLOR, LIST_BGCOLOR, LIST_BDCOLOR, WORK_NO, WORK_NM, LIST_NO 
+			FROM LIST
+			JOIN CARD USING(CARD_NO)
+			JOIN WORKSPACE USING(WORK_NO)
+			WHERE LIST_START_DT
+			BETWEEN ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), -1) 
+			AND LAST_DAY(ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), 1))
+			AND LIST_NO IN(SELECT LIST_NO FROM LIST
+			                WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
+			                                  WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
+			                                                    WHERE WORK_NO = #{workNo} )))
+	</select>
 
 
 

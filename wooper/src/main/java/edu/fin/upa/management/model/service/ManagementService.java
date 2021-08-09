@@ -33,5 +33,11 @@ public interface ManagementService {
 	 */
 	int deleteJoinMember(int workNo, Management management);
 
+	/**  팀멤버 추가
+	 * @param inputAddEmail
+	 * @return result
+	 */
+	int addJoinMember(Management inputAddEmail);
+
 
 }

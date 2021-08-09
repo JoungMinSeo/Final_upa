@@ -64,7 +64,7 @@
             <jsp:include page="../workSpace/workSpaceHeader.jsp" />
          </div>
          <div>
-            <div id='calendar'>dddd</div>
+            <div id="calendar">dddd</div>
          </div>
       </div>
    </div>
@@ -125,7 +125,7 @@
          // 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
          $.ajax({
 
-            url : 'selectCalendar', // 요청 주소 보내는곳
+            url : 'teamSchedule', // 요청 주소 보내는곳
             type : 'post', // 어떤 타입으로 보낼지
             data : {
                'startDate' : startDate

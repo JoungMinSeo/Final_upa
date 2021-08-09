@@ -2,11 +2,16 @@ package edu.fin.upa.management.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,8 +33,9 @@ public class ManagementController {
 	private WorkspaceService workService;
 
 	// 멤버 조회
-	@RequestMapping(value = "{workNo}/member")
-	public String selectMember(@PathVariable("workNo") int workNo, Model model, Pagination pg) {
+	@RequestMapping(value = "{workNo}/member/list")
+	public String selectMember(@PathVariable("workNo") int workNo, Model model, Pagination pg,
+											 @RequestParam(value="cp", required=false, defaultValue="1")int cp) {
 
 		Workspace work = workService.selectWorkspace(workNo);
 		
@@ -38,6 +44,8 @@ public class ManagementController {
 		
 		
 		pg.setWorkNo(workNo);
+		pg.setCurrentPage(cp);
+		
 		
 		System.out.println("workNo : " + workNo);
 
@@ -52,21 +60,34 @@ public class ManagementController {
 		return "/member/management";
 	}
 	
+	// 팀멤버 추가
+	@RequestMapping(value="{workNo}/add")
+	public String addJoinMember(@ModelAttribute Management inputAddEmail, RedirectAttributes ra) {
+		
+		int result = mService.addJoinMember(inputAddEmail);
+		
+		return null;
+	}
+	
+	
+	
 	// 회원등급수정
 	@RequestMapping(value="{workNo}/update")
 	public String updateMemberRank(@PathVariable("workNo") int workNo,
 													  @PathVariable("memberNo") int memberNo,
-													  Management management, RedirectAttributes ra) {
+													  Management management, RedirectAttributes ra,
+													  HttpServletRequest request, Model model) {
 		
 		int result = mService.updateMemberRank(management);
 		
 		String path = null;
 		if(result > 0) { // 수정 성공
 			swalSetMessage(ra, "success", "도롱뇽 등급 수정 성공", null);
+			path ="redirect:";
 		}else { // 수정 실패
 			swalSetMessage(ra, "error", "도롱뇽 등급 수정 실패", null);
+			path= "redirect:" + request.getHeader("referer");
 		}
-		
 		return path;
 	}
 	
@@ -90,7 +111,7 @@ public class ManagementController {
 		return path;
 	}
 	
-	
+
 	
 	
 	// SweetAlert를 이용한 메시지 전달용 메서드

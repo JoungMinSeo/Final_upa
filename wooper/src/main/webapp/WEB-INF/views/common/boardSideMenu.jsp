@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -77,6 +78,10 @@
         .myprofile{
         	padding:0;
         }
+        
+        #profile{
+        	padding-left:3px;
+        }
 
 /*         
         .mypagemove img, informationmove img{
@@ -137,7 +142,18 @@
             <div class="mypagemove" >
                 <div class="btn-group dropright">
 					<button type="button" id="profile" class="btn myprofile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;">
+<%-- 							
+							<c:choose>
+								<c:when test="${loginMember.memberImg == null}">
+								 --%>
+					    			<img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;">
+<%-- 					    			
+					    		</c:when>
+								<c:when test="${loginMember.memberImg != null}">
+				                	<img src="${pageContext.request.contextPath}/resources/img/member/${loginMember.memberImg}" style="width:40%;">
+								</c:when>
+					    	</c:choose>
+					    	 --%>
 					</button>
 					<div class="dropdown-menu">
 					    <!-- Dropdown menu links -->
