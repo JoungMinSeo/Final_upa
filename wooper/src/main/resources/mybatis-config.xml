@@ -14,8 +14,6 @@
 	<!-- VO클래스의 패키지명 + 클래스명 작성하는 것이 불편하기 때문에 짧은 별칭 부여 -->
 	<typeAliases>
 		<typeAlias type="edu.fin.upa.member.model.vo.Member" alias="Member" />
-		<typeAlias type="edu.fin.upa.calendar.model.vo.CalendarTest" alias="CalendarTest" />
-		<typeAlias type="edu.fin.upa.calendar.model.vo.Calendar" alias="Calendar" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
@@ -23,7 +21,12 @@
 		<typeAlias type="edu.fin.upa.sign.model.vo.Sign" alias="Sign" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.SignLine" alias="SignLine" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Vacation" alias="Vacation" />
+		
+		<!-- 함나현 vo임둥 -->
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Workspace" alias="Workspace" />
+		<typeAlias type="edu.fin.upa.calendar.model.vo.Calendar" alias="Calendar" />
+		<typeAlias type="edu.fin.upa.management.model.vo.Management" alias="Management" />
+		<typeAlias type="edu.fin.upa.management.model.vo.Pagination" alias="Pagination" />
 	</typeAliases>
 
 	<!-- mapper 파일(SQL 작성되는파일) 위치 등록 부분 -->
@@ -31,7 +34,10 @@
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/calendar-mapper.xml" />
 <!-- 		<mapper resource="/mappers/sign-mapper.xml" /> -->
+
+		<!-- 함나현 mapper임둥 -->
 		<mapper resource="/mappers/workspace-mapper.xml" />
+		<mapper resource="/mappers/management-mapper.xml" />
 	</mappers>
 	
 </configuration>

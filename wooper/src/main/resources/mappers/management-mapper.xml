@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="managementMapper">
+	
+	<resultMap type="Management" id="mm_rm">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<id property="workNo" column="WORK_NO"/>
+		
+		<result property="memberRank" column="MEMBER_RANK"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="memberNm" column="MEMBER_NM"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="memberImg" column="MEMBER_IMG"/>
+	</resultMap>
+	
+	<resultMap type="Pagination" id="pg_rm">
+		<result property="listCount" column="CNT"/>		
+		<result property="workNm" column="WORK_NM"/>		
+		<result property="workNo" column="WORK_NO"/>		
+		<result property="joinStatus" column="JOIN_STATUS"/>		
+	</resultMap>
+	
+	<!-- 특정 팀의 모든 팀원 수 조회 -->
+	<select id="memberCount" parameterType="_int" resultMap="pg_rm">
+		SELECT CNT, (SELECT WORK_NM FROM WORKSPACE WHERE WORK_NO = #{workNo}) WORK_NM
+		FROM (SELECT COUNT(*) CNT 
+				   FROM C_WORK_JOIN 
+				   WHERE WORK_NO = #{workNo})
+	</select>
+	
+	<!-- 특정 팀의 모든 멤버 정보 조회 -->
+	<select id="selectMember" parameterType="_int" resultMap="mm_rm">
+			SELECT * FROM C_WORK_JOIN 
+			WHERE WORK_NO = #{workNo} AND JOIN_STATUS = 'Y' AND MEMBER_STATUS = 'Y'
+			ORDER BY MEMBER_RANK
+	</select>
+	
+	<!-- 회원등급수정 -->
+	<select id="updateMemberRank" parameterType="Management" resultMap="mm_rm">
+			UPDATE WORKSPACE_JOIN SET MEMBER_RANK = #{memberRank}
+			WHERE WORK_NO = #{workNo}
+			AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 팀 회원 삭제 -->
+	<select id="deleteJoinMember" parameterType="Management" resultMap="mm_rm">
+			UPDATE WORKSPACE_JOIN SET JOIN_STATUS = 'N'
+			WHERE WORK_NO = #{workNo}
+			AND MEMBER_NO = #{memberNo}
+	</select>
+	
+
+
+</mapper>
