@@ -8,10 +8,16 @@ import edu.fin.upa.calendar.model.vo.Calendar;
 public interface CalendarService {
 
 	
-	/** 캘린더 조회
+	/** 개인캘린더 조회
 	 * @param map
 	 * @return
 	 */
 	List<Calendar> selectCalendar(Map<String, Object> map);
+
+	/** 팀캘린더조회
+	 * @param map
+	 * @return
+	 */
+	List<Calendar> selectTeamCal(Map<String, Object> map);
 
 }

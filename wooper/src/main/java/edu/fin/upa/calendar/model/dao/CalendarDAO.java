@@ -15,12 +15,20 @@ public class CalendarDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	/** 캘린더 조회 
+	/** 개인 캘린더 조회 
 	 * @param map
 	 * @return
 	 */
 	public List<Calendar> selectCalendar(Map<String, Object> map) {
 		return sqlSession.selectList("calMapper.selectCalendar", map);
+	}
+
+	/** 팀캘린더 조회 
+	 * @param map
+	 * @return
+	 */
+	public List<Calendar> selectTeamCal(Map<String, Object> map) {
+		return sqlSession.selectList("calMapper.selectTeamCal", map);
 	}
 
 

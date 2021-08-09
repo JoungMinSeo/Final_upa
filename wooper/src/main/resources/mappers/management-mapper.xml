@@ -36,18 +36,33 @@
 	</select>
 	
 	<!-- 회원등급수정 -->
-	<select id="updateMemberRank" parameterType="Management" resultMap="mm_rm">
+	<update id="updateMemberRank" parameterType="Management">
 			UPDATE WORKSPACE_JOIN SET MEMBER_RANK = #{memberRank}
 			WHERE WORK_NO = #{workNo}
 			AND MEMBER_NO = #{memberNo}
-	</select>
+	</update>
 	
 	<!-- 팀 회원 삭제 -->
-	<select id="deleteJoinMember" parameterType="Management" resultMap="mm_rm">
+	<update id="deleteJoinMember" parameterType="Management">
 			UPDATE WORKSPACE_JOIN SET JOIN_STATUS = 'N'
 			WHERE WORK_NO = #{workNo}
 			AND MEMBER_NO = #{memberNo}
-	</select>
+	</update>
+	
+	<!-- 팀 회원 삭제 -->
+<!-- 	
+	<update id="deleteJoinMember" parameterType="Management">
+			DELETE FROM WORKSPACE_JOIN SET
+			WHERE WORK_NO = #{workNo}
+			AND MEMBER_NO = #{memberNo}
+	</update>
+ -->	
+
+	<!-- 팀 회원 추가 -->
+	<update id="addJoinMember" parameterType="Management">
+			INSERT INTO WORKSPACE_JOIN VALUES
+			(#{memberNo}, #{workNo}, #{memberRank}, DEFAULT)
+	</update>
 	
 
 

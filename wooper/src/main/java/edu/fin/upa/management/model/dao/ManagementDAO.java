@@ -54,6 +54,14 @@ public class ManagementDAO {
 	public int deleteJoinMember(int workNo, Management management) {
 		return sqlSession.update("managementMapper.deleteJoinMember", management);
 	}
+
+	/** 팀 회원 추가
+	 * @param inputAddEmail
+	 * @return result
+	 */
+	public int addJoinMember(Management inputAddEmail) {
+		return sqlSession.insert("memberMapper.addJoinMember", inputAddEmail);
+	}
 	
 	
 	

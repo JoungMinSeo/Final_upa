@@ -16,10 +16,16 @@ public class CalendarServiceImpl implements CalendarService{
 	@Autowired
 	private CalendarDAO dao;
 	
-	// 캘린더 조회 
+	// 개인 캘린더 조회 
 	@Override
 	public List<Calendar> selectCalendar(Map<String, Object> map) {
 		return dao.selectCalendar(map);
+	}
+
+	// 팀캘린더 조회 
+	@Override
+	public List<Calendar> selectTeamCal(Map<String, Object> map) {
+		return dao.selectTeamCal(map);
 	}
 
 

@@ -43,7 +43,7 @@ li{list-style-type : none;}
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">
-						리스트상세보기 & 수정
+						리스트상세보기&수정
 					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
