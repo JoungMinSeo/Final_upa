@@ -3,6 +3,9 @@ package edu.fin.upa.member.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PrimitiveIterator.OfDouble;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -107,8 +110,7 @@ public class MemberController {
 			ra.addFlashAttribute("text", "아이디 또는 비밀번호가 일치하지않습니다");
 		}
 	        
-		System.out.println(loginMember);
-		 return path;
+		return path;
 	}
 	
 	
@@ -122,15 +124,15 @@ public class MemberController {
 	
 	// 회원 가입 진행
 	@RequestMapping(value="signUp", method=RequestMethod.POST)
-	public String singUp(Member inputMember) {
+	public String singUp(Member inputMember,RedirectAttributes ra) {
 		
 		
 		int result = service.signUp(inputMember);
 		
 		if(result > 0) {
-			System.out.println("회원 가입 성공");
+			swalSetMessage(ra, "success", "도롱뇽 부화!", inputMember.getMemberNm() + "님 도롱뇽이 된걸 축하드려요!");
 		}else {
-			System.out.println("회원 가입 실패");
+			swalSetMessage(ra, "error", "도롱뇽 부화 실패 ㅜㅠ", "고객센터로 문의하여주세요");
 		}
 		
 		return "redirect:/";
@@ -176,6 +178,15 @@ public class MemberController {
 		
 		return "member/findId";
 	}
+	
+	@RequestMapping(value="findId" , method=RequestMethod.POST)
+	public String findeId() {
+		
+		
+		
+		return null;
+	}
+	
 	// 비밀번호 찾기 화면 전환
 	@RequestMapping("findPw")
 	public String findPw() {
@@ -183,7 +194,7 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
-	// 마이페이지 화면 전환
+	// 회원 정보 화면 전환
 	@RequestMapping("myPage")
 	public String myPage() {
 		
@@ -203,16 +214,25 @@ public class MemberController {
 		String webPath = "/resources/img/member/";
 		String savePath = request.getSession().getServletContext().getRealPath(webPath);
 		
-		int result = service.updateMember(updateMember,img,webPath,savePath);
+		String fileName = service.rename(img.getOriginalFilename());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fileName", fileName);
+		map.put("memberNo", updateMember.getMemberNo());
+		
+		int result = service.updateMember(updateMember,map,webPath,savePath,img);
 		
 		if (result > 0) {
 			swalSetMessage(ra, "success", "회원 정보 수정 성공!", null);
+			
+			loginMember.setMemberNick(nickName);
+			loginMember.setMemberImg(fileName);
 		}else {
 			swalSetMessage(ra, "success", "회원 정보 수정 실패..", null);
 		}
 		
 		
-		return "redirect:myPage";
+		return "redirect:/member/myPage";
 	}
 	
 	// 비밀번호 변경 화면 전환
@@ -246,8 +266,6 @@ public class MemberController {
 			
 			path += "changePwd";
 		}
-		
-		System.out.println("비밀번호 변경" + result);
 		
 		return path;
 	}
@@ -284,14 +302,29 @@ public class MemberController {
 		return path;
 	}
 	
+	// 아이디, 전화번호 조회
+	@RequestMapping(value="selectPhone", method=RequestMethod.POST)
+	@ResponseBody
+	public Member selectPhone(@RequestParam("memberPhone") String memberPhone,
+							@RequestParam("memberName") String memberName) {
+		
+		Member member = service.selectPhone(memberPhone,memberName);
+		
+		System.out.println("아이디 찾기 : " + member);
+		
+		return member;
+	}
 	
-	// 휴대폰 인증
+	
+	//휴대폰 인증
 	@ResponseBody
 	@RequestMapping(value="sendSMS",method=RequestMethod.POST)
 	public String sendSMS(@RequestParam("memberPhone") String memberPhone) {
 		
+		
 		Random rand = new Random();
 		String numStr = "";
+		
 		for(int i=0; i<4; i++) {
 			String ran = Integer.toString(rand.nextInt(10));
 			numStr += ran;
@@ -302,11 +335,10 @@ public class MemberController {
 		
 		service.certifiedPhoneNumber(memberPhone,numStr);
 		
+		
+		
 		return numStr;
 	}
-	
-
-	
 	
 }
 

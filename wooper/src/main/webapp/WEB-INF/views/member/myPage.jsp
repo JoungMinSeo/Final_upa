@@ -38,7 +38,7 @@
 		<div class="bg-white rounded shadow-sm container p-2" id="content">
 			<form action="update" method="POST" enctype="multipart/form-data">
 				<div class="img-class">
-					<img src="${pageContext.request.contextPath}/${loginMember.memberImg}" id="img"
+					<img src="${pageContext.request.contextPath}/resources/img/member/${loginMember.memberImg}" id="img"
 						onclick="document.all.file.click()" onchange="LoadImg" accept="img/*"> 
 						<input type="file" id="file" name="img" style="display: none;"
 						onchange="LoadImg(this,0)" accept="img/*">

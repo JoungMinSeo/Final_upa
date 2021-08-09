@@ -170,6 +170,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	// 파일명 변경 메소드
+	@Override
 	public String rename(String originFileName) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
@@ -185,7 +186,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	// 회원 정보 수정
 	@Override
-	public int updateMember(Member updateMember, MultipartFile img, String webPath, String savePath) {
+	public int updateMember(Member updateMember, Map<String, Object> map, String webPath, String savePath, MultipartFile img) {
 		
 		int result = dao.updateNickName(updateMember);
 		
@@ -193,19 +194,13 @@ public class MemberServiceImpl implements MemberService{
 		if (result > 0) {
 			
 			if (!img.getOriginalFilename().equals("")) {
-				String fileName = rename(img.getOriginalFilename());
 				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("fileName", fileName);
-				map.put("memberNo", updateMember.getMemberNo());
-				
-				System.out.println(map);
 				
 				result = dao.updateImg(map);
 				
 				if (result > 0) {
 					try {
-						img.transferTo(new File(savePath + fileName));
+						img.transferTo(new File(savePath + map.get("fileName")));
 					} catch (Exception e) {
 						e.printStackTrace();
 						throw new SaveFileException();
@@ -216,7 +211,19 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return result;
 	}
+	
+	// 회원 번호 조회
+	@Override
+	public Member selectPhone(String memberPhone, String memberName) {
 		
+		Member member = new Member();
+		
+		member.setMemberNm(memberName);
+		member.setMemberPhone(memberPhone);
+		
+		return dao.selectPhone(member);
+	}
+
 	
 	
 	

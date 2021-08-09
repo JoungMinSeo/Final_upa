@@ -132,9 +132,6 @@ public class KakaoController {
 		
 		Member member = service.selectKakaoMember(kakaoId);
 		
-		String path = "redirect:/";
-		
-		path = "calendar/calendar";
 		if (member == null) { // 아이디가 없으므로 회원 가입 진행
 			
 			int result = service.insertKakaoMember(kakaoMember);
@@ -153,7 +150,7 @@ public class KakaoController {
 		}
 		System.out.println("카카오 로그인 : " + member);
 		
-		return path;
+		return "redirect:/calendar/calendar";
 	}
 	
 
