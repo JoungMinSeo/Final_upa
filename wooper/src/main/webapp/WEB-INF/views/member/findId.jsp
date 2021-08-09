@@ -35,7 +35,7 @@
                 <span id="span">ID를 잊으셨나요?</span> <br>
                 <span>아래의 정보를 입력해주세요</span>
             </div>
-            <form method="POST" action="signUp" class="needs-validation" name="signUpForm"
+            <form method="POST" action="findId" class="needs-validation" name="signUpForm"
                 onsubmit="return validate();">
 
                 <div class="col form-col">
@@ -81,10 +81,10 @@
 					</div>
                 </div>
                 <hr class="mb-4">
-                <a href="login"><button class="btn btn-lg f-btn" type="button" id="login">로그인 하러 가기</button></a>
+                <button class="btn btn-lg f-btn" type="submit" id="login">아이디 찾기</button>
             </form>
         </div>
     </div>
 </body>
-<script src="${pageContext.request.contextPath}/resources/js/findId.js"></script>
+<jsp:include page="${pageContext.request.contextPath}/resources/js/findIdScript.jsp"/>
 </html>

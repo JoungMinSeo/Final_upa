@@ -60,7 +60,7 @@
 	<insert id="insertKakaoMember" parameterType="Member">
 		INSERT INTO MEMBER
 			VALUES( SEQ_MNO.NEXTVAL , #{memberId} , #{memberPw} ,#{memberNm}, 'KAKAO', 
-				DEFAULT, DEFAULT, DEFAULT, #{memberNick}, NULL, #{memberImg}, 'NONE', NULL, #{kakaoId})
+				DEFAULT, DEFAULT, DEFAULT, #{memberNick}, #{memberImg}, NULL, 'NONE', NULL, #{kakaoId})
 	</insert>
 	
  	<!-- 닉네임 수정 -->
@@ -97,6 +97,13 @@
 		MEMBER_STATUS = 'N'
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
+	
+	<select id="selectPhone" parameterType="Member" resultMap="member_rm">
+		SELECT MEMBER_ID
+		FROM MEMBER
+		WHERE MEMBER_PHONE = #{memberPhone}
+		AND MEMBER_NM = #{memberNm}
+	</select>
 	
 </mapper>
 

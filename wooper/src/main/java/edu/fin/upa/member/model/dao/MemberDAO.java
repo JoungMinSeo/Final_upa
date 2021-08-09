@@ -76,6 +76,11 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.secession", loginMember);
 	}
 	
+	// 아이디 조회
+	public Member selectPhone(Member member) {
+		return sqlSession.selectOne("memberMapper.selectPhone",member);
+	}
+	
 
 
 

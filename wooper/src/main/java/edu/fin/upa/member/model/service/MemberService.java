@@ -2,6 +2,7 @@ package edu.fin.upa.member.model.service;
 
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +39,13 @@ public interface MemberService {
 	int secession(String currentPwd, Member loginMember);
 	
 	// 회원 수정
-	int updateMember(Member updateMember, MultipartFile img, String webPath, String savePath);
+	int updateMember(Member updateMember, Map<String, Object> map, String webPath, String savePath, MultipartFile img);
+	
+	// 파일 이름 수정
+	String rename(String originFileName);
+
+	// 번호 조회
+	Member selectPhone(String memberPhone, String memberName);
 	
 
 	
