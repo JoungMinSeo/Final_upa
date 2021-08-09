@@ -8,14 +8,16 @@
 * {
     font-family: "BMJUA";
 }
+.secession{
+	margin-left: 200px;
+	width: 700px;
+	height: 800px;
+}
 body{
     background-color: rgb(213, 232, 243);
 }
 #content-main {
-    padding-left: 150px;
-   
-    display: flex;
-    justify-content: center;
+    padding: 15px;
 }
 #btn{
     background-color: rgb(24, 64, 88);

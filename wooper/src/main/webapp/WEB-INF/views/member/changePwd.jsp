@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
 <meta charset="UTF-8">
 <title>changePwd</title>
 <!-- Bootstrap core CSS -->
@@ -20,6 +19,7 @@
 	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 	crossorigin="anonymous"></script>
 
+<head>
 <style>
 #include{
 	float:left;	
@@ -30,6 +30,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/changePw.css">
 <body>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<div id="include">
 		<jsp:include page="../common/memberSideMenu.jsp"></jsp:include>
 	</div>
@@ -37,9 +38,10 @@
 	<div class="container" id="content-main">
 			<div class="row my-5">
 				<div class="col-sm-offset-2 col-sm-8">
-					<div class="bg-white rounded shadow-sm container p-5">
+					<div class="bg-white rounded shadow-sm container p-5 pwd">
 						<h4>비밀번호 변경</h4>
-						<form method="POST" action="changePw"
+						<br>
+						<form method="POST" action="changePwd"
 							onsubmit="return pwdValidate();" class="form-horizontal"
 							role="form">
 
@@ -52,7 +54,7 @@
 										name="currentPwd">
 								</div>
 							</div>
-
+							<br>
 							<div class="row mb-3 form-row">
 								<div class="col-md-3">
 									<h6>새 비밀번호</h6>
@@ -62,7 +64,7 @@
 										name="newPwd1">
 								</div>
 							</div>
-
+							<br>
 							<div class="row mb-3 form-row">
 								<div class="col-md-3">
 									<h6>새 비밀번호 확인</h6>
@@ -72,6 +74,7 @@
 										name="newPwd2">
 								</div>
 							</div>
+							<hr>
 
 							<button class="btn btn-lg btn-block" id="btn" type="submit">변경하기</button>
 						</form>

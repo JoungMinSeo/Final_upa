@@ -1,16 +1,24 @@
 package edu.fin.upa.member.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.ibatis.transaction.Transaction;
+import org.eclipse.jdt.internal.compiler.apt.util.ArchiveFileObject;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import edu.fin.upa.member.commons.Exception.SaveFileException;
 import edu.fin.upa.member.model.dao.MemberDAO;
 import edu.fin.upa.member.model.vo.Member;
 import net.nurigo.java_sdk.api.Message;
@@ -25,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO dao;
 	
+	// 로그인
 	@Override
 	public Member login(Member inputMember) {
 		
@@ -120,6 +129,100 @@ public class MemberServiceImpl implements MemberService{
 		return dao.insertKakaoMember(kakaoMember);
 	}
 
+	// 비밀번호 수정
+	@Override
+	public int changePwd(String currentPwd, String newPwd, Member loginMember) {
+		
+		String savePwd = dao.selectPassword(loginMember.getMemberNo());
+		
+		int result = 0;
+		
+		if(bCryptPasswordEncoder.matches(currentPwd, savePwd)) {
+			
+			// 2) 비밀번호 변경
+			// - 새 비밀번호 암호화
+			String encPwd = bCryptPasswordEncoder.encode(newPwd);
+			
+			// 마이바티스 메소드는 SQL 수행 시 사용할 파라미터를
+			// 하나만 추가할 수 있다 -> loginMember에 담아서 전달
+			loginMember.setMemberPw(encPwd);
+			
+			result = dao.changePwd(loginMember);
+			
+			// loginMember에 저장한 encPwd를 제거 (Session에 비밀번호 저장하면 안됨)
+			loginMember.setMemberPw(null);
+			
+		}
+		
+		return result;
+	}
+	
+	
+	// 회원 탈퇴
+	@Override
+	public int secession(String currentPwd, Member loginMember) {
+		
+		String savePwd = dao.selectPassword(loginMember.getMemberNo());
+		
+		int result = 0;
+		
+		if(bCryptPasswordEncoder.matches(currentPwd, savePwd)) {
+			
+			result  = dao.secession(loginMember);
+		}
+		
+		return result;
+	}
+
+	// 파일명 변경 메소드
+	public String rename(String originFileName) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
+		
+		int ranNum = (int)(Math.random()*100000); // 5자리 랜덤 숫자 생성
+		
+		String str = "_" + String.format("%05d", ranNum);
+		
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		
+		return date + str + ext;
+	}
+	
+	// 회원 정보 수정
+	@Override
+	public int updateMember(Member updateMember, MultipartFile img, String webPath, String savePath) {
+		
+		int result = dao.updateNickName(updateMember);
+		
+		System.out.println("업데이트 멤버 : " + updateMember);
+		if (result > 0) {
+			
+			if (!img.getOriginalFilename().equals("")) {
+				String fileName = rename(img.getOriginalFilename());
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("fileName", fileName);
+				map.put("memberNo", updateMember.getMemberNo());
+				
+				System.out.println(map);
+				
+				result = dao.updateImg(map);
+				
+				if (result > 0) {
+					try {
+						img.transferTo(new File(savePath + fileName));
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new SaveFileException();
+					}
+					
+				}
+			}
+		}
+		return result;
+	}
+		
+	
 	
 	
 	

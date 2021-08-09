@@ -34,37 +34,32 @@
 		<jsp:include page="../common/memberSideMenu.jsp" />
 	</div>
 	<div>
+		<div id="all">
 		<div class="bg-white rounded shadow-sm container p-2" id="content">
-			<form action="update" method="POST">
+			<form action="update" method="POST" enctype="multipart/form-data">
 				<div class="img-class">
-					<img src="${pageContext.request.contextPath}/resources/img/user.png" id="img"
-						onclick="document.all.file.click()" onchange="LoadImg"> <input
-						type="file" id="file" name="file" style="display: none;"
-						onchange="LoadImg(this,0)">
+					<img src="${pageContext.request.contextPath}/${loginMember.memberImg}" id="img"
+						onclick="document.all.file.click()" onchange="LoadImg" accept="img/*"> 
+						<input type="file" id="file" name="img" style="display: none;"
+						onchange="LoadImg(this,0)" accept="img/*">
 				</div>
 				<br>
 				<div class="area">
-					<label for="name">이름</label> <label for="rank">직급</label>
+					<label for="name">이름</label> <label for="rank">아이디</label>
 					<div class="name-rank">
-						<span class="name" id="name">이름 나오는곳</span>
+						<span class="name" id="name">${loginMember.memberNm}</span>
 					</div>
 					<div class="name-rank">
-						<span class="name" id="rank">랭크 나오는곳</span>
+						<span class="name" id="rank">${loginMember.memberId}</span>
 					</div>
 				</div>
 				<br>
-				<div class="area">
-					<label for="id">아이디</label>
-					<div class="id-area">
-						<span id="id">아이디 나오는곳</span>
-					</div>
-				</div>
 				<div class="area">
 					<label for="nickName">닉네임</label>
 				</div>
 				<div class="nick-area">
 					<input type="text" class="form-control" id="nickName"
-						name="nickName">
+						name="nickName" value="${loginMember.memberNick}">
 				</div>
 				<div class="nick-area">
 					<span id="checkNickName">&nbsp;</span>
@@ -80,6 +75,7 @@
 			</form>
 		</div>
 	</div>
+		</div>
 </body>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/myPage.js">
+<script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script>
 </html>

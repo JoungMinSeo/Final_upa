@@ -1,6 +1,7 @@
 
 package edu.fin.upa.member.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -88,7 +91,6 @@ public class MemberController {
 	    		String loginId = loginMember.getMemberId();
 	    		service.keepLogin(loginId, limitDate, inputId);
 	            
-	    		System.out.println(limitDate);
 	         }else { // 자동 로그인을 체크하지 않은 경우
 	        	// cookie의 생명 주기 저장
 	            cookie.setMaxAge(0);
@@ -104,7 +106,8 @@ public class MemberController {
 			ra.addFlashAttribute("title", "로그인 실패");
 			ra.addFlashAttribute("text", "아이디 또는 비밀번호가 일치하지않습니다");
 		}
-	         
+	        
+		System.out.println(loginMember);
 		 return path;
 	}
 	
@@ -187,18 +190,98 @@ public class MemberController {
 		return "member/myPage";
 	}
 	
+	// 회원 정보 수정
+	@RequestMapping(value="update",method=RequestMethod.POST)
+	public String updateMember(@RequestParam("img") MultipartFile img,@RequestParam("nickName") String nickName,
+								HttpServletRequest request, RedirectAttributes ra,
+								@ModelAttribute("loginMember") Member loginMember, Member updateMember) {
+		
+		
+		updateMember.setMemberNo(loginMember.getMemberNo());
+		updateMember.setMemberNick(nickName);
+		
+		String webPath = "/resources/img/member/";
+		String savePath = request.getSession().getServletContext().getRealPath(webPath);
+		
+		int result = service.updateMember(updateMember,img,webPath,savePath);
+		
+		if (result > 0) {
+			swalSetMessage(ra, "success", "회원 정보 수정 성공!", null);
+		}else {
+			swalSetMessage(ra, "success", "회원 정보 수정 실패..", null);
+		}
+		
+		
+		return "redirect:myPage";
+	}
+	
 	// 비밀번호 변경 화면 전환
 	@RequestMapping("changePwd")
 	public String changePw() {
 		
-		return "member/changePw";
+		return "member/changePwd";
 	}
 	
-	// 마이페이지 화면 전환
+	// 비밀번호 변경
+	@RequestMapping(value="changePwd", method=RequestMethod.POST)
+	public String chagePwd(@RequestParam("currentPwd") String currentPwd,
+							@RequestParam("newPwd1") String newPwd,
+							@ModelAttribute("loginMember") Member loginMember,
+							RedirectAttributes ra, SessionStatus status) {
+		
+		int result = service.changePwd(currentPwd,newPwd,loginMember);
+		
+		String path = "redirect:";
+		
+		if(result > 0) {
+			ra.addFlashAttribute("icon", "success");
+			ra.addFlashAttribute("title", "비밀번호 변경 성공!");
+			ra.addFlashAttribute("text", "다시 로그인하여주세요");
+			path += "/";
+			status.setComplete();
+		}else {
+			ra.addFlashAttribute("icon", "error");
+			ra.addFlashAttribute("title", "비밀번호 변경 실패...");
+			ra.addFlashAttribute("text", "비밀번호가 일치하지않습니다.");
+			
+			path += "changePwd";
+		}
+		
+		System.out.println("비밀번호 변경" + result);
+		
+		return path;
+	}
+	
+	
+	
+	// 회원 탈퇴 화면 전환
 	@RequestMapping("secession")
 	public String secession() {
-		
 		return "member/secession";
+	}
+	
+	@RequestMapping(value="secession", method=RequestMethod.POST)
+	public String secession(RedirectAttributes ra, @RequestParam("currentPwd") String currentPwd,
+											@ModelAttribute("loginMember") Member loginMember, SessionStatus status) {
+		
+		int result = service.secession(currentPwd, loginMember);
+		
+		String path = "redirect:";
+		
+		if(result > 0) {
+		 	ra.addFlashAttribute("icon", "success");
+	    	  ra.addFlashAttribute("title", "탈퇴 성공!");
+	    	  ra.addFlashAttribute("text", "잘가유 ㅜㅜ");
+			status.setComplete();
+			path += "/";
+		}else {
+			  ra.addFlashAttribute("icon", "error");
+	    	  ra.addFlashAttribute("title", "탈퇴 실패..");
+	    	  ra.addFlashAttribute("text", "비밀번호가 일치하지 않습니다.");
+			path += "secession";
+		}
+		
+		return path;
 	}
 	
 	
@@ -223,6 +306,8 @@ public class MemberController {
 	}
 	
 
+	
+	
 }
 
 

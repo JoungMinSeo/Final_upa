@@ -5,7 +5,7 @@
     font-style: normal;
 }
 *{font-family: 'BMJUA';}
-hr{
+#hr{
     width: 150px;
     height: 3px;
     background-color: gray;
@@ -19,10 +19,11 @@ hr{
     height:100vh;
     background-color: rgb(24, 64, 88);
     border: 1px solid black;
+    color: white;
 }
-.sidMenu-container ul{
+ul{
     list-style:none;
-  
+  	color: white;
 }
 .sidMenu{
     line-height: 50px;
