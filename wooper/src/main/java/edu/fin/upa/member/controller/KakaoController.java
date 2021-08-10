@@ -120,14 +120,15 @@ public class KakaoController {
 		UUID garbagePassword = UUID.randomUUID();
 		
 		Member kakaoMember = new Member();
+		
 		kakaoMember.setMemberId(kakaoProfile.getKakao_account().getEmail());
 		kakaoMember.setMemberPw(garbagePassword.toString());
 		kakaoMember.setMemberNm(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMemberNick(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMemberImg(kakaoProfile.getProperties().getProfile_image());
 		kakaoMember.setKakaoId(kakaoProfile.getId());
-		// 가입자 혹은 비가입자 체크해서 처리
 		
+		// 가입자 혹은 비가입자 체크해서 처리
 		int kakaoId = kakaoProfile.getId();
 		
 		Member member = service.selectKakaoMember(kakaoId);
