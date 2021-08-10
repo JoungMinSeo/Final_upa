@@ -71,15 +71,11 @@ public class ManagementController {
 			return mService.invitation(inputAddEmail);
 	}
 	
-	
-	
-	
-	
-	// 팀멤버 추가
+	// 초대링크 수락
 	@RequestMapping(value="{workNo}/add")
 	public String addJoinMember(@PathVariable("workNo") int workNo,
 														@ModelAttribute("loginMember") Member loginMember,
-														Management management, 	RedirectAttributes ra) {
+														Management management, 	RedirectAttributes ra, Model model) {
 		
 		String path = "redirect:/";
 		
@@ -87,9 +83,7 @@ public class ManagementController {
 			//  로그인된 회원의 회원 번호를 얻어와 세팅
 			management.setMemberNo(loginMember.getMemberNo());
 			
-			//System.out.println(inputAddEmail);
 			int result = mService.addJoinMember(management);
-			
 			
 			if(result > 0) {
 				swalSetMessage(ra, "success", "도롱뇽이 된 것을 환영합니다.", null);
@@ -98,57 +92,60 @@ public class ManagementController {
 				swalSetMessage(ra, "error", "초대받지않은 도롱뇽입니다.", null);
 			}
 		}else {
+			model.addAttribute("loginMember", loginMember);
 			swalSetMessage(ra, "info", "로그인 후 초대 링크를 눌러주세요.", null);
 		}
 		
 		return path;
 	}
 	
-	
-	
-	
 	// 회원등급수정
 	@RequestMapping(value="{workNo}/update")
 	public String updateMemberRank(@PathVariable("workNo") int workNo,
 													  @PathVariable("memberNo") int memberNo,
+													  @ModelAttribute("loginMember") Member loginMember,
 													  Management management, RedirectAttributes ra,
 													  HttpServletRequest request, Model model) {
 		
-		int result = mService.updateMemberRank(management);
+		String path = "redirect:/";
 		
-		String path = null;
-		if(result > 0) { // 수정 성공
-			swalSetMessage(ra, "success", "도롱뇽 등급 수정 성공", null);
-			path ="redirect:";
-		}else { // 수정 실패
-			swalSetMessage(ra, "error", "도롱뇽 등급 수정 실패", null);
-			path= "redirect:" + request.getHeader("referer");
-		}
+			int result = mService.updateMemberRank(management);
+			
+			if(result > 0) { // 수정 성공
+				swalSetMessage(ra, "success", "도롱뇽 등급 수정 성공", null);
+				path ="redirect:/";
+			}else { // 수정 실패
+				swalSetMessage(ra, "error", "도롱뇽 등급 수정 실패", null);
+				// path= "redirect:" + request.getHeader("referer");
+			}
+			
+		
 		return path;
 	}
 	
 	// 팀 회원 삭제
 	@RequestMapping(value="{workNo}/delete")
-	public String deleteJoinMember(@PathVariable("workNo")int workNo, Management management,
-													RedirectAttributes ra) {
+	public String deleteJoinMember(@PathVariable("workNo")int workNo, 
+												   @ModelAttribute("loginMember") Member loginMember,
+												   Management management,
+												   RedirectAttributes ra) {
 		
-		int result = mService.deleteJoinMember(workNo, management);
+		String path = "redirect:/";
 		
-		String path = "redirect:";
+			int result = mService.deleteJoinMember(workNo, management);
+			if(result > 0) { // 회원삭제성공
+				swalSetMessage(ra, "success", "도롱뇽을 추방하였습니다.", null);
+				path += "member/management";
+			}else { // 회원삭제실패
+				swalSetMessage(ra, "error", "도롱뇽 추방에 실패하였습니다.", null);
+				path +="secession";
+			}
+			
 		
-		if(result > 0) { // 회원삭제성공
-			swalSetMessage(ra, "success", "도롱뇽을 추방하였습니다.", null);
-			path += "member/management";
-		}else { // 회원삭제실패
-			swalSetMessage(ra, "error", "도롱뇽 추방에 실패하였습니다.", null);
-			path +="secession";
-		}
 		
 		return path;
 	}
-	
 
-	
 	
 	// SweetAlert를 이용한 메시지 전달용 메서드
 	public static void swalSetMessage(RedirectAttributes ra, String icon, String title, String text) {
