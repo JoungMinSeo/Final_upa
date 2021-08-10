@@ -40,7 +40,7 @@
 
 				<h1 class="font projectName">${sessionScope.loginMember.memberNm}님의 프로젝트</h1>
 				<h2 class="font">나의 프로젝트</h2>
-				
+
 			</div>
 			
 			<div class="col py-3 px-lg-5">
@@ -49,16 +49,28 @@
 		</div>
 
 
+		<c:choose>
 
-		<c:forEach items="${workList}" var="item" varStatus="vs">
-			
-			<div class="project" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'"> ${item.workNo } , ${item.workNm }</div>
-		
-		</c:forEach>
-		
+			<c:when test="${empty workList }">
+				<h3 clas="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
+			</c:when>
+
+			<c:otherwise>
+				<c:forEach items="${workList}" var="item" varStatus="vs">
+					<div class="project" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">
+						${item.workNo } , ${item.workNm }
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 
 
-	<!-- 	<div class="project">
+
+
+
+
+
+		<!-- 	<div class="project">
 		
 		</div> -->
 

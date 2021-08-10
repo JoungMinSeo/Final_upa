@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -55,6 +57,18 @@
 		</interceptor>
 	</interceptors>
 	
+	
+	<!-- CardWebSocketHandler 클래스를 bean으로 등록 -->
+	<beans:bean id="cardHandler" class="edu.fin.upa.card.websocket.CardWebsocketHandler" />
+		
+	<!-- /card 라는 주소로 오는 웹소켓 요청을 CardWebSocketHandler 클래스와 연결하기  -->
+	<websocket:handlers>
+		<websocket:mapping handler="cardHandler" path="/cardScript" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
 	
 	
 	 

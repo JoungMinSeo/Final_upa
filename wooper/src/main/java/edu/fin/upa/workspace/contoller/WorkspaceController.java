@@ -15,7 +15,7 @@ import edu.fin.upa.calendar.model.vo.Workspace;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.workspace.model.service.WorkspaceService;
 
-@SessionAttributes({ "loginMember" })
+@SessionAttributes({ "loginMember", "work" })
 @RequestMapping("/workspace/*")
 @Controller
 public class WorkspaceController {
@@ -27,7 +27,6 @@ public class WorkspaceController {
 		public String result() {
 			return "/workSpace/boardMain";
 	}
-
 	
 	
 	// 내가 참여한 워크스페이스 목록 얻어오기 (로그인하자마자 보이는 페이지)
@@ -44,6 +43,7 @@ public class WorkspaceController {
 	}
 	
 	
+	// 현재 들어간 워크스페이스 정보 조회
 	@RequestMapping(value="{workNo}/boardMain", method=RequestMethod.GET)
 	public String boardMain(@PathVariable("workNo") int workNo, Model model) {
 		
