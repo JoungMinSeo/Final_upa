@@ -93,7 +93,7 @@ cardSock.onmessage = function(event){
 	
 	console.log(obj.cardNm);
 	
-	 if(obj.cardNm != ""){
+	 if(obj.cardNm != "" && obj.memberNo != "${loginMember.memberNo}"){
 		 var empty = $("<div>").addClass("empty");
 
 		    var top = $("<div>").addClass("top");
