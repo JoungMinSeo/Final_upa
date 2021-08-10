@@ -47,6 +47,12 @@ public interface MemberService {
 	// 번호 조회
 	Member selectPhone(String memberPhone, String memberName);
 	
+	// 이메일 조회
+	int selectEmail(Member inputMember);
+	
+	// 이메일 보내기
+	int sendEmail(Member inputMember);
+	
 
 	
 }

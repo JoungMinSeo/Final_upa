@@ -1,11 +1,9 @@
 
 package edu.fin.upa.member.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PrimitiveIterator.OfDouble;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,7 +69,7 @@ public class MemberController {
 
 	         ra.addFlashAttribute("icon", "success");
 	         ra.addFlashAttribute("title", "로그인 성공");
-	         ra.addFlashAttribute("text", "아이디 또는 비밀번호가 일치하지않습니다");
+	         ra.addFlashAttribute("text", "일해라 노예들아!");
 	         
 	         path = "redirect:/calendar/calendar";
 	         
@@ -179,20 +176,31 @@ public class MemberController {
 		return "member/findId";
 	}
 	
-	@RequestMapping(value="findId" , method=RequestMethod.POST)
-	public String findeId() {
-		
-		
-		
-		return null;
-	}
-	
 	// 비밀번호 찾기 화면 전환
 	@RequestMapping("findPw")
 	public String findPw() {
 		
 		return "member/findPw";
 	}
+	
+	// 비밀번호 찾기
+	@ResponseBody
+	@RequestMapping(value="selectEmail",method=RequestMethod.POST)
+	public int findPw(@RequestParam("memberId") String memberId,RedirectAttributes ra,
+					@RequestParam("memberNm") String memberNm,Member inputMember) {
+		
+		inputMember.setMemberId(memberId);
+		inputMember.setMemberNm(memberNm);
+		
+		int result = service.selectEmail(inputMember);
+		
+		if (result > 0) { // 가입된 정보가 있을 경우
+			result = service.sendEmail(inputMember);
+		}
+		
+		return result;
+	}
+	
 	
 	// 회원 정보 화면 전환
 	@RequestMapping("myPage")
@@ -310,7 +318,6 @@ public class MemberController {
 		
 		Member member = service.selectPhone(memberPhone,memberName);
 		
-		System.out.println("아이디 찾기 : " + member);
 		
 		return member;
 	}

@@ -30,7 +30,6 @@ public class MemberDAO {
 		return sqlSession.insert("memberMapper.signUp", inputMember);
 	}
 
-
 	// 인터셉터 자동 로그인
 	public Member getMemberSessionId(String sessionId) {
 		return sqlSession.selectOne("memberMapper.getMemberSessionId",sessionId);
@@ -79,6 +78,16 @@ public class MemberDAO {
 	// 아이디 조회
 	public Member selectPhone(Member member) {
 		return sqlSession.selectOne("memberMapper.selectPhone",member);
+	}
+	
+	// 이메일 조회
+	public int selectEmail(Member inputMember) {
+		return sqlSession.selectOne("memberMapper.selectEmail",inputMember);
+	}
+	
+	// 임시 비밀번호로 회원 정보 변경
+	public int updatePassword(Member inputMember) {
+		return sqlSession.update("memberMapper.updatePassword",inputMember);
 	}
 	
 

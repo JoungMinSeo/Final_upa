@@ -5,9 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.mail.internet.MimeMessage;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +33,9 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO dao;
 	
+	@Autowired  
+	private JavaMailSender mailSender;   //메일
+	
 	// 로그인
 	@Override
 	public Member login(Member inputMember) {
@@ -43,7 +51,8 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return loginMember;
 	}
-
+	
+	// 아이디 중복 검사
 	@Override
 	public int idDupCheck(String id) {
 		return dao.idDupCheck(id);
@@ -67,6 +76,7 @@ public class MemberServiceImpl implements MemberService{
 		return dao.getMemberSessionId(sessionId);
 	}
 	
+	// 쿠키 유효시간 저장
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void keepLogin(String loginId, Date limitDate, String inputId) {
@@ -125,6 +135,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	// 비밀번호 수정
+	@Transactional(rollbackFor=Exception.class)
 	@Override
 	public int changePwd(String currentPwd, String newPwd, Member loginMember) {
 		
@@ -154,6 +165,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	// 회원 탈퇴
+	@Transactional(rollbackFor=Exception.class)
 	@Override
 	public int secession(String currentPwd, Member loginMember) {
 		
@@ -185,6 +197,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 회원 정보 수정
+	@Transactional(rollbackFor=Exception.class)
 	@Override
 	public int updateMember(Member updateMember, Map<String, Object> map, String webPath, String savePath, MultipartFile img) {
 		
@@ -222,6 +235,55 @@ public class MemberServiceImpl implements MemberService{
 		member.setMemberPhone(memberPhone);
 		
 		return dao.selectPhone(member);
+	}
+	
+	// 이메일 조회
+	@Override
+	public int selectEmail(Member inputMember) {
+		return dao.selectEmail(inputMember);
+	}
+	
+	// 이메일 보내기
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public int sendEmail(Member inputMember) {
+		
+		// 임시 비밀번호 생성
+		UUID garbagePassword = UUID.randomUUID();
+		String encPwd = bCryptPasswordEncoder.encode(garbagePassword.toString());
+		
+		inputMember.setMemberPw(encPwd);
+		
+		int result = dao.updatePassword(inputMember);
+		
+		if (result > 0) {
+			
+			String setfrom = "upalupa789@gmail.com"; // 보내는 서버 이메일
+			String tomail = inputMember.getMemberId(); // 받는 사람 이메일
+			String title = "우파루파 임시 비밀번호입니다."; // 제목
+			
+			String content =  "임시 비밀번호는 " + garbagePassword + " 입니다."; // 내용
+			
+			try {
+				
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+				messageHelper.setTo(tomail); // 받는사람 이메일
+				messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+				messageHelper.setText(content, true); // 메일 내용
+				
+				mailSender.send(message);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			result = -1;
+		}
+		
+		return result;
 	}
 
 	
