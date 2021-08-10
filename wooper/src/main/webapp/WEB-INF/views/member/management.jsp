@@ -8,9 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버관리</title>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<link href='${pageContext.request.contextPath}/resources/css/management.css' rel='stylesheet' />
-
 </head>
 <body>
 
@@ -21,6 +22,7 @@
 		<div class="mmheader">
 			<div>
 					<jsp:include page="../workSpace/workSpaceHeader.jsp" />
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			</div>
 			<div class="mmcontends">
 			    <div class="managementcontainer">
@@ -35,19 +37,34 @@
 				            <!-- <div class="memberadd">
 				                <button type="button" class="addmember" id="addmember" onclick="addmember(this);">팀원추가</button>
 				            </div> -->
-				            <div class="memberaddarea" id="memberaddarea">
-				                <h3 class="memberadd">
-				                    팀원추가
-				                    <select id="memberaddst">
-				                        <option value="1">왕도롱뇽</option>
-				                        <option value="2">도롱뇽</option>
-				                        <option value="3">작은도롱뇽</option>
-				                        <option value="4" selected>아기도롱뇽</option>
-				                    </select>
-				                    <input type="text" id="memberaddip" placeholder="이메일을 입력해주세요">
-				                    <button id="memberaddbtn">초대요청</button>
-				                </h3>
-				            </div>
+				            
+				            
+				            <c:forEach items="${memberList }" var = "member">
+				            	<c:if test="${member.memberRank == 1  &&  member.memberId == loginMember.memberId}">
+				            		<c:set var="flag" value="true"/>
+				            	</c:if>
+				            </c:forEach>
+				            
+				            
+				            
+				            <c:if test="${flag == true }">
+					            <div class="memberaddarea" id="memberaddarea">
+					                <h3 class="memberadd">
+					                    팀원추가
+					                    <select id="memberaddRank">
+					                        <option value="1">왕도롱뇽</option>
+					                        <option value="2">도롱뇽</option>
+					                        <option value="3">작은도롱뇽</option>
+					                        <option value="4" selected>아기도롱뇽</option>
+					                    </select>
+					                    <input type="text" id="memberaddEmail" placeholder="이메일을 입력해주세요">
+					                    <button id="memberaddbtn">초대요청</button>
+					                </h3>
+					            </div>
+				            </c:if>
+				            
+				            
+				            
 				            <div class="loginmemberemail">
 				                <h3 class="teammember" id="loginmemberemail">${loginMember.memberId }</h3>
 				            </div>
@@ -224,6 +241,43 @@
 			document.requestForm.submit();
 			
 		}
+		
+		// http://localhost:8080/wooper/management/2/member/list
+		// http://localhost:8080/wooper/management/2/add
+		
+		//memberaddbtn, memberaddEmail
+		$("#memberaddbtn").on("click",function(){
+			//console.log(123)
+			//console.log($("#memberaddEmail").val().trim().length)
+			
+			// (팀장)초대메일 보내기 -> (받은 사람)메일에서 링크 클릭 -> (받은 사람)동의, 거절 화면 -> (받은 사람) -> 동의 클릭 시 addMember 진행
+			
+			if( $("#memberaddEmail").val().trim().length != 0 ){ // 나중에 이메일 정규식 추가하기
+				$.ajax({
+					url : "../sendEmail",
+					data : {"memberId" : $("#memberaddEmail").val(),
+						        "memberRank" : $("#memberaddRank").val()},
+					type : "POST",
+					success : function(result){
+						console.log(result);
+						if(result == -1){
+							swal( { "icon" : "info", "title" : "이미 해당 팀의 도롱뇽입니다."	});
+						}else{
+							swal( { "icon" : "success", "title" : "메일이 발송되었습니다."	});
+							$("#memberaddEmail").val(""); 
+							
+						}
+						
+					}, error : function(){
+						swal( { "icon" : "error", "title" : "존재하지 않는 회원입니다."	});
+						
+					}
+					
+				});
+			}
+		})
+		
+		
 	</script>
 </body>
 </html>

@@ -12,16 +12,6 @@
    src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
 <script
    src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-   crossorigin="anonymous"></script>
-<link
-   href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css'
-   rel='stylesheet' />
-<link
-   href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css'
-   rel='stylesheet'>
-
       
 
 
@@ -62,6 +52,9 @@
       <div>
          <div>
             <jsp:include page="../workSpace/workSpaceHeader.jsp" />
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+   crossorigin="anonymous"></script>
          </div>
          <div>
             <div id="calendar">dddd</div>

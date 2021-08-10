@@ -1,6 +1,7 @@
 package edu.fin.upa.management.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -56,11 +57,42 @@ public class ManagementDAO {
 	}
 
 	/** 팀 회원 추가
+	 * @param management
+	 * @return result
+	 */
+	public int addJoinMember(Management management) {
+		return sqlSession.insert("managementMapper.addJoinMember", management);
+	}
+
+	/**  팀 멤버 초대 메일 보내기(누구에게 메일을 보냈는가 기록)
 	 * @param inputAddEmail
 	 * @return result
 	 */
-	public int addJoinMember(Management inputAddEmail) {
-		return sqlSession.insert("memberMapper.addJoinMember", inputAddEmail);
+	public int invitation(Management inputAddEmail) {
+		return sqlSession.insert("managementMapper.invitation", inputAddEmail);
+	}
+
+	/** 초대 테이블에서 회원등급 조회
+	 * @param management
+	 * @return memberRank
+	 */
+	public String selectIvitation(Management management) {
+		return sqlSession.selectOne("managementMapper.selectIvitation", management);
+	}
+ 
+	/** 초대 테이블 삭제
+	 * @param management
+	 */
+	public void deleteInvitation(Management management) {
+		sqlSession.delete("managementMapper.deleteInvitation", management);
+	}
+ 
+	/** 팀에 존재하는 회원인지 확인
+	 * @param inputAddEmail
+	 * @return 
+	 */
+	public Map<String, Object> selectWorkspaceJoin(Management inputAddEmail) {
+		return sqlSession.selectOne("managementMapper.selectWorkspaceJoin", inputAddEmail);
 	}
 	
 	
