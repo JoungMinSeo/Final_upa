@@ -17,7 +17,6 @@
 		<result property="listCount" column="CNT"/>		
 		<result property="workNm" column="WORK_NM"/>		
 		<result property="workNo" column="WORK_NO"/>		
-		<result property="joinStatus" column="JOIN_STATUS"/>		
 	</resultMap>
 	
 	<!-- 특정 팀의 모든 팀원 수 조회 -->
@@ -31,33 +30,10 @@
 	<!-- 특정 팀의 모든 멤버 정보 조회 -->
 	<select id="selectMember" parameterType="_int" resultMap="mm_rm">
 			SELECT * FROM C_WORK_JOIN 
-			WHERE WORK_NO = #{workNo} AND JOIN_STATUS = 'Y' AND MEMBER_STATUS = 'Y'
+			WHERE WORK_NO = #{workNo} AND MEMBER_STATUS = 'Y'
 			ORDER BY MEMBER_RANK
 	</select>
 	
-	<!-- 회원등급수정 -->
-	<update id="updateMemberRank" parameterType="Management">
-			UPDATE WORKSPACE_JOIN SET MEMBER_RANK = #{memberRank}
-			WHERE WORK_NO = #{workNo}
-			AND MEMBER_NO = #{memberNo}
-	</update>
-	
-	<!-- 팀 회원 삭제 -->
-	<update id="deleteJoinMember" parameterType="Management">
-			UPDATE WORKSPACE_JOIN SET JOIN_STATUS = 'N'
-			WHERE WORK_NO = #{workNo}
-			AND MEMBER_NO = #{memberNo}
-	</update>
-	
-	<!-- 팀 회원 삭제 -->
-<!-- 	
-	<update id="deleteJoinMember" parameterType="Management">
-			DELETE FROM WORKSPACE_JOIN SET
-			WHERE WORK_NO = #{workNo}
-			AND MEMBER_NO = #{memberNo}
-	</update>
- -->	
-
 	<!--  팀 멤버 초대 -->
 	<insert id="invitation" parameterType="Management">
 		INSERT INTO INVITATION VALUES
@@ -77,7 +53,7 @@
 	<!-- 팀 회원 추가 -->
 	<update id="addJoinMember" parameterType="Management">
 			INSERT INTO WORKSPACE_JOIN VALUES
-			(#{memberNo}, #{workNo}, #{memberRank}, DEFAULT)
+			(#{memberNo}, #{workNo}, #{memberRank})
 	</update>
 	
 	<!-- 팀 회원 제거 -->
@@ -91,11 +67,28 @@
 	<select id="selectWorkspaceJoin" parameterType="Management" resultType="map">
 		SELECT CNT, (SELECT WORK_NM FROM WORKSPACE WHERE WORK_NO=#{workNo}) WORK_NM
 		FROM (SELECT COUNT(*) CNT FROM WORKSPACE_JOIN
+		
 				WHERE MEMBER_NO =#{memberNo}
+				
 				AND WORK_NO = #{workNo})
 	</select>
 	
+		<!-- 회원등급수정 -->
+	<update id="updateMemberRank" parameterType="Management">
+			UPDATE WORKSPACE_JOIN SET MEMBER_RANK = #{memberRank}
+			WHERE WORK_NO = #{workNo}
+			AND MEMBER_NO = #{memberNo}
+	</update>
 	
+	
+	<!-- 팀 회원 삭제 -->
+	<update id="deleteJoinMember" parameterType="Management">
+		DELETE FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+
 
 
 </mapper>

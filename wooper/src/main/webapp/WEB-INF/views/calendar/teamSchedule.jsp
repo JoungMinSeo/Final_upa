@@ -57,7 +57,7 @@
    crossorigin="anonymous"></script>
          </div>
          <div>
-            <div id="calendar">dddd</div>
+            <div id="calendar"></div>
          </div>
       </div>
    </div>

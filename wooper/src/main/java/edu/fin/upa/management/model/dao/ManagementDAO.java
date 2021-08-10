@@ -38,23 +38,7 @@ public class ManagementDAO {
 		return sqlSession.selectList("managementMapper.selectMember", pagination.getWorkNo(), rowBounds);
 	}
 
-	/** 회원 등급 수정
-	 * @param workNo
-	 * @param memberNo
-	 * @return result
-	 */
-	public int updateMemberRank(Management management) {
-		return sqlSession.update("managementMapper.updateMemberRank", management);
-	}
 
-	/** 팀 회원 삭제
-	 * @param workNo
-	 * @param management
-	 * @return result
-	 */
-	public int deleteJoinMember(int workNo, Management management) {
-		return sqlSession.update("managementMapper.deleteJoinMember", management);
-	}
 
 	/** 팀 회원 추가
 	 * @param management
@@ -93,6 +77,24 @@ public class ManagementDAO {
 	 */
 	public Map<String, Object> selectWorkspaceJoin(Management inputAddEmail) {
 		return sqlSession.selectOne("managementMapper.selectWorkspaceJoin", inputAddEmail);
+	}
+	
+	/** 회원 등급 수정
+	 * @param workNo
+	 * @param memberNo
+	 * @return result
+	 */
+	public int updateMemberRank(Management management) {
+		return sqlSession.update("managementMapper.updateMemberRank", management);
+	}
+
+	/** 팀 회원 삭제
+	 * @param workNo
+	 * @param management
+	 * @return result
+	 */
+	public int deleteJoinMember(int workNo, Management management) {
+		return sqlSession.update("managementMapper.deleteJoinMember", management);
 	}
 	
 	

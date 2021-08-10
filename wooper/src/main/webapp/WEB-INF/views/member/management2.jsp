@@ -151,25 +151,23 @@
 
 						                </h3>    
 						            </div>
+						            <div class="memberupdate">
+						                <button  type = "submit" class="mupdatebtn" id="memberUpdate"><h3>회원정보수정</h3></button>
+						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
+						            </div>
+						            
+						            <div class="memberdelete">
+						                <button   type = "submit"  class="mdeletebtn" id="memberDelete"><h3>x</h3></button>
+						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
+						            </div>
+								
 								
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
 			        </div>
 		           
-						            <div class="memberdelete">
-						                <button   type = "submit"  class="mdeletebtn" id="memberDelete"><h3>회원삭제</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
-						            </div>
-						            <div class="memberupdate">
-						                <button  type = "submit" class="mupdatebtn" id="memberUpdate"><h3>회원등급수정</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
-						            </div>
-						            <div class=chatinvite>
-						                <button  type = "submit" class="chat-Invite-btn" id="chatInvite"><h3>채팅방개설</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
-						            </div>
-						            
+
 
 			    </div>
 			</div>
@@ -227,7 +225,6 @@
 			</div>
 			<%---------------------- Pagination end----------------------%>
 		</div>
-
 	</div>
 	 </form>
 	 

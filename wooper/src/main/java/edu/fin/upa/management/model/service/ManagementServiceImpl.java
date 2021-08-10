@@ -44,26 +44,6 @@ public class ManagementServiceImpl implements ManagementService{
 		return mDao.selectMemberList(pagination);
 	}
 
-	// 회원 등급 수정
-	@Transactional(rollbackFor=Exception.class)
-	@Override
-	public int updateMemberRank(Management management) {
-		
-		int result = mDao.updateMemberRank(management);
-		
-		return result;
-	}
-
-	// 팀 회원 삭제
-	@Transactional(rollbackFor=Exception.class)
-	@Override
-	public int deleteJoinMember(int workNo, Management management) {
-		
-		int result=mDao.deleteJoinMember(workNo, management);
-		
-		return result;
-	}
-	
 	// 팀 멤버 초대 메일 보내기
 	@Transactional(rollbackFor=Exception.class)
 	@Override
@@ -86,7 +66,7 @@ public class ManagementServiceImpl implements ManagementService{
 			if(result > 0) {
 				String setfrom = "upalupa789@gmail.com"; // 보내는 서버 이메일
 				String tomail = inputAddEmail.getMemberId(); // 받는 사람 이메일
-				String title = "회원초대메일입니다."; // 제목
+				String title = "우파루파로부터 초대장이 도착했습니다."; // 제목
 				
 				String content =   (String)map.get("WORK_NM") + " 팀의 도롱뇽이 되어주세요!<br>"
 						+ "아래 링크 클릭 시 바로 승인됩니다.<br>"
@@ -143,8 +123,26 @@ public class ManagementServiceImpl implements ManagementService{
 		return result;
 	}
 	
-	
+	// 회원 등급 수정
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public int updateMemberRank(Management management) {
+		
+		int result = mDao.updateMemberRank(management);
+		
+		return result;
+	}
 
+	// 팀 회원 삭제
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public int deleteJoinMember(int workNo, Management management) {
+		
+		int result=mDao.deleteJoinMember(workNo, management);
+		
+		return result;
+	}
+	
 
 
 }
