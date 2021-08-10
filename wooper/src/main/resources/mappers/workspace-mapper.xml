@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="selectWorkspace" parameterType="_int" resultMap="workspace_rm">
-		SELECT WORK_NM, WORK_INFO
+		SELECT *
 		FROM WORKSPACE
 		WHERE WORK_NO = #{workNo}
 	
