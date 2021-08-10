@@ -32,9 +32,9 @@
                 <br>
                 <hr>
                 <span style="font-size: 21px; font-weight: bold;" id="span">비밀번호를 잊으셨나요?</span> <br>
-                <span>이메일로 전송된 임시 비밀번호로 비밀번호를 재설정 해주세요</span>
+                <span>가입된 정보로 전송된 임시 비밀번호로 비밀번호를 재 설정 해주세요</span>
             </div>
-            <form method="POST" action="signUp" class="needs-validation" name="signUpForm"
+            <form method="POST" action="findPw" class="needs-validation" name="signUpForm"
                 onsubmit="return validate();">
                 
                 <div class="col form-col">
@@ -42,7 +42,7 @@
                         <label for="name">이름</label>
                     </div>
                     <div class="col-md">
-                        <input type="text" class="form-control" id="name" name="memberName" required>
+                        <input type="text" class="form-control" id="name" name="memberNm" required>
                     </div>
 
                     <div class="col-md-6 offset-md-3">
@@ -55,7 +55,7 @@
                         <label for="email">이메일 주소</label>
                     </div>
                     <div class="col-md">
-                        <input type="text" class="form-control" id="email" name="memberEmail" required>
+                        <input type="text" class="form-control" id="email" name="memberId" required>
                     </div>
 
                     <div class="col-md-6 offset-md-3">
@@ -74,12 +74,35 @@
 </body>
 
 <script>
-    $("#login").click(function(){
 
-        $("#showId").html("임시 비밀번호를 발송하였습니다." + "<br>" + "메일함을 확인하여주세요.");
-
-    });
+$("#login").click(function(){
+	
+	const memberId = $("#email").val();
+	const memberNm = $("#name").val();
+	
+	$.ajax({
+		url: "selectEmail",
+		data: {"memberId" : memberId,
+				"memberNm" : memberNm},
+		async : false,
+		type: "post",
+		success:function(result){
+			
+			if(result > 0){
+				$("#showId").html("임시 비밀번호를 발송하였습니다." + "<br>" + "메일함을 확인하여주세요.");
+			}else{
+				alert("가입하신 정보가 없습니다. 입력한 정보를 다시 한번 확인해주세요.")
+			}
+		},
+		error:function(e){
+			console.log("ajax 통신 실패");
+			console.log(e);
+			
+		}
+	})
+		
+    
+});
 
 </script>
-
 </html>

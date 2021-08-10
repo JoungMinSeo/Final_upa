@@ -98,12 +98,28 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
+	<!-- 번호 조회 -->
 	<select id="selectPhone" parameterType="Member" resultMap="member_rm">
 		SELECT MEMBER_ID
 		FROM MEMBER
 		WHERE MEMBER_PHONE = #{memberPhone}
 		AND MEMBER_NM = #{memberNm}
 	</select>
+	
+	<!-- 이메일 조회 -->
+	<select id="selectEmail" parameterType="Member" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_NM = #{memberNm}
+	</select>
+	
+	<!-- 임시 비밀번호 -->
+	<update id="updatePassword" parameterType="Member">
+		UPDATE MEMBER SET
+		MEMBER_PW = #{memberPw}
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_NM = #{memberNm}
+	</update>
 	
 </mapper>
 
