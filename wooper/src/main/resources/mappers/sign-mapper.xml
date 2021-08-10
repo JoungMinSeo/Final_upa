@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="signMapper">
+
+	<resultMap type="Sign" id="sign_rm">
+		<id property="signNo" column="SIGN_NO"/>
+			
+		<result property="signDraftingDt" column="SIGN_DRAFTING_DT"/>
+		<result property="signResult" column="SIGN_RESULT"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+	</resultMap>
+
+	<resultMap type="Document" id="document_rm">
+		<id property="documentNo" column="DOCUMENT_NO"/>
+		
+		<result property="signNo" column="SIGN_NO"/>
+		<result property="documentType" column="DOCUMENT_TYPE"/>
+		<result property="documentTitle" column="DOCUMENT_TITLE"/>
+		<result property="documentEtc" column="DOCUMENT_ETC"/>
+		<result property="documentStatus" column="DOCUMENT_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="ExpenseReport" id="expenseReport_rm">
+		<id property="documentNo" column="DOCUMENT_NO"/>
+		
+		<result property="expenseDept" column="EXPENSE_DEPT"/>
+		<result property="expensePurpose" column="EXPENSE_PURPOSE"/>
+		<result property="accountPhone" column="ACCOUNT_PHONE"/>
+		<result property="accountDt" column="ACCOUNT_DT"/>
+		<result property="deliveryStartDt" column="DELIVERY_START_DT"/>
+		<result property="deliveryEndDt" column="DELIVERY_END_DT"/>
+		<result property="paymentMethod" column="PAYMENT_METHOD"/>
+		
+		<collection property="pList" column="ITEM_NO" javaType="java.util.ArrayList" ofType="PurchaseList" select="selectPurchaseList" />
+	</resultMap>
+	
+	
+	<resultMap type="Meeting" id="meeting_rm">
+		<id property="documentNo" column="DOCUMENT_NO"/>
+		
+		<result property="meetingDt" column="MEETING_DT"/>
+		<result property="meetingDept" column="MEETING_DEPT"/>
+		<result property="meetingPurpose" column="MEETING_PURPOSE"/>
+		<result property="meetingContent" column="MEETING_CONTENT"/>
+		
+		<collection property="meetingJoin" column="JOIN_NO" javaType="java.util.ArrayList" ofType="MeetingJoin" select="selectMeetingJoinList"></collection>
+	</resultMap>
+	
+	<resultMap type="PurchaseList" id="purchaseList_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+		
+		<result property="itemNm" column="ITEM_NM"/>
+		<result property="itemUnit" column="ITEM_UNIT"/>
+		<result property="itemAmount" column="ITEM_AMOUNT"/>
+		<result property="unitPrice" column="UNIT_PRICE"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
+		<result property="documentNo" column="DOCUMENT_NO"/>
+	</resultMap>
+	
+	<resultMap type="SignLine" id="signLine_rm">
+		<id property="signNo" column="SIGN_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="signStatus" column="SIGN_STATUS"/>
+		<result property="signComment" column="SIGN_COMMENT"/>
+		<result property="signDt" column="SIGN_DT"/>
+		<result property="signOrder" column="SIGN_ORDER"/>
+	</resultMap>
+	
+	<resultMap type="Vacation" id="vacation_rm">
+		<id property="documentNo" column="DOCUMENT_NO"/>
+		
+		<result property="vacationType" column="VACATION_TYPE"/>
+		<result property="vacationStartDt" column="VACATION_START_DT"/>
+		<result property="vacationEndDt" column="VACATION_END_DT"/>
+		<result property="vacationReason" column="VACATION_REASON"/>
+	</resultMap>
+
+	<resultMap type="Viewer" id="viewer_rm">
+		<id property="signNo" column="SIGN_NO"/>
+	
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+	</resultMap>
+	
+	<resultMap type="MeetingJoin" id="meetingJoin_rm">
+		<id property="joinNo" column="JOIN_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="documentNo" column="DOCUMENT_NO"/>
+	</resultMap>
+	
+	
+	
+	
+
+</mapper>

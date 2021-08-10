@@ -11,104 +11,12 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-    <style>
-        #document-container{
-            box-sizing: border-box;
-            height: 1000px;
-            width: 80%;
-            padding-top: 80px;
-            margin: auto;
-        }
-
-        .tab_content{
-            text-align: left; /* 라디오버튼 왼쪽 정렬 */
-            height: 100%;
-        }
-
-        input[type="radio"]{
-            display: none;
-        }
-
-        input[type="radio"] + label{
-            display: inline-block;
-            padding: 13px;
-            font-size: 18px;
-            cursor: pointer;
-            border: 1px solid rgb(42, 111, 154);
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        input[type="radio"]:checked + label{
-            background-color: rgb(213, 232, 243);
-            color: #000;
-        }
-
-        .conbox{
-            height: 90%;
-            padding-left: 4%;
-            padding-right: 4%;
-            display: none;
-            border: 1px solid rgb(42, 111, 154);
-            background-color: rgb(213, 232, 243);
-            position: relative;
-        }
-
-        /* 각 탭이 클릭 되었을때 뿌려지는 내용 */
-        input[id="tab01"]:checked ~ .con1{
-            display: block;
-        }
-
-        input[id="tab02"]:checked ~ .con2{
-            display: block;
-        }
-
-        input[id="tab03"]:checked ~ .con3{
-            display: block;
-        }
-
-        input[id="tab04"]:checked ~ .con4{
-            display: block;
-        }
-
-        #document-view-menubar{
-            margin-top: 1%;
-        }
-
-        #document-view-optionbar{
-            width: fit-content;
-            margin: 1%;
-            float: left;
-        }
-
-        #newDocument, #signAllDocument, #deleteDocument, #deleteAllDocument{
-            float: right;
-            margin: 1%;
-        }
-
-        #document-list-content{
-            padding-top: 1%;
-            margin: 1%;
-            clear: both;
-        }
-
-        .document-list-table{
-            text-align: center;
-        }
-
-        .documentPg{
-            margin-top: 2%;
-            position: absolute;
-            right: 0;
-            left: 0;
-            bottom: 1%;
-        }
-
-        </style>
+	<link rel="stylesheet" href="${contextPath}/webapp/resources/css/sign/signMain.css">
 
 </head>
 <body>
+	<jsp:include page="../common/boardSideMenu.jsp"/>
+
     <div id="document-container">
         <div class="tab_content">
             <input type="radio" name="document-tab" id="tab01" checked>
@@ -131,11 +39,11 @@
                             </select>
                         </div>
                         <div id="document-written-btn-area">
-                            <button type="button" class="btn btn-primary" id="newDocument">신규 작성</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 게시글 조회 목록 -->
+                        <!-- 1) 결재 문서 조회 목록 -->
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -147,7 +55,7 @@
                                 </tr>
                             </thead>
     
-                            <!-- 게시글 목록 출력 -->
+                            <!-- 결재 문서 목록 출력 -->
                             <tbody>
                                 <c:forEach items="${documentList}" var="document">
                                     <tr class="item" id="document-list-body">
@@ -276,12 +184,12 @@
                             </select>
                         </div>
                         <div id="document-written-btn-area">
-                            <button type="button" class="btn btn-primary" id="newDocument">신규 작성</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                             <button type="button" class="btn btn-primary" id="signAllDocument">일괄 결재</button>
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 게시글 조회 목록 -->
+                        <!-- 1) 결재 문서 조회 목록 -->
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -293,7 +201,7 @@
                                 </tr>
                             </thead>
     
-                            <!-- 게시글 목록 출력 -->
+                            <!-- 결재 문서 목록 출력 -->
                             <tbody>
                                 <c:forEach items="${documentList}" var="document">
                                     <tr class="item" id="document-list-body">
@@ -364,11 +272,11 @@
                             </select>
                         </div>
                         <div id="document-written-btn-area">
-                            <button type="button" class="btn btn-primary" id="newDocument">신규 작성</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 게시글 조회 목록 -->
+                        <!-- 1) 결재 문서 조회 목록 -->
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -380,7 +288,7 @@
                                 </tr>
                             </thead>
     
-                            <!-- 게시글 목록 출력 -->
+                            <!-- 결재 문서 목록 출력 -->
                             <tbody>
                                 <c:forEach items="${documentList}" var="document">
                                     <tr class="item" id="document-list-body">
@@ -451,13 +359,13 @@
                             </select>
                         </div>
                         <div id="document-written-btn-area">
-                            <button type="button" class="btn btn-primary" id="newDocument">신규 작성</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                             <button type="button" class="btn btn-primary" id="deleteDocument">문서 삭제</button>
                             <button type="button" class="btn btn-primary" id="deleteAllDocument">전체 삭제</button>
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 게시글 조회 목록 -->
+                        <!-- 1) 결재 문서 조회 목록 -->
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -469,7 +377,7 @@
                                 </tr>
                             </thead>
     
-                            <!-- 게시글 목록 출력 -->
+                            <!-- 결재 문서 목록 출력 -->
                             <tbody>
                                 <c:forEach items="${documentList}" var="document">
                                     <tr class="item" id="document-list-body">
@@ -530,6 +438,60 @@
             </div>
         </div>
     </div>
+    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="documentTypeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="documentTypeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" id="documentType-modal-dialog">
+            <div class="modal-content" id="documentType">
+                <div class="modal-header" id="documentTypeTitle">
+                    <ion-icon name="reader" id="documentType-img"></ion-icon>
+                    <h3 class="modal-title" id="documentTypeLabel" style="text-align: left;">작성할 문서 양식 선택</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" id="documentType-close-btn">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="documentType-container">
+                    <div class="row row-cols-1 row-cols-md-3">
+                        <div class="col mb-4">
+                          <div class="card">
+                            <a href="/sign/expenseReport.jsp">
+                            	<img src="..." class="card-img-top" alt="품의서">
+                            </a>
+                            <div class="card-body">
+                              <h5 class="card-title">품의서</h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                          	<a href="/sign/meeting.jsp">
+                            	<img src="..." class="card-img-top" alt="회의록">
+                            </a>
+                            <div class="card-body">
+                              <h5 class="card-title">회의록</h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                          	<a href="/sign/vacation.jsp">
+                            	<img src="..." class="card-img-top" alt="휴가신청서">
+                            </a>
+                            <div class="card-body">
+                              <h5 class="card-title">휴가신청서</h5>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div>* 작성할 문서 양식을 선택해주세요.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<input type="hidden" name=rank value="${workspaceJoin.memberRank}">
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

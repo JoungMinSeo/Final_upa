@@ -9,9 +9,9 @@ public class Meeting {
 	private int documentNo; // 문서 번호
 	private Timestamp meetingDt; // 회의 일자
 	private String meetingDept; // 회의 부서
-	private List<Member> meetingMember; // 참석자
 	private String meetingPurpose; // 회의 목적
 	private String meetingContent; // 회의 내용
+	private List<MeetingJoin> meetingJoin; // 참석자
 	
 	public Meeting() {	}
 
@@ -39,12 +39,12 @@ public class Meeting {
 		this.meetingDept = meetingDept;
 	}
 
-	public List<Member> getMeetingMember() {
-		return meetingMember;
+	public List<MeetingJoin> getMeetingJoin() {
+		return meetingJoin;
 	}
 
-	public void setMeetingMember(List<Member> meetingMember) {
-		this.meetingMember = meetingMember;
+	public void setMeetingJoin(List<MeetingJoin> meetingJoin) {
+		this.meetingJoin = meetingJoin;
 	}
 
 	public String getMeetingPurpose() {
@@ -66,7 +66,7 @@ public class Meeting {
 	@Override
 	public String toString() {
 		return "Meeting [documentNo=" + documentNo + ", meetingDt=" + meetingDt + ", meetingDept=" + meetingDept
-				+ ", meetingMember=" + meetingMember + ", meetingPurpose=" + meetingPurpose + ", meetingContent="
+				+ ", meetingJoin=" + meetingJoin + ", meetingPurpose=" + meetingPurpose + ", meetingContent="
 				+ meetingContent + "]";
 	}
 	

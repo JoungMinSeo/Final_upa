@@ -1,0 +1,83 @@
+div{
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.meeting-container{
+    width: 1000px;
+    height: auto;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.meeting-infobox{
+    width: 1000px;
+    height: 180px;
+    position: relative;
+}
+
+.meeting-writeInfo{
+    width: 250px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.signInfo{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.meeting-content-info{
+    width: 1000px;
+    padding-top: 30px;
+}
+
+.table{
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.table th{
+    background-color: lightgray;
+    border: 1px solid gray;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.table td{
+    border: 1px solid gray;
+    padding: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+
+.textA{
+    box-sizing: border-box;
+    vertical-align: middle;
+    width: 100%;
+    resize: none;
+}
+
+#meeting-member{
+    min-height: 80px;
+}
+
+#meeting-purpose{
+    min-height: 120px;
+}
+
+#meeting-content{
+    min-height: 200px;
+}
+
+.document-submit, .document-cancel, .document-save{
+    float: right;
+    margin-left: 10px;
+}

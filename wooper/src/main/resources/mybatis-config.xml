@@ -17,10 +17,12 @@
 		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.MeetingJoin" alias="MeetingJoin" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.PurchaseList" alias="PurchaseList" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Sign" alias="Sign" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.SignLine" alias="SignLine" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Vacation" alias="Vacation" />
+		<typeAlias type="edu.fin.upa.sign.model.vo.Viewer" alias="Viewer" />
 		
 		<!-- 함나현 vo임둥 -->
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Workspace" alias="Workspace" />
@@ -33,7 +35,7 @@
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/calendar-mapper.xml" />
-<!-- 		<mapper resource="/mappers/sign-mapper.xml" /> -->
+		<mapper resource="/mappers/sign-mapper.xml" />
 
 		<!-- 함나현 mapper임둥 -->
 		<mapper resource="/mappers/workspace-mapper.xml" />
