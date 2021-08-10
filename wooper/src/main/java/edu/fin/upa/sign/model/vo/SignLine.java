@@ -3,13 +3,13 @@ package edu.fin.upa.sign.model.vo;
 import java.sql.Timestamp;
 
 public class SignLine {
-	private int signOrder; // 결재 순번
 	private int signNo; // 결재 번호
 	private int memberNo; // 회원 번호
 	private int workNo; // 워크스페이스 번호
-	private String signType; // 결재 상태(대기:0, 심의:1, 반려:2, 결재:3)
+	private String signStatus; // 결재 상태(대기:0, 심의:1, 반려:2, 결재:3)
 	private String signComment; // 결재 의견
 	private Timestamp signDt; // 결재 일자
+	private int signOrder; // 결재 순번
 	
 	public SignLine() {	}
 
@@ -45,12 +45,12 @@ public class SignLine {
 		this.workNo = workNo;
 	}
 
-	public String getSignType() {
-		return signType;
+	public String getSignStatus() {
+		return signStatus;
 	}
 
-	public void setSignType(String signType) {
-		this.signType = signType;
+	public void setSignStatus(String signStatus) {
+		this.signStatus = signStatus;
 	}
 
 	public String getSignComment() {
@@ -72,7 +72,7 @@ public class SignLine {
 	@Override
 	public String toString() {
 		return "SignLine [signOrder=" + signOrder + ", signNo=" + signNo + ", memberNo=" + memberNo + ", workNo="
-				+ workNo + ", signType=" + signType + ", signComment=" + signComment + ", signDt=" + signDt + "]";
+				+ workNo + ", signStatus=" + signStatus + ", signComment=" + signComment + ", signDt=" + signDt + "]";
 	}
 	
 	

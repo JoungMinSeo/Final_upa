@@ -1,0 +1,78 @@
+div{
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.expense-report-container{
+    width: 1000px;
+    height: auto;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.expense-report-infobox{
+    width: 1000px;
+    height: 180px;
+    position: relative;
+}
+
+.expense-report-writeInfo{
+    width: 250px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.signInfo{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.expense-report-content{
+    width: 1000px;
+    padding-top: 30px;
+}
+
+.table{
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.table th{
+    background-color: lightgray;
+    border: 1px solid gray;
+    vertical-align: middle;
+}
+
+.table td{
+    border: 1px solid gray;
+    padding: 0;
+    vertical-align: middle;
+}
+
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+
+#expense-report-content-info{
+    margin-bottom: 0;
+}
+
+#expense-report-content-table{
+    margin-bottom: 0;
+}
+
+#document-etc{
+    width: 100%;
+    min-height: 150px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    resize: none;
+}
+
+.document-submit, .document-cancel, .document-save{
+    float: right;
+    margin-left: 10px;
+}
