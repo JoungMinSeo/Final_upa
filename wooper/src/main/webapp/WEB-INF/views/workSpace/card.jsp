@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -6,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <%--  <script src="${pageContext.request.contextPath}/resources/js/card.js" defer></script> --%> <!-- defer키워드 넣는 이유: 모든 스크립트 파일을 받을때까지 html창이 표시되지 않음을 방지하기 위해 -->
 
     <title>card~~~~</title>
 
@@ -17,12 +17,29 @@
 
 <body>
 
+
+
+
     <div class="container">
+    	
+    	
+<%-- 등록된 카드가 있을때 생성
+				<c:forEach items="${work}" var="item" varStatus="vs">
+					
+					
+					
+					
+				</c:forEach>
+
+     --%>
+    
+    
         <div class="addCard font" onclick="addCard();"> 카드 추가하기</div>
     </div>
 
 
     <!-- 리스트 추가  modal -->
+
 
     <div class="modal fade modalList" id="addList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl listSize">
@@ -120,7 +137,7 @@
  </div>
 
 
-
+<jsp:include page="cardScript.jsp"/>
 
 
 
