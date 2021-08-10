@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,14 +8,16 @@
     <link href="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.js"></script>
 
-	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar/main.css' rel='stylesheet' />
-	<script src='${pageContext.request.contextPath}/resources/css/fullcalendar/main.js'></script>
-	<script src='${pageContext.request.contextPath}/resources/css/fullcalendar/ko.js'></script>
+	<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 			   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			   crossorigin="anonymous"></script>
 	<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 	<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+	
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<%-- 	<jsp:include page="../common/boardSideMenu.jsp"/> --%>
 	<jsp:include page="../workSpace/workSpace.jsp" />
@@ -32,6 +34,15 @@ li{list-style-type : none;}
 </style>
 </head>
 <body>
+   	<c:if test="${!empty title}">
+		<script>
+			swal({
+				icon : "${icon}",
+				title : "${title}",
+				text : "${text}"
+			});
+		</script>
+	</c:if>
 
 	<div class="container" id="calendarc">
 		<div id='calendar'></div>

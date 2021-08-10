@@ -14,9 +14,9 @@
 	
 	
 	<select id="selectWorkList" parameterType="_int" resultMap="workspace_rm">
-		SELECT WORK_NO, WORK_NM
-		FROM WORKSPACE
-		WHERE MEMBER_NO = #{memberNo}
+	    SELECT WORK_NO, WORK_NM
+	    FROM WORKSPACE
+	    WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN WHERE MEMBER_NO = #{memberNo})
 	</select>
 	
 	<select id="selectWorkspace" parameterType="_int" resultMap="workspace_rm">

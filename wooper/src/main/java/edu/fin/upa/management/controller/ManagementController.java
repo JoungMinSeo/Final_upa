@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,7 @@ import edu.fin.upa.calendar.model.vo.Workspace;
 import edu.fin.upa.management.model.service.ManagementService;
 import edu.fin.upa.management.model.vo.Management;
 import edu.fin.upa.management.model.vo.Pagination;
+import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.workspace.model.service.WorkspaceService;
 
 @RequestMapping("/management/*")
@@ -60,14 +62,48 @@ public class ManagementController {
 		return "/member/management";
 	}
 	
+	
+	// 팀 멤버 초대 메일 보내기
+	@RequestMapping("{workNo}/sendEmail")
+	@ResponseBody
+	public int invitation(@ModelAttribute Management inputAddEmail) {
+																			// workNo,, memberId, memberRank
+			return mService.invitation(inputAddEmail);
+	}
+	
+	
+	
+	
+	
 	// 팀멤버 추가
 	@RequestMapping(value="{workNo}/add")
-	public String addJoinMember(@ModelAttribute Management inputAddEmail, RedirectAttributes ra) {
+	public String addJoinMember(@PathVariable("workNo") int workNo,
+														@ModelAttribute("loginMember") Member loginMember,
+														Management management, 	RedirectAttributes ra) {
 		
-		int result = mService.addJoinMember(inputAddEmail);
+		String path = "redirect:/";
 		
-		return null;
+		if(loginMember != null) {
+			//  로그인된 회원의 회원 번호를 얻어와 세팅
+			management.setMemberNo(loginMember.getMemberNo());
+			
+			//System.out.println(inputAddEmail);
+			int result = mService.addJoinMember(management);
+			
+			
+			if(result > 0) {
+				swalSetMessage(ra, "success", "도롱뇽이 된 것을 환영합니다.", null);
+				path = "redirect:/workspace/"+workNo+"/boardMain";
+			}else {
+				swalSetMessage(ra, "error", "초대받지않은 도롱뇽입니다.", null);
+			}
+		}else {
+			swalSetMessage(ra, "info", "로그인 후 초대 링크를 눌러주세요.", null);
+		}
+		
+		return path;
 	}
+	
 	
 	
 	

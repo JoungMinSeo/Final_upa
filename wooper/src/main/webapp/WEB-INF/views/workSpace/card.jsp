@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="${pageContext.request.contextPath}/resources/js/card.js" defer></script> <!-- defer키워드 넣는 이유: 모든 스크립트 파일을 받을때까지 html창이 표시되지 않음을 방지하기 위해 -->
+   <%--  <script src="${pageContext.request.contextPath}/resources/js/card.js" defer></script> --%> <!-- defer키워드 넣는 이유: 모든 스크립트 파일을 받을때까지 html창이 표시되지 않음을 방지하기 위해 -->
 
     <title>card~~~~</title>
 

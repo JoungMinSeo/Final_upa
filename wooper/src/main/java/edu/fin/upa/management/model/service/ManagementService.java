@@ -33,6 +33,12 @@ public interface ManagementService {
 	 */
 	int deleteJoinMember(int workNo, Management management);
 
+	/** 팀 멤버 초대 메일 보내기
+	 * @param inputAddEmail
+	 * @return result
+	 */
+	int invitation(Management inputAddEmail);
+	
 	/**  팀멤버 추가
 	 * @param inputAddEmail
 	 * @return result
