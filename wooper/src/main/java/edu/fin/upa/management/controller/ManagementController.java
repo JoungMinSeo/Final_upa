@@ -1,5 +1,6 @@
 package edu.fin.upa.management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import edu.fin.upa.calendar.model.vo.Workspace;
 import edu.fin.upa.management.model.service.ManagementService;
 import edu.fin.upa.management.model.vo.Management;
@@ -88,9 +90,14 @@ public class ManagementController {
 			if(result > 0) {
 				swalSetMessage(ra, "success", "도롱뇽이 된 것을 환영합니다.", null);
 				path = "redirect:/workspace/"+workNo+"/boardMain";
+			}else if(result == -1) {
+				swalSetMessage(ra, "info", "이미 가입된 도롱뇽입니다.", null);
+				path = "redirect:/workspace/"+workNo+"/boardMain";
 			}else {
 				swalSetMessage(ra, "error", "초대받지않은 도롱뇽입니다.", null);
 			}
+			
+			
 		}else {
 			model.addAttribute("loginMember", loginMember);
 			swalSetMessage(ra, "info", "로그인 후 초대 링크를 눌러주세요.", null);
@@ -100,52 +107,88 @@ public class ManagementController {
 	}
 	
 	// 회원등급수정
-	@RequestMapping(value="{workNo}/update")
-	public String updateMemberRank(@PathVariable("workNo") int workNo,
-													  @PathVariable("memberNo") int memberNo,
-													  @ModelAttribute("loginMember") Member loginMember,
-													  Management management, RedirectAttributes ra,
-													  HttpServletRequest request, Model model) {
+	@RequestMapping(value="{workNo}/rankUpdate")
+	@ResponseBody
+	public int updateMemberRank(@PathVariable("workNo") int workNo,
+											     @ModelAttribute("loginMember") Member loginMember,
+											     Management management, RedirectAttributes ra,
+											     HttpServletRequest request, Model model,
+											     int[] ckMemberNo, String[] changeRank) {
 		
-		String path = "redirect:/";
+//		 System.out.println(Arrays.toString(ckMemberNo));
+//		 System.out.println(Arrays.toString(changeRank));
 		
-			int result = mService.updateMemberRank(management);
+//		String path = "redirect:/";
+		
+		List<Management> list = new ArrayList<Management>();
+		for(int i = 0 ; i < ckMemberNo.length ; i++) {
+			Management m = new Management();
+			m.setMemberNo(ckMemberNo[i]);
+			m.setMemberRank(changeRank[i]);
+			m.setWorkNo(workNo);
 			
-			if(result > 0) { // 수정 성공
-				swalSetMessage(ra, "success", "도롱뇽 등급 수정 성공", null);
-				path ="redirect:/";
-			}else { // 수정 실패
-				swalSetMessage(ra, "error", "도롱뇽 등급 수정 실패", null);
-				// path= "redirect:" + request.getHeader("referer");
-			}
-			
+			list.add(m);
+		}
 		
-		return path;
+		int result = mService.updateMemberRank(list);
+		System.out.println(result);
+		return result;
 	}
 	
 	// 팀 회원 삭제
-	@RequestMapping(value="{workNo}/delete")
-	public String deleteJoinMember(@PathVariable("workNo")int workNo, 
-												   @ModelAttribute("loginMember") Member loginMember,
-												   Management management,
-												   RedirectAttributes ra) {
+	@RequestMapping(value="{workNo}/TMDelete")
+	@ResponseBody
+	public int deleteJoinMember(@PathVariable("workNo") int workNo,
+												    @ModelAttribute("loginMember") Member loginMember,
+												    Management management, RedirectAttributes ra,
+												    HttpServletRequest request, Model model,
+												    int[] ckMemberNo) {
 		
-		String path = "redirect:/";
-		
-			int result = mService.deleteJoinMember(workNo, management);
-			if(result > 0) { // 회원삭제성공
-				swalSetMessage(ra, "success", "도롱뇽을 추방하였습니다.", null);
-				path += "member/management";
-			}else { // 회원삭제실패
-				swalSetMessage(ra, "error", "도롱뇽 추방에 실패하였습니다.", null);
-				path +="secession";
-			}
+		List<Management> list = new ArrayList<Management>();
+		for(int i=0 ; i<ckMemberNo.length ; i++) {
+			Management m = new Management();
 			
-		
-		
-		return path;
+			m.setMemberNo(ckMemberNo[i]);
+			m.setWorkNo(workNo);
+			
+			list.add(m);
+		}
+			int result = mService.deleteJoinMember(list);
+			
+		return result;
 	}
 
+	// 현재 참여하고있는 워크스페이스 탈퇴
+	@RequestMapping(value="{workNo}/selfDelete")
+	@ResponseBody
+	public int selfDeleteMember(@PathVariable("workNo") int workNo,
+			@ModelAttribute("loginMember") Member loginMember,
+			Management management, RedirectAttributes ra,
+			HttpServletRequest request, Model model,
+			int[] ckMemberNo) {
+		
+		int result = 0;
+		String path = "redirect:/";
+		
+		List<Management> list = new ArrayList<Management>();
+		
+		for(int i=0 ; i<ckMemberNo.length ; i++) {
+			Management m = new Management();
+			
+			m.setMemberNo(ckMemberNo[i]);
+			m.setWorkNo(workNo);
+			
+			
+			list.add(m);
+			
+			if(m.getMemberNo() == loginMember.getMemberNo()) {
+				result = mService.deleteJoinMember(list);
+			} 
+			
+		}
+		
+		return result;
+	}
 	
 	// SweetAlert를 이용한 메시지 전달용 메서드
 	public static void swalSetMessage(RedirectAttributes ra, String icon, String title, String text) {
@@ -155,5 +198,8 @@ public class ManagementController {
 		ra.addFlashAttribute("title", title);
 		ra.addFlashAttribute("text", text);
 	}
+	
+	
+	
    
 }
