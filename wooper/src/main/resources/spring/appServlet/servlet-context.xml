@@ -60,6 +60,7 @@
 	
 	<!-- CardWebSocketHandler 클래스를 bean으로 등록 -->
 	<beans:bean id="cardHandler" class="edu.fin.upa.card.websocket.CardWebsocketHandler" />
+<!-- 	<beans:bean id="calendarHandler" class="edu.fin.upa.calendar.websocket.CalendarWebsocketHandler" /> -->
 		
 	<!-- /card 라는 주소로 오는 웹소켓 요청을 CardWebSocketHandler 클래스와 연결하기  -->
 	<websocket:handlers>

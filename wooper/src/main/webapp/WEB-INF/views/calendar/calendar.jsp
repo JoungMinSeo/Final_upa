@@ -5,15 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link href="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/css/colorPicker/bootstrap-colorpicker.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.js"></script>
 
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
 	<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
 	<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-			   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			   crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 	<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 	
@@ -22,16 +20,28 @@
 	<%-- 	<jsp:include page="../common/boardSideMenu.jsp"/> --%>
 	<jsp:include page="../workSpace/workSpace.jsp" />
 
-<style>
-#calendarc {
-	/* background-color:white;  */
-	/* background-color:rgb(235, 244, 249); */
-	background-color: rgb(236, 245, 250);
-	/* background-color:rgb(242, 248, 252); */
-}
-ul{list-style:none;}
-li{list-style-type : none;}
-</style>
+	<style>
+		#calendarc {
+			/* background-color:white;  */
+			/* background-color:rgb(235, 244, 249); */
+			background-color: rgb(236, 245, 250);
+			/* background-color:rgb(242, 248, 252); */
+		}
+		
+		#calListUpdate, #calListDelete{
+		  background-color:rgb(24, 64, 88);
+		  color:white;
+		  border: 2px solid white;
+		  border-radius: 5px;
+		}
+		#calListUpdate:hover, #calListDelete:hover{
+		  background-color:rgb(42,111,154);
+		}
+		
+		ul{list-style:none;}
+		li{list-style-type : none;}
+	</style>
+
 </head>
 <body>
    	<c:if test="${!empty title}">
@@ -67,9 +77,9 @@ li{list-style-type : none;}
 				
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소</button>
-					<button type="submit" class="btn btn-primary">내용수정</button>
+	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
+	               <button type="button" class="btn btn-primary" id="calListUpdate">수정</button>
+	               <button type="button" class="btn btn-primary" id="calListDelete">삭제</button>
 				</div>
 			</div>
 		</div>
@@ -153,31 +163,36 @@ li{list-style-type : none;}
 					// alert($(info.el).attr("workNm"));
 					
 					$("#detailBody").empty(); // 모달에 작성되어있는 이 전 내용 삭제
+
 					const ul = $("<ul>");
 					const li1 = $("<li>").text( $(info.el).attr("workNm") ); // 워크스페이스팀이름
 					const li2 = $("<li>").text( $(info.el).attr("workNo") ); // 워크스페이스번호
-					const li3 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
+					const li3 = $("<li>").text( $(info.el).attr("cardNo") ); // 카드번호
 					
-					// attr : attribute
-					// 2021-08-05T23:11:00+09:00 
-					const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
-					const li4 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
+					const li4 = $("<li>").text( $(info.el).attr("cardNm") ); // 카드이름
 					
-					const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
-					const li5 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
+					const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 					
 					const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
 					const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
 					
+					// attr : attribute
+					// 2021-08-05T23:11:00+09:00 
+					const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
+					const li7 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
+					
+					const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
+					const li8 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
+					
 					const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
-					const li7 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
+					const li9 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
 					const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor"}).val(info.event.backgroundColor);
-					const li8 = $("<li>").text( "배경색 : ").append(backgroundColor); // 배경색 
+					const li10 = $("<li>").text( "배경색 : ").append(backgroundColor); // 배경색 
 					const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
-					const li9 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
+					const li11 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
 					
 					
-					ul.append(li6, li1, li4, li5, li7, li8, li9);
+					ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
 					$("#detailBody").append(ul);
 				},
 
@@ -196,9 +211,11 @@ li{list-style-type : none;}
 					//console.log(info.event.extendedProps);
 					// {description: "Lecture", department: "BioChemistry"}
 					$(info.el).attr("workNm", info.event.extendedProps.workNm);
+					$(info.el).attr("cardNm", info.event.extendedProps.cardNm);
 					$(info.el).attr("listNo", info.event.extendedProps.listNo);
 					$(info.el).attr("cardNo", info.event.extendedProps.cardNo);
 					$(info.el).attr("workNo", info.event.extendedProps.workNo);
+					
 					
 					$(info.el).attr("data-toggle", "modal");
 					$(info.el).attr("data-target", "#calendarDetail");

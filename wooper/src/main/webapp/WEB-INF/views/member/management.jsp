@@ -12,8 +12,20 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<link href='${pageContext.request.contextPath}/resources/css/management.css' rel='stylesheet' />
+	
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <body>
+   	<c:if test="${!empty title}">
+		<script>
+			swal({
+				icon : "${icon}",
+				title : "${title}",
+				text : "${text}"
+			});
+		</script>
+	</c:if>
 
 	<div class="mmcon">
 		<div class="mmside">
@@ -29,7 +41,7 @@
 			        <div class="teamNamearea">
 			            <h1><br></h1><!-- 팀명중복으로 제거 -->
 			        </div>
-<%-- 					<form method="POST" action="#{workNo}/add" name="#{workNo}/add"> --%>
+
 				        <div class="insertmember">
 				            <div class="memberinformation">
 				                <h3 class="teammember">팀원정보</h3>
@@ -43,6 +55,12 @@
 				            <c:forEach items="${memberList }" var = "member">
 				            	<c:if test="${member.memberRank == 1  &&  member.memberId == loginMember.memberId}">
 				            		<c:set var="flag" value="true"/>
+				            	</c:if>
+				            </c:forEach>
+				            
+  				            <c:forEach items="${memberList }" var = "member">
+				            	<c:if test="${member.memberRank != 1  &&  member.memberNo == loginMember.memberNo}">
+				            		<c:set var="flag2" value="true"/>
 				            	</c:if>
 				            </c:forEach>
 				            
@@ -71,11 +89,8 @@
 				                <h3 class="teammember" id="loginmemberemail">${loginMember.memberId }</h3>
 				            </div>
 				        </div>
-<!-- 					</form>
- -->			        
 			        
 			        
-			        <div class="selectteammember">
 						<c:choose>
 							<%-- 조회된 멤버가 없을 경우 --%>
 							<c:when test="${empty memberList}">
@@ -86,16 +101,17 @@
 							<c:otherwise>
 							
 								<c:forEach items="${memberList }" var = "member">
+						        <div class="selectteammember">
 									<c:choose>
 										<c:when test="${member.memberImg == null}">
 								            <div class="memberprofile">
-								            	<input type="checkbox" name="ckMemberNo" value="${member.memberNo}">
+								            	<input type="checkbox" name="ckMemberNo"  value="${member.memberNo}">
 								                <img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="width:40%;">
 								            </div>
 										</c:when>
 										<c:when test="${member.memberImg != null}">
 								            <div class="memberprofile">
-								            	<input type="checkbox" name="ckMemberNo" value="${member.memberNo }">
+								            	<input type="checkbox" name="ckMemberNo"  value="${member.memberNo }">
 								                <img src="${pageContext.request.contextPath}/resources/img/member/${member.memberImg}" style="width:40%;">
 								            </div>
 										</c:when>
@@ -152,23 +168,33 @@
 						                </h3>    
 						            </div>
 								
+						        </div>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-			        </div>
 		           
+		           
+		           				<c:if test="${flag == true }">
 						            <div class="memberdelete">
 						                <button   type = "submit"  class="mdeletebtn" id="memberDelete"><h3>회원삭제</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
 						            </div>
 						            <div class="memberupdate">
 						                <button  type = "submit" class="mupdatebtn" id="memberUpdate"><h3>회원등급수정</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
 						            </div>
 						            <div class=chatinvite>
 						                <button  type = "submit" class="chat-Invite-btn" id="chatInvite"><h3>채팅방개설</h3></button>
-						                <%-- <h3><input type="button" class="mdeletebtn" value="회원삭제"></h3> --%>
 						            </div>
+					            </c:if>
+					            
+					            
+		           				<c:if test="${flag2 == true }">
+						            <div class="memberdelete">
+						                <button   type = "submit"  class="mdeletebtn" id="selfDelete"><h3>팀 나가기</h3></button>
+						            </div>
+						            <div class=chatinvite>
+						                <button  type = "submit" class="chat-Invite-btn" id="chatInvite"><h3>채팅방개설</h3></button>
+						            </div>
+					            </c:if>
 						            
 
 			    </div>
@@ -229,7 +255,6 @@
 		</div>
 
 	</div>
-	 </form>
 	 
 	 
 	 <script src="${pageContext.request.contextPath}/resources/js/management.js"></script>
@@ -270,10 +295,11 @@
 						console.log(result);
 						if(result == -1){
 							swal( { "icon" : "info", "title" : "이미 해당 팀의 도롱뇽입니다."	});
+						}else if(result == 0){
+							swal( { "icon" : "warnning", "title" : "이미 메일을 발송하였습니다."	});
 						}else{
 							swal( { "icon" : "success", "title" : "메일이 발송되었습니다."	});
 							$("#memberaddEmail").val(""); 
-							
 						}
 						
 					}, error : function(){
@@ -285,34 +311,114 @@
 			}
 		})
 		
-		
-		$("#memberUpdate").on("click",function(){
-			if( $("#changegrade").val().trim().length != 0 ){ 
-				$.ajax({
-					url : "../rankUpdate",
-					data : {"memberNo" : $("#ckMemberNo").val(),
-						        "memberRank" : $("#changeRank").val()},
-					type : "POST",
-					success : function(result){
-						console.log(result);
-						if(result == -1){
-							swal( { "icon" : "info", "title" : "이미 해당 팀의 도롱뇽입니다."	});
-						}else{
-							swal( { "icon" : "success", "title" : "메일이 발송되었습니다."	});
-							$("#memberaddEmail").val(""); 
-							
-						}
-						
-					}, error : function(){
-						swal( { "icon" : "error", "title" : "존재하지 않는 회원입니다."	});
-						
-					}
+	/* 회원 등급 수정 */
+	$("#memberUpdate").on("click",function(){
+	    var ckMemberNo = [];     // 배열 초기화
+	    var changeRank= [];     // 배열 초기화
+	    $.each( $("[name='ckMemberNo']:checked"), function(){
+	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    	const idx = $("[name='ckMemberNo']").index( $(this) );
+	    	
+	    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    });
+	    
+    	console.log(ckMemberNo);
+    	console.log(changeRank);
+	 
+	    $.ajax({
+	        url: '../rankUpdate', 
+	        type: 'POST',
+	        dataType: 'text',
+	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+			data : {"ckMemberNo" : ckMemberNo,
+	       			 "changeRank" : changeRank },
+    		success : function(result){
+    			console.log(result);
+				if(result > 0){
+					swal( { "icon" : "success", "title" : "도롱뇽의 등급이 변경되었습니다."	});
+				}else{
+					swal( { "icon" : "error", "title" : "도롱뇽의 등급 변경에 실패하였습니다."	});
+					$("#ckMemberNo").val(""); 
+				}
+    		}
+	    });
+	});
+   
+   
+   
+   /* 워크스페이스 내 회원 삭제 */
+	$("#memberDelete").on("click",function(){
+	    var ckMemberNo = [];     // 배열 초기화
+	    $.each( $("[name='ckMemberNo']:checked"), function(){
+	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    });
+	    
+    	console.log(ckMemberNo);
+	 
+	    $.ajax({
+	        url: '../TMDelete', 
+	        type: 'POST',
+	        dataType: 'text',
+	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+			data : {"ckMemberNo" : ckMemberNo},
+    		success : function(result){
+    			console.log(result);
+				if(result > 0){
+					swal( { "icon" : "success", "title" : "선택한 도롱뇽이 추방되었습니다."	});
 					
-				});
-			}
-		})
-		
-		
+				    $.each( $("[name='ckMemberNo']:checked"), function(){
+				    	$(this).parents(".selectteammember").remove();	    	
+				    });
+				    	
+				}else{
+					swal( { "icon" : "error", "title" : "도롱뇽 추방에 실패하였습니다."	});
+					$("#ckMemberNo").val(""); 
+				}
+    		}
+	    });
+	});
+   
+   /* 현재참여하고있는 워크스페이스 탈퇴하기 */
+	$("#selfDelete").on("click",function(){
+	    var ckMemberNo = [];     // 배열 초기화
+	    $.each( $("[name='ckMemberNo']:checked"), function(){
+	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    });
+	    
+    	console.log(ckMemberNo);
+	 
+	    $.ajax({
+	        url: '../selfDelete', 
+	        type: 'POST',
+	        dataType: 'text',
+	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+			data : {"ckMemberNo" : ckMemberNo},
+    		success : function(result){
+    			console.log(result);
+				if(result > 0){
+					swal( { "icon" : "success", "title" : "탈출 성공!"	});
+						
+				    $.each( $("[name='ckMemberNo']:checked"), function(){
+				    	$(this).parents(".selectteammember").remove();	    
+				    	
+			    	window.location.href = "../../../calendar/calendar";
+
+				    });
+				    	
+				}else{
+					swal( { "icon" : "error", "title" : "본인만 탈출 할 수 있습니다. 왕도롱뇽으로 승급하세요."	});
+					$("#ckMemberNo").val(""); 
+				}
+    		}
+	    });
+	});
+   	/* 현재 url */
+/* 	var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname; */
+
 
 	</script>
 </body>

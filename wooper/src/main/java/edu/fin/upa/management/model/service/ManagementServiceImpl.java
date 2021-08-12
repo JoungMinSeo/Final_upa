@@ -50,51 +50,55 @@ public class ManagementServiceImpl implements ManagementService{
 	public int invitation(Management inputAddEmail) {
 		
 		
-		
 		// 워크 스페이스에 가입된 회원인지 검사
 		Map<String, Object> map= mDao.selectWorkspaceJoin(inputAddEmail);
 		
-		System.out.println(map);
 		int result =0;	
-
-		
+		System.out.println(map);
 		System.out.println(inputAddEmail);
 		
 		if( Integer.parseInt(  map.get("CNT").toString()) == 0) { // 가입되지 않은 회원이라면
-			result = mDao.invitation(inputAddEmail);
 			
-			if(result > 0) {
-				String setfrom = "upalupa789@gmail.com"; // 보내는 서버 이메일
-				String tomail = inputAddEmail.getMemberId(); // 받는 사람 이메일
-				String title = "우파루파로부터 초대장이 도착했습니다."; // 제목
+			try {
+				result = mDao.invitation(inputAddEmail);
 				
-				String content =   (String)map.get("WORK_NM") + " 팀의 도롱뇽이 되어주세요!<br>"
-						+ "아래 링크 클릭 시 바로 승인됩니다.<br>"
-						+ "<a href='http://localhost:8080/wooper/management/"+inputAddEmail.getWorkNo()+"/add'>팀 초대 링크</a>"; // 내용
-				// <a href='http://localhost:8080/wooper/management/2/add>팀 초대 링크</a>
-				
-				// https://github.com/HoneyBBangdangE/WTWI/invitations
-				
-				try {
+				if(result > 0) {
+					String setfrom = "upalupa789@gmail.com"; // 보내는 서버 이메일
+					String tomail = inputAddEmail.getMemberId(); // 받는 사람 이메일
+					String title = "우파루파로부터 초대장이 도착했습니다."; // 제목
 					
-					MimeMessage message = mailSender.createMimeMessage();
-					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+					String content =   (String)map.get("WORK_NM") + " 팀의 도롱뇽이 되어주세요!<br>"
+							+ "아래 링크 클릭 시 바로 승인됩니다.<br>"
+							+ "<a href='http://localhost:8080/wooper/management/"+inputAddEmail.getWorkNo()+"/add'>팀 초대 링크</a>"; // 내용
+					// <a href='http://localhost:8080/wooper/management/2/add>팀 초대 링크</a>
 					
-					messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
-					messageHelper.setTo(tomail); // 받는사람 이메일
-					messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-					messageHelper.setText(content, true); // 메일 내용
+					// https://github.com/HoneyBBangdangE/WTWI/invitations
 					
-					mailSender.send(message);
+					try {
+						
+						MimeMessage message = mailSender.createMimeMessage();
+						MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+						
+						messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+						messageHelper.setTo(tomail); // 받는사람 이메일
+						messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+						messageHelper.setText(content, true); // 메일 내용
+						
+						mailSender.send(message);
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 				
-			}else { // 가입이 되어있는 경우
-				result = -1;
+			}catch (Exception e) {
+				result = 0;
 			}
 			
+		}else { // 가입이 되어있는 경우
+			result = -1;
+			mDao.deleteInvitation(inputAddEmail);
 		}
 		
 		return result;
@@ -114,34 +118,63 @@ public class ManagementServiceImpl implements ManagementService{
 			management.setMemberRank(memberRank);
 			
 			result = mDao.addJoinMember(management);
+		
 			
+			
+			System.out.println("result : " + result);
+			System.out.println(management);
 			if(result > 0) {
 				mDao.deleteInvitation(management);
 			}
+		}else {
+			// 이미 워크스페이스에 가입된 회원인지 확인
+			result = mDao.checkWorkspceMember(management);
+			
+			// 이미 존재하는 회원인 경우
+			if(result > 0)  result = -1;
 		}
 		
 		return result;
 	}
 	
 	// 회원 등급 수정
+	
 	@Transactional(rollbackFor=Exception.class)
 	@Override
-	public int updateMemberRank(Management management) {
+	public int updateMemberRank(List<Management> list) {
+		int result = 0;
+		System.out.println("너는 무엇이 담겨있느냐 : " + list);
 		
-		int result = mDao.updateMemberRank(management);
+		for(Management m : list) {
+			result = mDao.updateMemberRank(m);
+			
+			if(result == 0) {
+				break;
+			}
+		}
 		
 		return result;
 	}
-
+		
 	// 팀 회원 삭제
 	@Transactional(rollbackFor=Exception.class)
 	@Override
-	public int deleteJoinMember(int workNo, Management management) {
+	public int deleteJoinMember(List<Management>  list) {
+		int result = 0;
 		
-		int result=mDao.deleteJoinMember(workNo, management);
+		for(Management m : list) {
+			result=mDao.deleteJoinMember(m);
+			if(result ==0) {
+				break;
+			}
+		}
 		
 		return result;
 	}
+		
+		
+
+
 	
 
 

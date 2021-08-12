@@ -36,13 +36,16 @@ public interface ManagementService {
 	 * @param memberNo
 	 * @return result
 	 */
-	int updateMemberRank(Management management);
+	int updateMemberRank(List<Management> list);
 
 	/** 팀 회원 삭제
 	 * @param workNo
 	 * @param management
 	 * @return result
 	 */
-	int deleteJoinMember(int workNo, Management management);
+	int deleteJoinMember(List<Management> list);
+
+
+
 
 }
