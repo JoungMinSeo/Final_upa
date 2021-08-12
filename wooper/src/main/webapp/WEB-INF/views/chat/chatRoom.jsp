@@ -1,163 +1,284 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>채팅창</title>
-
-	<link href='${pageContext.request.contextPath}/resources/css/chat/chatRoom.css' rel='stylesheet' />
-
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>chatRoom</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/chat/chatRoom.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/chat/chatInvite.css">
 </head>
-
+<link rel="stylesheet" href="chatRoom.css">
 <body>
-    <div class="chattinglistcontainer">
-        <div class="chattinglisttitle">
-            <div class="chattinglisttt">
-                <h1>채팅</h1>
-            </div>
-
-            <div class="loginmemberemail">
-                <h3 class="teammember" id="loginmemberemail">hammcoder@gmail.com</h3>
-            </div>
-        </div>
-
-        <div class="chatting-area">
-            <ul class="display-chatting">
-
-                <c:forEach items="${list}" var="msg">
-                    <fmt:formatDate var="chatDate" value="${msg.createDate }" pattern="yyyy년 MM월 dd일 HH:mm:ss" />
-                    <c:if test="${msg.memberNo == loginMember.memberNo }">
-                        <li class="myChat">
-                            <span class="chatDate">${chatDate}</span>
-                            <p class="chat">${msg.message }</p>
-                        </li>
-                    </c:if>
-
-                    <c:if test="${msg.memberNo != loginMember.memberNo }">
-                        <li>
-                            <b>${msg.memberName }</b> <br>
-                            <p class="chat">${msg.message }</p>
-                            <span class="chatDate">${chatDate}</span>
-                        </li>
-                    </c:if>
-
-                </c:forEach>
-
-            </ul>
-
-            <div class="input-area">
-                <textarea id="inputChatting" rows="3"></textarea>
-                <button id="send">
-                    <img src="../common/icon/message.png" style="width:50px;">
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
-
-    <!-- 
-            WebSocket : 브라우저와 웹서버간의 전이중 통신을 지원하는 프로토콜
-            (WebSocket을 위한 객체는 HTTP를 이용해 생성되지만, 생성 후 동작은 HTTP와 별도로 진행됨)
-            
-            (전이중(Full Duplex) 통신 : 두 단말기가 데이터를 송수신 하기 위해 각각 독립된 회선을 사용하는 것)
-            
-            WebSocket을 사용하기 위한 객체를 Javascript가 기본적으로 제공하고 있지만
-            (new WebSocket) 웹소켓을 제공하지 않는 브라우저도 있다.
-            -> SookJS를 이용하면 문제가 해결 됨
-            
-            SockJS : 브라우저가 WebSocket을 제공하지 않을 때 비슷한 다른 객체를 찾아서 
-                        웹소켓 통신이 가능하도록 하는 Javascript 라이브러리
-         -->
-
-    <!-- https://github.com/sockjs/sockjs-client -->
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-
-
-    <script>
-        // -------------------------------------------- WebSocket ----------------------------------------------
-
-        //let chattingSock; // SockJS를 이용한 WebSocket 객체 저장 변수 선언
-
-        // 로그인이 되어 있을 경우에만
-        // /chat 이라는 요청 주소로 통신할 수 있는  WebSocket 객체 생성
-        // let chattingSock = new SockJS("<c:url value='/chat' />"); 
-        let chattingSock = new SockJS("${contextPath}/chat");
-        // -> 생성된 SockJS객체는 자바 스크립트(브라우저에서 동작 == 클라이언트)
-        // 		/chat주소로 오는 웹소켓 요청을 받아들이는 핸들러는 자바(서버에서 동작 == 서버)
-        // 		서버와 통신할 수 있는 별도의 통로가 개설이 된다.
-
-
-        const memberNo = "${loginMember.memberNo}"; // 회원 번호 
-        const memberId = "${loginMember.memberId}"; // 회원 아이디 --> 사용하지 않아도 됨.
-        const memberName = "${loginMember.memberName}"; // 회원 이름
-        const chatRoomNo = "${chatRoomNo}"; // 채팅방 번호
-
-        // 채팅보내기 버튼을 클릭했을 때 
-        $("#send").on("click", function () {
-            const chat = $("#inputChatting").val(); // 입력한 채팅 내용
-
-            if (chat.trim().length == 0) {
-                alert("채팅을 입력해주세요.");
-            } else {
-                // {중괄호} : JS -> Object(객체) Javascript -> 배열
-                // 자바스크립트 객체 obj를 만들어 로그인한 회원의 정보, 채팅방 번호, 채팅 내용을 삽입
-                var obj = {
-                    "memberNo": memberNo,
-                    "memberId": memberId,
-                    "memberName": memberName,
-                    "chat": chat,
-                    "chatRoomNo": chatRoomNo
-                };
-
-                // JSON : 자바스크립트 객체 표기법, 자바스크립트 객체 모양의 문자열
-                // JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
-
-                // JSON.stringify() : 자바 스크립트 객체를 JSON문자열로 변환
-
-                // 웹소켓 통신 객체를 이용해 /chat 주소로 obj를 JSON으로 변환한 문자열을 전송함
-                chattingSock.send(JSON.stringify(obj));
-
-                $("#inputChatting").val("");
-            }
-        });
-
-        // WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
-        chattingSock.onmessage = function (event) {
-            // 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
-            const obj = JSON.parse(event.data);
-            console.log(obj);
-
-
-            const li = $("<li>");
-            const p = $("<p class='chat'>");
-            const span = $("<span class='chatDate'>");
-            span.html(obj.createDate);
-
-            const chat = obj.chat.replace(/\n/g, "<br>");
-            p.html(chat);
-
-            if (obj.memberNo == memberNo) {
-                li.addClass("myChat");
-                li.append(span);
-                li.append(p);
-            } else {
-                li.html("<b>" + obj.memberName + "</b><br>");
-                li.append(p);
-                li.append(span);
-            }
-
-            $(".display-chatting").append(li);
-
-            // 채팅 입력 시 스크롤을 가장 아래로 내리기
-            $(".display-chatting").scrollTop($(".display-chatting")[0].scrollHeight);
-
-        }
-    </script>
+	<div id="color">
+		<div id="container">
+			<aside>
+				<c:choose>
+					<c:when test="${empty chatRoomList}">
+						<br>
+						<br>
+						<h4 style="color: white;">&nbsp채팅방이 존재하지 않습니다</h4>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="chatRoom" items="${chatRoomList}">
+							<ul class="scroll">
+								<li>
+									<%-- <img src="${loginMember.memberImg}"> --%>
+									<div>
+										<h2>${chatRoom.title}</h2>
+										<h3>
+											<span class="status orange"></span> 마지막 내용
+										</h3>
+									</div>
+								</li>
+							</ul>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				<hr>
+				<!-- Button trigger modal -->
+				<button type="button" data-toggle="modal" class="makeChatRoom"
+					data-target="#signLineModal">채팅방 개설</button>
+			</aside>
+			${memberList}
+			<main>
+				<header>
+					<div>
+						<h2>채팅방 이름</h2>
+					</div>
+				</header>
+				<ul id="chat">
+					<li class="you">
+						<div class="entete">
+							<span class="status green"></span>
+							<h2>정민서</h2>
+							<h3>10:12AM, Today</h3>
+						</div>
+						<div class="triangle"></div>
+						<div class="message">도대체 이게 모야</div>
+					</li>
+					<li class="you">
+						<div class="entete">
+							<span class="status green"></span>
+							<h2>정민서</h2>
+							<h3>10:12AM, Today</h3>
+						</div>
+						<div class="triangle"></div>
+						<div class="message">도대체 이게 모야</div>
+					</li>
+					<li class="you">
+						<div class="entete">
+							<span class="status green"></span>
+							<h2>정민서</h2>
+							<h3>10:12AM, Today</h3>
+						</div>
+						<div class="triangle"></div>
+						<div class="message">도대체 이게 모야</div>
+					</li>
+					<li class="you">
+						<div class="entete">
+							<span class="status green"></span>
+							<h2>정민서</h2>
+							<h3>10:12AM, Today</h3>
+						</div>
+						<div class="triangle"></div>
+						<div class="message">도대체 이게 모야</div>
+					</li>
+					<li class="me">
+						<div class="entete">
+							<h3>10:12AM, Today</h3>
+							<h2>Vincent</h2>
+							<span class="status blue"></span>
+						</div>
+						<div class="triangle"></div>
+						<div class="message">하하 진짜 힘드네요</div>
+					</li>
+				</ul>
+				<footer>
+					<textarea placeholder="Type your message"></textarea>
+					<a href="#">Send</a>
+				</footer>
+			</main>
+		</div>
+	</div>
 </body>
 
+<!-- Modal -->
+<div class="modal fade" id="signLineModal" data-backdrop="static"
+	data-keyboard="false" tabindex="-1" aria-labelledby="signLineLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl"
+		id="signLine-modal-dialog">
+		<div class="modal-content" id="signLine">
+			<div class="modal-header">
+				<ion-icon name="people" id="signLine-people"></ion-icon>
+				<h3 class="modal-title" id="signLineLabel">채팅방 개설</h3>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true" id="signLine-close-btn">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="signLine-container">
+				<div class="signList-container">
+					<div id="signList-title">
+						<h4>초대할 회원</h4>
+					</div>
+					<div class="signList">
+						<div class="signList-search">
+							<form action="memberList" method="GET"
+								id="signListMemberSearchForm">
+								
+								<select name="sk" class="form-control"
+									id="signList-search-option">
+									<option value="memberNm">이름</option>
+									<option value="memberNick">닉네임</option>
+									<option value="memberId">이메일</option>
+									
+								</select> <input type="search" name="sv" class="form-control"
+									id="signListSearch" name="signListSearch" placeholder=" 회원 검색">
+								<button type="button" class="signListSearchBtn" id="searchMember">
+									<svg xmlns="http://www.w3.org/2000/svg" width="22" height="30"
+										fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+								</button>
+							</form>
+						</div>
+						<div class="memberTable">
+							<table class="table table-sm table-hover table-bordered">
+								<thead>
+									<tr>
+										<th width="110px">닉네임</th>
+										<th>멤버 이메일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:choose>
+										<c:when test="${empty memberList}">
+											<div id="searchList">검색 내역이 존재하지 않습니다.</div>
+										</c:when>
+
+										<c:otherwise>
+											<c:forEach items="${memberList}" var="member">
+												<tr class="searchMemberArea">
+													<td class="memberNick">${member.memberNick}</td>
+													<td class="memberId">${member.memberId}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="signLine-iconbox">
+					<button type="button" id="signLine-forward-btn"
+						onclick="addSignLine();">
+						<ion-icon name="chevron-forward-circle-outline"
+							id="signLine-forward"></ion-icon>
+					</button>
+					<br>
+					<button type="button" id="signLine-back-btn"
+						onclick="deleteSignLine();">
+						<ion-icon name="chevron-back-circle-outline" id="signLine-back"></ion-icon>
+					</button>
+				</div>
+
+				<div class="signLine-info">
+					<div id="signLine-info-title">
+						<h4>초대한 사람</h4>
+					</div>
+					<div id="signLine-info-content">
+						<table class="table table-hover table-sm" id="signLine-table">
+							<thead class="thead-light">
+								<tr>
+									<th>초대한 사람 이메일</th>
+									<th width="40px"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td></td>
+									<td>&times;</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>&times;</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="makeChatRoom">채팅방 개설</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$("#searchMember").click(function(){
+	
+	const sk = $("#signList-search-option").val();
+	const sv = $("#signListSearch").val();
+	
+	console.log(sk);
+	console.log(sv);
+	
+	$.ajax({
+		url : "memberList",
+		data : {"sk":sk,
+				"sv":sv},
+		type : "POST",
+		success:function(memberList){
+			
+			console.log("검색됨" + memberList);
+			
+			$(".searchList").html("");
+			$.each(JSON.parse(memberList),function(index,item){
+				
+				var area = $("<tr>").addClass("searchMemberArea");
+				var memberNick = $("<td>").addClass("memberNick").text(item.memberNick);
+				var memberId = $("<td>").addClass("memberId").text(item.memberId);
+				
+				area.append(memberNick).append(memberId);
+				$(".searchList").append(area);
+			});
+			
+		},error:function(e){
+			console.log("ajax 통신 실패");
+			console.log(e);
+		}
+	});
+
+ });
+	
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+	crossorigin="anonymous"></script>
+<script type="module"
+	src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule
+	src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

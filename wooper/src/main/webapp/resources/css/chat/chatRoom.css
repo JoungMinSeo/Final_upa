@@ -1,118 +1,221 @@
-@charset "UTF-8";
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+	box-sizing:border-box;
+    font-family: "BMJUA";
+}
+html{
+	background-color: rgb(213,232,243);
+}
+#color{
+	background-color: rgb(213,232,243);
+}
+#container{
+	width:1050px;
+	height:800px;
+	background:#f4f4f4;
+	margin:0 auto;
+	font-size:0;
+	border-radius:5px;
+    margin-top: 50px;
+}
+.makeChatRoom{
+    width: 200px;
+    height: 50px;
+    margin-left: 30px;
+    margin-top: 5px;   
+    border-radius: 5px;
+    background:#3c7294;
+    border: 0px;
+    color: white;
+}
+#btn:hover{
+    cursor: pointer;
+}
+aside{
+	width:260px;
+	height:800px;
+	background-color:#3b3e49;
+	font-size:15px;
+	vertical-align:top;
+    border-radius: 5px;
+	float: left;
+}
+main{
+	width:490px;
+	height:800px;
+	font-size:15px;
+	vertical-align:top;
+	float: left;
+}
 
-        @font-face {
-            font-family: 'BMJUA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        *{font-family: 'BMJUA';}
+aside ul{
+	padding-left:0;
+	margin:0;
+	list-style-type:none;
+	height:690px;
+	overflow-y:scroll;
+    -ms-overflow-style: none;
+}
+aside ul::-webkit-scrollbar{ display:none; }
 
-	    @font-face {
-		    font-family: 'BMJUA';
-		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
-		}
-    
-        div {
-            /* border : 2px solid rgb(24, 64, 88); */
-            box-sizing: border-box;
-        }
+aside li{
+    margin-top: 7px;
+	padding:10px 0;
+}
+aside li:hover{
+	background-color:#5e616a;
+}
+h2,h3{
+	margin:0;
+}
+aside li img{
+	border-radius:50%;
+	margin-left:30px;
+	margin-right:20px;
+}
+aside li div{
+	display:inline-block;
+	vertical-align:top;
+	margin-top:12px;
+}
+aside li h2{
+	font-size:20px;
+	color:#fff;
+	font-weight:normal;
+	margin-bottom:5px;
+}
+aside li h3{
+	font-size:15px;
+	color:#7e818a;
+	font-weight:normal;
+}
+.chatRoom{
+	float: left;
+}
+.status{
+	width:8px;
+	height:8px;
+	border-radius:50%;
+	display:inline-block;
+	margin-right:7px;
+}
+.green{
+	background-color:#58b666;
+}
+.orange{
+	background-color:#ff725d;
+}
+.blue{
+	background-color:#6fbced;
+	margin-right:0;
+	margin-left:7px;
+}
+main header{
+	height:110px;
+	padding:30px 20px 30px 40px;
+    width: 100%;
+    height: 10%;
+}
+main header > *{
+	display:inline-block;
+	vertical-align:top;
+}
+main header img:first-child{
+	border-radius:50%;
+}
+#chat{
+	padding-left:0;
+	margin:0;
+	list-style-type:none;
+	overflow-y:scroll;
+	height:535px;
+	border-top:2px solid #fff;
+	border-bottom:2px solid #fff;
+    width: 84vh;
+}
+#chat::-webkit-scrollbar{ display:none; }
+#chat li{
+	padding:10px 30px;
+}
+#chat h2,#chat h3{
+	display:inline-block;
+	font-size:13px;
+	font-weight:normal;
+}
+#chat h3{
+	color:#bbb;
+}
+#chat .entete{
+	margin-bottom:5px;
+}
+#chat .message{
+	padding:20px;
+	color:#fff;
+	line-height:25px;
+	max-width:90%;
+	display:inline-block;
+	text-align:left;
+	border-radius:5px;
+}
+#chat .me{
+	text-align:right;
+}
+#chat .you .message{
+	background-color:#58b666;
+}
+#chat .me .message{
+	background-color:#6fbced;
+}
+#chat .triangle{
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 10px 10px 10px;
+}
+#chat .you .triangle{
+		border-color: transparent transparent #58b666 transparent;
+		margin-left:15px;
+}
+#chat .me .triangle{
+		border-color: transparent transparent #6fbced transparent;
+		margin-left: 690px;
+}
 
-        /*         @media(max-width:950px) {
-            h1{font-size:25px; margin-bottom:0;}
-            h3{font-size:15px; margin-bottom:0;}
-            .memberprofile img{height:30px;}
-        }
-        @media(max-width:690px) {
-            h1{font-size:15px; margin-bottom:0;}
-            h3{font-size:5px; margin-bottom:0;}
-            .memberprofile img{height:15px;}
-        } */
-
-
-        /* 전체 테두리 */
-        .chattinglistcontainer {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* 타이틀 */
-        .chattinglisttitle {
-            width: 100%;
-            height: 5%;
-            border-bottom: 2px solid rgb(24, 64, 88);
-            float: left;
-        }
-
-        .chattinglisttitle h1,
-        .chattinglisttitle h3 {
-            margin-bottom: 5px;
-            margin-top: 10px;
-        }
-
-        .chattinglisttt {
-            width: 50%;
-            float: left;
-        }
-
-        #loginmemberemail {
-            float: right;
-            padding-top: 18px;
-        }
-
-
-
-        /* 채팅창 */
-        .chatting-area {
-            margin: auto;
-            height: 600px;
-            width: 450px;
-            margin-bottom: 100px;
-            float:left;
-        }
-        
-        .display-chatting {
-            width: 100%;
-            height: 600px;
-            border: 1px solid black;
-            overflow: auto;
-            list-style: none;
-            padding: 10px 10px;
-        }
-
-        .chat {
-            display: inline-block;
-            border-radius: 20%;
-            padding: 5px;
-            background-color: #eee;
-        }
-
-
-        .input-area {
-            width: 100%;
-            display: flex;
-        }
-
-        #inputChatting {
-            width: 80%;
-            resize: none;
-        }
-
-        #send {
-            width:20%;
-            background-color:rgb(24, 64, 88);
-        }
-
-        .myChat {
-            text-align: right;
-        }
-
-        .myChat>p {
-            background-color: yellow;
-        }
-
-        .chatDate {
-            font-size: 9px;
-        }
+main footer{
+	height:155px;
+	padding:20px 30px 10px 20px;
+    width: 85vh;
+}
+main footer textarea{
+	resize:none;
+	border:none;
+	display:block;
+	width:100%;
+	height:80px;
+	border-radius:3px;
+	padding:20px;
+	font-size:13px;
+	margin-bottom:13px;
+}
+main footer textarea::placeholder{
+	color:#ddd;
+}
+main footer img{
+	height:30px;
+	cursor:pointer;
+}
+main footer a{
+	text-decoration:none;
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#6fbced;
+	vertical-align:top;
+	margin-left:680px;
+	margin-top:5px;
+	display:inline-block;
+}

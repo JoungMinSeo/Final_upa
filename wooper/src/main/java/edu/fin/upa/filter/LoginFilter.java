@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 // 회원 전용 서비스에 비로그인 상태로 요청이 올 경우 메인페이지로 돌려보내는 필터
-@WebFilter(filterName = "loginFilter", urlPatterns = {"/{workNo}/add"})
+@WebFilter(filterName = "loginFilter", urlPatterns = {"/member/myPage", "/member/changePwd" ,"/member/secession"})
 public class LoginFilter implements Filter {
 
 	public void destroy() {

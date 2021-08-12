@@ -14,6 +14,12 @@
 	<!-- VO클래스의 패키지명 + 클래스명 작성하는 것이 불편하기 때문에 짧은 별칭 부여 -->
 	<typeAliases>
 		<typeAlias type="edu.fin.upa.member.model.vo.Member" alias="Member" />
+		<typeAlias type="edu.fin.upa.chat.model.vo.ChatRoom" alias="ChatRoom" />
+		<typeAlias type="edu.fin.upa.chat.model.vo.ChatMessage" alias="ChatMessage" />
+		<typeAlias type="edu.fin.upa.chat.model.vo.ChatRoomJoin" alias="ChatRoomJoin" />
+		<typeAlias type="edu.fin.upa.chat.model.vo.Search" alias="Search"/>
+
+
 		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
@@ -34,9 +40,10 @@
 	<!-- mapper 파일(SQL 작성되는파일) 위치 등록 부분 -->
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/chat-mapper.xml"/>
+		
 		<mapper resource="/mappers/calendar-mapper.xml" />
 		<mapper resource="/mappers/sign-mapper.xml" />
-
 		<!-- 함나현 mapper임둥 -->
 		<mapper resource="/mappers/workspace-mapper.xml" />
 		<mapper resource="/mappers/management-mapper.xml" />
