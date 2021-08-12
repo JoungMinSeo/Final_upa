@@ -41,6 +41,11 @@
 					WHERE MEMBER_STATUS = 'Y'
 					AND MEMBER_ID=#{memberId}), #{workNo}, #{memberRank})
 	</insert>
+	
+	<!--  팀 멤버 초대 실패 시 초대 삭제 -->
+	<delete id="inviTranslation" parameterType="Management">
+		DELETE FROM INVITATION WHERE MEMBER_NO =(SELECT MEMBER_NO MEMBER WHERE MEMBER_ID = #{memberId})
+	</delete>
 
 	<!-- 초대 테이블에서 회원등급 조회 -->
 	<select id="selectIvitation" parameterType="Management" resultType="string">
@@ -67,13 +72,12 @@
 	<select id="selectWorkspaceJoin" parameterType="Management" resultType="map">
 		SELECT CNT, (SELECT WORK_NM FROM WORKSPACE WHERE WORK_NO=#{workNo}) WORK_NM
 		FROM (SELECT COUNT(*) CNT FROM WORKSPACE_JOIN
-		
-				WHERE MEMBER_NO =#{memberNo}
-				
+		JOIN MEMBER USING(MEMBER_NO)
+				WHERE MEMBER_ID =#{memberId}
 				AND WORK_NO = #{workNo})
 	</select>
 	
-		<!-- 회원등급수정 -->
+	<!-- 회원등급수정 -->
 	<update id="updateMemberRank" parameterType="Management">
 			UPDATE WORKSPACE_JOIN SET MEMBER_RANK = #{memberRank}
 			WHERE WORK_NO = #{workNo}
@@ -82,13 +86,19 @@
 	
 	
 	<!-- 팀 회원 삭제 -->
-	<update id="deleteJoinMember" parameterType="Management">
+	<delete id="deleteJoinMember" parameterType="Management">
 		DELETE FROM WORKSPACE_JOIN
 		WHERE WORK_NO = #{workNo}
 		AND MEMBER_NO = #{memberNo}
-	</update>
+	</delete>
 	
-
+	<!--  -->
+	<select id="checkWorkspceMember" parameterType="Management" resultType="_int">
+		SELECT COUNT(*) FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo}
+		AND MEMBER_NO = #{memberNo}
+	</select>
+	
 
 
 </mapper>

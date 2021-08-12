@@ -5,6 +5,8 @@
 	<resultMap type="Calendar" id="cal_rm">
 		<id property="listNo" column="LIST_NO"/>
 		
+		<result property="cardNo" column="CARD_NO"/>
+		<result property="cardNm" column="CARD_NM"/>
 		<result property="title" column="LIST_NM"/>
 		<result property="start" column="LIST_START_DT"/>
 		<result property="end" column="LIST_END_DT"/>
@@ -16,7 +18,7 @@
 	</resultMap>
 	
 	<select id="selectCalendar" parameterType="map" resultMap="cal_rm">
-	     SELECT LIST_NM, 
+	     SELECT LIST_NM,  CARD_NO, CARD_NM, 
 			    TO_CHAR(LIST_START_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_START_DT, 
 			    TO_CHAR(LIST_END_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_END_DT, 
 			    LIST_TCOLOR, LIST_BGCOLOR, LIST_BDCOLOR, WORK_NO, WORK_NM, LIST_NO 
@@ -27,9 +29,11 @@
 			BETWEEN ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), -1) 
 			AND LAST_DAY(ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), 1))
 			AND LIST_NO IN(SELECT LIST_NO FROM LIST
-			                WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
-			                                  WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
-			                                                    WHERE MEMBER_NO = #{memberNo} )))
+					                 WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
+								                                     WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
+								                                                    				   WHERE MEMBER_NO = #{memberNo} )                                                    
+		                                       				 		 AND CARD_STATUS = 'Y')
+                                     AND LIST_STATUS = 'Y')
 	</select>
 	
 
@@ -56,7 +60,7 @@
 	 -->
 	 
 	 	<select id="selectTeamCal" parameterType="map" resultMap="cal_rm">
-	     SELECT LIST_NM, 
+	     SELECT LIST_NM, CARD_NO, CARD_NM,
 			    TO_CHAR(LIST_START_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_START_DT, 
 			    TO_CHAR(LIST_END_DT, 'YYYY-MM-DD HH24:MI:SS') AS LIST_END_DT, 
 			    LIST_TCOLOR, LIST_BGCOLOR, LIST_BDCOLOR, WORK_NO, WORK_NM, LIST_NO 
@@ -67,9 +71,11 @@
 			BETWEEN ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), -1) 
 			AND LAST_DAY(ADD_MONTHS(to_date(#{startDate}, 'RRRR-MM'), 1))
 			AND LIST_NO IN(SELECT LIST_NO FROM LIST
-			                WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
-			                                  WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
-			                                                    WHERE WORK_NO = #{workNo} )))
+					                 WHERE CARD_NO IN (SELECT CARD_NO FROM CARD
+									                                 WHERE WORK_NO IN (SELECT WORK_NO FROM WORKSPACE_JOIN
+									                                                    			   WHERE WORK_NO = #{workNo} )
+		                                       				 		 AND CARD_STATUS = 'Y')
+                                     AND LIST_STATUS = 'Y')
 	</select>
 
 

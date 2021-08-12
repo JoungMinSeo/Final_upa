@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class Calendar {
 	private int cardNo;
+	private String cardNm;
 	private int listNo;
 	private String title;
 	private String listStatus;
@@ -28,6 +29,14 @@ public class Calendar {
 
 	public void setCardNo(int cardNo) {
 		this.cardNo = cardNo;
+	}
+	
+	public String getCardNm() {
+		return cardNm;
+	}
+
+	public void setCardNm(String cardNm) {
+		this.cardNm = cardNm;
 	}
 
 	public int getListNo() {
@@ -128,11 +137,13 @@ public class Calendar {
 
 	@Override
 	public String toString() {
-		return "Calendar [cardNo=" + cardNo + ", listNo=" + listNo + ", title=" + title + ", listStatus=" + listStatus
-				+ ", start=" + start + ", end=" + end + ", listMDt=" + listMDt + ", listDDt=" + listDDt + ", textColor="
-				+ textColor + ", backgroundColor=" + backgroundColor + ", borderColor=" + borderColor + ", workNo="
-				+ workNo + ", workNm=" + workNm + "]";
+		return "Calendar [cardNo=" + cardNo + ", cardNm=" + cardNm + ", listNo=" + listNo + ", title=" + title
+				+ ", listStatus=" + listStatus + ", start=" + start + ", end=" + end + ", listMDt=" + listMDt
+				+ ", listDDt=" + listDDt + ", textColor=" + textColor + ", backgroundColor=" + backgroundColor
+				+ ", borderColor=" + borderColor + ", workNo=" + workNo + ", workNm=" + workNm + "]";
 	}
+
+	
 
 
 	
