@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cardMapper">
+	
+	<resultMap type="Card" id="card_rm">
+		<id property="cardNo" column="CARD_NO"/>
+		
+		<result property="workNo" column="WORK_NO"/>
+		<result property="cardNm" column="CARD_NM"/>
+		<result property="cardStatus" column="CARD_STATUS"/>
+		<result property="cardCreateDt" column="CARD_CREATE_DT"/>
+		<result property="cardModifyDt" column="CARD_MODIFY_DT"/>
+		<result property="cardDeleteDt" column="CARD_DELETE_DT"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
+	
+	
+	<!-- 현 워크스페이스에 있는 카드 조회 -->
+	<select id="selectCardList" parameterType="_int" resultMap="card_rm">
+		SELECT CARD_NO, CARD_NM, WORK_NO
+		FROM CARD
+		WHERE CARD_STATUS = 'Y'
+		AND WORK_NO = #{workNo}
+	</select>
+	
+	<!-- 카드 삽입 -->
+	<insert id="insertCard" parameterType="Card">
+		<selectKey keyProperty="cardNo" resultType="_int" order="BEFORE"> 
+			SELECT SEQ_CAL_CARD.NEXTVAL FROM DUAL 
+		</selectKey>
+	
+		INSERT INTO CARD  
+		VALUES
+		(#{cardNo} , #{workNo}, #{cardNm}, DEFAULT, DEFAULT, SYSTIMESTAMP, NULL,  #{memberNo} )
+	</insert>
+	
+	<!-- 카드 삭제 -->
+	<update id="deleteCard" parameterType="_int">
+		UPDATE CARD SET CARD_STATUS = 'N' 
+		WHERE CARD_NO = #{cardNo}
+		AND 
+		NOT EXISTS
+		(SELECT CARD_NO, CARD_NM FROM CARD WHERE CARD_STATUS='Y'
+		AND 
+		CARD_NO IN(
+		   SELECT DISTINCT CARD_NO FROM LIST
+		   WHERE LIST_STATUS = 'Y' 
+		   AND CARD_NO = #{cardNo}
+		))
+	</update>
+	
+	<update id="updateCard">
+		UPDATE CARD SET CARD_NM = #{cardNm}
+		WHERE CARD_NO = #{cardNo}
+	</update>
+	
+	
+	<!-- 강사님이 민경씨에게 ...  : 퇴근하고 씻고,,, 밥먹고,,,, 그 후에 봅시다 ㅎㅎㅎㅎ..  -->
+
+
+</mapper>
