@@ -168,8 +168,9 @@
 					const li1 = $("<li>").text( $(info.el).attr("workNm") ); // 워크스페이스팀이름
 					const li2 = $("<li>").text( $(info.el).attr("workNo") ); // 워크스페이스번호
 					const li3 = $("<li>").text( $(info.el).attr("cardNo") ); // 카드번호
-					const cardNm = $("<input>").attr({"type": "text", "id" : "cardNm"}).val(info.event.cardNm);
-					const li4 = $("<li>").text( "카드타이틀 : ").append(cardNm); // 카드이름
+					
+					const li4 = $("<li>").text( $(info.el).attr("cardNm") ); // 카드이름
+					
 					const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 					
 					const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
@@ -210,9 +211,11 @@
 					//console.log(info.event.extendedProps);
 					// {description: "Lecture", department: "BioChemistry"}
 					$(info.el).attr("workNm", info.event.extendedProps.workNm);
+					$(info.el).attr("cardNm", info.event.extendedProps.cardNm);
 					$(info.el).attr("listNo", info.event.extendedProps.listNo);
 					$(info.el).attr("cardNo", info.event.extendedProps.cardNo);
 					$(info.el).attr("workNo", info.event.extendedProps.workNo);
+					
 					
 					$(info.el).attr("data-toggle", "modal");
 					$(info.el).attr("data-target", "#calendarDetail");
