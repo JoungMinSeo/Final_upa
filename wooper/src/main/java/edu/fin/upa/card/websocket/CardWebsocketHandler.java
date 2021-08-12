@@ -1,8 +1,12 @@
 package edu.fin.upa.card.websocket;
 
+
+import java.text.SimpleDateFormat;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -12,11 +16,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import edu.emory.mathcs.backport.java.util.Collections;
+import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.calendar.model.vo.Workspace;
+import edu.fin.upa.card.model.service.CardService;
+import edu.fin.upa.list.model.service.ListService;
+import edu.fin.upa.list.model.vo.ListList;
 import edu.fin.upa.member.model.vo.Member;
 
 public class CardWebsocketHandler extends TextWebSocketHandler{
 
+	@Autowired
+	private CardService service;
+	
+	@Autowired
+	private ListService listService;
+	
 	// SockJs가 연결되면 WebSocketSession으로 들어옴 
 	// -> 연결된 클라이언트의 Session을 다룰 수 있음
 	private Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<WebSocketSession>());
@@ -46,25 +60,148 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 		// JSON 형태의 문자열을 JsonObject로 변경하여 값을 꺼낼쓸 수 있는 형태로 변환
 		JsonObject convertedObj = new Gson().fromJson(message.getPayload(), JsonObject.class);
 		
-		// 변경된 JsonObject에서 값 추출
-		int memberNo = Integer.parseInt(convertedObj.get("memberNo").toString().replaceAll("\"", ""));
-		String cardNm = convertedObj.get("cardNm").toString();
-		
-		// 쌍따옴표 없애기
-		cardNm = cardNm.substring(1, cardNm.length()-1);
-		
-		System.out.println("카드 작성자 멤버번호 " + memberNo);
-		System.out.println("카드 이름 " + cardNm);
-		
-		
-		// 카드 이름 DB 삽입 구문
+		// 팀(워크스페이스) 번호
 		int workNo = Integer.parseInt(convertedObj.get("workNo").toString().replaceAll("\"", ""));
 		
-		System.out.println("workNo : " + workNo);
+		// 로그인한 회원 번호
+		int memberNo = Integer.parseInt(convertedObj.get("memberNo").toString().replaceAll("\"", ""));
+		
+	
+		
+		// 소켓 동작 상태 구분값
+		String status = convertedObj.get("status").toString().replaceAll("\"", "");
+		System.out.println("status : " + status);
+		
+		switch(status) {
+		
+		case "insertCard" :
+			String cardNm = convertedObj.get("cardNm").toString();
+			
+			// 쌍따옴표 없애기
+			cardNm = cardNm.substring(1, cardNm.length()-1);
+			
+			System.out.println("카드 작성자 멤버번호 " + memberNo);
+			System.out.println("카드 이름 " + cardNm);
+			
+			System.out.println("workNo : " + workNo);
+			
+			// CARD 테이블에 삽입하려는 내용을 하나의 VO에 담기
+			Card card = new Card();
+			card.setWorkNo(workNo);
+			card.setMemberNo(memberNo);
+			card.setCardNm(cardNm);
+			
+			// 카드를 DB에 삽입하는 service 호출
+			service.insertCard(card);
+			
+			convertedObj.addProperty("cardNo", card.getCardNo());
+		
+		break;
+		
+		case "updateCard" : 
+			
+			cardNm = convertedObj.get("cardNm").toString();
+			
+			// 쌍따옴표 없애기
+			cardNm = cardNm.substring(1, cardNm.length()-1);
+			
+			
+			
+			System.out.println("카드 이름변경하는 멤버번호 " + memberNo);
+			System.out.println("카드 변경하는 이름 " + cardNm);
+			
+			System.out.println("workNo : " + workNo);
+			
+			// CARD 테이블에 삽입하려는 내용을 하나의 VO에 담기
+			card = new Card();
+			card.setWorkNo(workNo);
+			card.setMemberNo(memberNo);
+			card.setCardNm(cardNm);
+			card.setCardNo(Integer.parseInt(convertedObj.get("cardNo").toString().replaceAll("\"", "")));
+			
+			// 카드를 DB에 삽입하는 service 호출
+			service.updateCard(card);
+			
+			
+			
+		break;
+			
+		case "deleteCard" :
+			
+			// 카드 넘버 가져오기
+			int cardNo = Integer.parseInt(convertedObj.get("cardNo").toString().replaceAll("\"", ""));
+			
+			System.out.println("얻어온 cardNo : " + cardNo);
+			
+			service.deleteCard(cardNo);
+			
+			
+		break;
+		
+		case "insertList" :
+			
+			int addListCardNo = Integer.parseInt(convertedObj.get("addListCardNo").toString().replaceAll("\"", ""));
+			
+			String listNm = convertedObj.get("listNm").toString();
+			listNm = listNm.substring(1, listNm.length()-1);
+			
+			String listStartDt = convertedObj.get("listStartDt").toString();
+			listStartDt = listStartDt.substring(1, listStartDt.length()-1);
+			
+			
+			String listEndDt = convertedObj.get("listEndDt").toString();
+			listEndDt = listEndDt.substring(1, listEndDt.length()-1);
+			
+			
+			String statusCategory = convertedObj.get("statusCategory").toString();
+			statusCategory = statusCategory.substring(1, statusCategory.length()-1);
+			
+			ListList Llist = new ListList();
+			Llist.setCardNo(addListCardNo);
+			Llist.setListNm(listNm);
+			Llist.setListStartDt(listStartDt);
+			Llist.setListEndDt(listEndDt);
+			Llist.setListStatus(listStartDt);
+			Llist.setMemberNo(memberNo);
+			
+			
+			listService.insertLlist(Llist);
+			
+			convertedObj.addProperty("listNo", Llist.getCardNo());
+			
+		break;
+			
+		case "deleteList" : 
+			
+			int listNo = Integer.parseInt(convertedObj.get("listNo").toString().replaceAll("\"", ""));
+			
+			listService.deleteList(listNo);
+			
+		break;
+			
+		
+		case "dropList" :
+			
+			int dropCardNo = Integer.parseInt(convertedObj.get("dropCardNo").toString().replaceAll("\"", ""));
+			int dropListNo = Integer.parseInt(convertedObj.get("dropListNo").toString().replaceAll("\"", ""));
+			
+			ListList Dlist = new ListList();
+			Dlist.setCardNo(dropCardNo);
+			Dlist.setListNo(dropListNo);
+			
+			listService.dropList(Dlist);
+			
+		break;
+			
+			
+		}
+		
+		
+		
+		
 		
 		
 		// 화면에 보이게.... 
-		
 		for(WebSocketSession s : sessions) {
 			
 			int joinWorkNo = ((Workspace)s.getAttributes().get("work")).getWorkNo();
@@ -75,16 +212,6 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 				
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	
 	}
 

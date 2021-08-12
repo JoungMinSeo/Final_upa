@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="listMapper">
+	
+	<resultMap type="ListList" id="list_rm">
+		<id property="listNo" column="LIST_NO"/>
+		
+		<result property="cardNo" column="CARD_NO"/>
+		<result property="listNm" column="LIST_NM"/>
+		<result property="listStatus" column="LIST_STATUS"/>
+		<result property="listCreateDt" column="LIST_CREATE_DT"/>
+		<result property="listModifyDt" column="LIST_MODIFY_DT"/>
+		<result property="listDeleteDt" column="LIST_DELETE_DT"/>
+		
+		<result property="listTColor" column="LIST_TCOLOR"/>
+		<result property="listBgColor" column="LIST_BGCOLOR"/>
+		<result property="listBdColor" column="LIST_BDCOLOR"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="listStartDt" column="LIST_START_DT"/>
+		<result property="listEndDt" column="LIST_END_DT"/>
+	</resultMap>
+	
+	
+	<select id="selectList" parameterType="list" resultMap="list_rm">
+		SELECT CARD_NO, CARD_NM, LIST_NO, LIST_NM, LIST_START_DT, LIST_END_DT
+		FROM CARD C
+		JOIN LIST USING(CARD_NO)
+		WHERE C.WORK_NO = #{list[0].workNo}
+		AND LIST_STATUS ='Y'
+		AND CARD_NO in 
+			<foreach collection="list" item="card" open="(" close=")" separator=",">
+				#{card.cardNo}
+			</foreach>
+	
+	</select>
+	
+	<!-- 리스트 삽입 -->
+	<insert id="insertLlist" parameterType="ListList">
+		<selectKey keyProperty="listNo" resultType="_int" order="BEFORE"> 
+			SELECT SEQ_CAL_LIST.NEXTVAL FROM DUAL 
+		</selectKey>
+		
+		INSERT INTO LIST  
+		VALUES
+		(SEQ_CAL_LIST.NEXTVAL, #{cardNo}, #{listNm}, DEFAULT, DEFAULT, SYSTIMESTAMP, NULL, DEFAULT, DEFAULT, DEFAULT, #{memberNo},
+		 TO_DATE(#{listCreateDt}, 'RRRR-MM-DD"T"HH24:MI') , TO_DATE(#{listEndDt}, 'RRRR-MM-DD"T"HH24:MI')
+ 		)
+	</insert>
+	
+	<!-- 리스트 삭제 -->
+	<update id="deleteList" parameterType="_int">
+		UPDATE LIST SET LIST_STATUS = 'N'
+		WHERE LIST_NO = #{listNo}
+	</update>
+	
+	<!-- 리스트 드랍했을때 -->
+	<update id="dropList" parameterType="ListList">
+		UPDATE LIST SET CARD_NO = #{cardNo}
+		WHERE LIST_NO = #{listNo}
+	</update>
+	
+	
+
+
+</mapper>

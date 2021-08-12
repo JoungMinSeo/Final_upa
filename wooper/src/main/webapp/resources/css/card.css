@@ -27,7 +27,7 @@
 
 .empty{
     display: inline-block;
-    width: 200px;
+/*     width: 200px; */
     height: auto;
     margin-left: 10px;
     padding: 10px;
@@ -35,7 +35,86 @@
     background-color: white;
     top: 0;
     vertical-align: top;
+    border-radius:7px;
 }
+
+.fill{
+    position: relative;
+    border : 3px rgb(213,232,243) solid;
+ height: auto; 
+    top: 5px;
+    cursor: pointer;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius:7px;
+}
+/*************************************************************************************  */
+
+.listNm{
+    display: inline-block;
+}
+
+.mem{
+    display: inline-block;
+}
+
+.memImg{
+    display: inline-block;
+}
+
+.create{
+    display: inline-block;
+}
+
+.LcreateDt{
+    display: inline-block;
+}
+
+.listStartDt{
+    display: inline-block;
+}
+
+.LEndDt{
+    display: inline-block;
+}
+
+.listEndDt{
+    display: inline-block;
+}
+
+.lStatus{
+    display: inline-block;
+}
+
+.statusCategory{
+    display: inline-block;
+}
+
+.Lfile{
+    display: inline-block;
+}
+
+.listFile{
+    display: inline-block;
+}
+
+
+
+/*************************************************************************************  */
+
+.hold{
+    border: solid rgb(213,232,243) 4px;
+}
+
+.hovered{
+	border : 3px  rgb(42,111,154) solid;
+    border-style: dashed;
+}
+
+.invisible{
+    display: none;
+}
+
 
 .bottom{
     height: 10%;
@@ -88,6 +167,8 @@
     height: 10%;
 }
 /* *********************************************************************** */
+
+
 
 
 /* 리스트 모달 css */

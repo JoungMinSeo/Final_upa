@@ -11,6 +11,7 @@ public class Card {
 	private Date cardCDt;
 	private Date cardMDt;
 	private Date cardDDt;
+	private int memberNo;
 	
 	public Card() {}
 
@@ -69,13 +70,22 @@ public class Card {
 	public void setCardDDt(Date cardDDt) {
 		this.cardDDt = cardDDt;
 	}
+	
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Card [cardNo=" + cardNo + ", workNo=" + workNo + ", cardNm=" + cardNm + ", cardStatus=" + cardStatus
-				+ ", cardCDt=" + cardCDt + ", cardMDt=" + cardMDt + ", cardDDt=" + cardDDt + "]";
+				+ ", cardCDt=" + cardCDt + ", cardMDt=" + cardMDt + ", cardDDt=" + cardDDt + ", memberNo=" + memberNo
+				+ "]";
 	}
-	
-	
+
+
 	
 }

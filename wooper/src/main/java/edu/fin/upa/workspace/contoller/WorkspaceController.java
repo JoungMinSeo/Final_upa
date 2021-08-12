@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.calendar.model.vo.Workspace;
+import edu.fin.upa.card.model.service.CardService;
+import edu.fin.upa.list.model.service.ListService;
+import edu.fin.upa.list.model.vo.ListList;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.workspace.model.service.WorkspaceService;
 
@@ -22,6 +26,14 @@ public class WorkspaceController {
 	
 	@Autowired
 	private WorkspaceService service;
+	
+	@Autowired
+	private CardService cardService;
+	
+	@Autowired
+	private ListService listService;
+	
+	
 	// 임시 화면
 		@RequestMapping(value = "workSpace", method = RequestMethod.GET)
 		public String result() {
@@ -46,16 +58,23 @@ public class WorkspaceController {
 	// 현재 들어간 워크스페이스 정보 조회
 	@RequestMapping(value="{workNo}/boardMain", method=RequestMethod.GET)
 	public String boardMain(@PathVariable("workNo") int workNo, Model model) {
-		
-		/*
-		 * List<Workspace> workList = service.selectWorkList(loginMember.getMemberNo());
-		 * 
-		 * model.addAttribute("workList", workList);
-		 */
-		
+	
+		// 워크스페이스 정보 조회
 		Workspace work = service.selectWorkspace(workNo);
-		
 		model.addAttribute("work", work);
+		
+		// 워크스페이스별 카드 조회
+		List<Card> cardList = cardService.selectCardList(workNo);
+		model.addAttribute(cardList);
+		
+		System.out.println(cardList);
+		
+		// 리스트 조회
+		if(!cardList.isEmpty()) {
+			List<ListList> listList = listService.selectList(cardList);
+			
+			model.addAttribute("listList", listList);
+		}
 		
 		return "/workSpace/boardMain";
 	}
