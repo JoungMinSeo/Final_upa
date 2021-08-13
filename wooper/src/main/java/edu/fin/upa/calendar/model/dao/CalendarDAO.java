@@ -23,6 +23,14 @@ public class CalendarDAO {
 		return sqlSession.selectList("calMapper.selectCalendar", map);
 	}
 
+	/** 개인 캘린더 수정
+	 * @param listNo
+	 * @return
+	 */
+	public int updateCalendar(int listNo) {
+		return sqlSession.update("calMapper.updateCalendar", listNo);
+	}
+
 	/** 팀캘린더 조회 
 	 * @param map
 	 * @return
@@ -30,6 +38,7 @@ public class CalendarDAO {
 	public List<Calendar> selectTeamCal(Map<String, Object> map) {
 		return sqlSession.selectList("calMapper.selectTeamCal", map);
 	}
+	
 
 
 }

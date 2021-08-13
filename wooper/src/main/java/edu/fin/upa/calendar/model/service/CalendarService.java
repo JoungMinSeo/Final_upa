@@ -14,10 +14,17 @@ public interface CalendarService {
 	 */
 	List<Calendar> selectCalendar(Map<String, Object> map);
 
+	/** 개인캘린더 수정
+	 * @param listNo
+	 * @return
+	 */
+	int updateCalendar(int listNo);
+
 	/** 팀캘린더조회
 	 * @param map
 	 * @return
 	 */
 	List<Calendar> selectTeamCal(Map<String, Object> map);
+
 
 }

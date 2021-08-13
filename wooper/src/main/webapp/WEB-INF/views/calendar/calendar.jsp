@@ -160,6 +160,7 @@
 					//alert('View: ' + info.view.type);
 					// change the border color just for fun
 					info.el.style.borderColor = 'red';
+					info.el.style.borderWidth = '2.5px';
 					// alert($(info.el).attr("workNm"));
 					
 					$("#detailBody").empty(); // 모달에 작성되어있는 이 전 내용 삭제
@@ -194,6 +195,44 @@
 					
 					ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
 					$("#detailBody").append(ul);
+					
+					
+					
+			        // 모달창 리스트 수정
+			        $("#calListUpdate").on("click", function(){
+			        	
+						$.ajax({
+							url : "calListUpdate",
+							data : {"title" : $("#title").val(),
+									  "start" : $("#start").val(),
+									  "end" : $("#end").val(),
+									  "textColor" : $("#textColor").val(),
+									  "backgroundColor" : $("#backgroundColor").val(),
+								      "borderColor" : $("#borderColor").val()},
+									  "listNo" : $("#listNo").val(),
+							type : "POST",
+							/* 
+							success : function(result){
+								console.log(result);
+								if(result == -1){
+									swal( { "icon" : "info", "title" : "이미 해당 팀의 도롱뇽입니다."	});
+								}else if(result == 0){
+									swal( { "icon" : "warnning", "title" : "이미 메일을 발송하였습니다."	});
+								}else{
+									swal( { "icon" : "success", "title" : "메일이 발송되었습니다."	});
+									$("#memberaddEmail").val(""); 
+								}
+								
+							}, error : function(){
+									swal( { "icon" : "error", "title" : "존재하지 않는 회원입니다."	});
+									// 이미 가입된 메일, 없는 회원 모두 해당 문구 출력.......
+							}
+							 */
+						});
+						
+			        });
+			        
+			        
 				},
 
 				dateClick : function(info) { // 날짜 빈칸 클릭 시
@@ -283,6 +322,16 @@
             $('#borderColor').on('colorpickerChange', function(event) {
                 $('#coloradd').css('background-color', event.color.toString());
             });
+        });
+        
+        
+        
+        
+
+        
+        // 모달창 리스트 삭제
+        $("#calListUpdate").on("click", function(){
+        	
         });
 	</script>
 </body>

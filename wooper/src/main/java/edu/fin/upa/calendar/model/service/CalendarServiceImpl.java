@@ -22,11 +22,18 @@ public class CalendarServiceImpl implements CalendarService{
 		return dao.selectCalendar(map);
 	}
 
+	// 개인캘린더 수정
+	@Override
+	public int updateCalendar(int listNo) {
+		return dao.updateCalendar(listNo);
+	}
+
 	// 팀캘린더 조회 
 	@Override
 	public List<Calendar> selectTeamCal(Map<String, Object> map) {
 		return dao.selectTeamCal(map);
 	}
+
 
 
 	
