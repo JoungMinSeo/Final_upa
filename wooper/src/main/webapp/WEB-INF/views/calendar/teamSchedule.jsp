@@ -413,6 +413,8 @@
                $(info.el).attr("data-toggle", "modal");
                $(info.el).attr("data-target", "#calendarDetail");
                $(info.el).attr("data-target", "#calndarInsert");
+               
+               
             }
 
          });
