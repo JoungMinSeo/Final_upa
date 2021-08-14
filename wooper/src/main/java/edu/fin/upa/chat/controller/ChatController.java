@@ -56,6 +56,8 @@ public class ChatController {
 		Gson gson = new Gson();
 		
 		return gson.toJson(memberList);
+		
+		//헤헿 테스트임미둥
 	}
 	
 	
