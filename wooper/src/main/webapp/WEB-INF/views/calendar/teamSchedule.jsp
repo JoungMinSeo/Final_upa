@@ -414,6 +414,8 @@
                $(info.el).attr("data-target", "#calendarDetail");
                $(info.el).attr("data-target", "#calndarInsert");
                
+               
+               
             }
 
          });
