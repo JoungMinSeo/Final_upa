@@ -96,7 +96,6 @@
         .addsedate{
             float:left;
             width:100%;
-            display:none;
         }
         .calendardatechange{
             float:left;
@@ -245,4 +244,3 @@
             width:440px;
             float:left;
         }
-
