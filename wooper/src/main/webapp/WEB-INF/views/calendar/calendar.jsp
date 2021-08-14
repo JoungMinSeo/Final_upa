@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link href="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.js"></script>
 
+	<!-- 캘린더 css & js -->
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
 	<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
 	<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 	<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
@@ -73,8 +73,6 @@
 				</div>
 				<div class="modal-body" id="detailBody">
 				
-				
-				
 				</div>
 				<div class="modal-footer">
 	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
@@ -84,7 +82,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<script>
 		let calendar; // 만들어진 Full Calendar 달력을 저장할 변수
@@ -148,7 +145,7 @@
 				navLinks : true, // 달력에서 일, 주를 나타내는 텍스트를 클릭 가능하게함. -> 클릭 시 해당 일 단위로 이동
 				nowIndicator : true, // 일 단위 화면에서 현재 시간을 표시
 
-				editable : true, // 달력 이벤트 수정 가능 여부 -> 일정을 드래그해서 옮길 수 있음
+				editable : false, // 달력 이벤트 수정 가능 여부 -> 일정을 드래그해서 옮길 수 있음
 				selectable : true, // 클릭하면 그 날짜가 파랗게 변함
 				dayMaxEvents : true, // allow "more" link when too many events
 
@@ -160,6 +157,7 @@
 					//alert('View: ' + info.view.type);
 					// change the border color just for fun
 					info.el.style.borderColor = 'red';
+					info.el.style.borderWidth = '2.5px';
 					// alert($(info.el).attr("workNm"));
 					
 					$("#detailBody").empty(); // 모달에 작성되어있는 이 전 내용 삭제
@@ -172,39 +170,88 @@
 					const li4 = $("<li>").text( $(info.el).attr("cardNm") ); // 카드이름
 					
 					const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
-					
-					const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
+
+					const title = $("<h5>").attr({"id" : "title"}).text(info.event.title);
 					const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
-					
 					// attr : attribute
 					// 2021-08-05T23:11:00+09:00 
-					const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
+					
+					const start = $("<h5>").attr({"id" : "start"}).text(info.event.startStr.substring(0, 19));
 					const li7 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
 					
-					const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
+					const end = $("<h5>").attr({"id" : "end"}).text(info.event.endStr.substring(0, 19));
 					const li8 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
 					
+					/*
 					const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
 					const li9 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
 					const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor"}).val(info.event.backgroundColor);
 					const li10 = $("<li>").text( "배경색 : ").append(backgroundColor); // 배경색 
 					const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
 					const li11 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
+					 */
 					
 					
-					ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
+					ul.append(li1, li6, li7, li8);
 					$("#detailBody").append(ul);
+					
+					
+					
+			        // 모달창 리스트 수정
+			        $("#calListUpdate").on("click", function(){
+			        	
+						$.ajax({
+							url : "calListUpdate",
+							data : {"title" : $("#title").val(),
+									  "start" : $("#start").val(),
+									  "end" : $("#end").val(),
+									  "textColor" : $("#textColor").val(),
+									  "backgroundColor" : $("#backgroundColor").val(),
+								      "borderColor" : $("#borderColor").val()},
+									  "listNo" : $("#listNo").val(),
+							type : "POST",
+							/* 
+							success : function(result){
+								console.log(result);
+								if(result == -1){
+									swal( { "icon" : "info", "title" : "이미 해당 팀의 도롱뇽입니다."	});
+								}else if(result == 0){
+									swal( { "icon" : "warnning", "title" : "이미 메일을 발송하였습니다."	});
+								}else{
+									swal( { "icon" : "success", "title" : "메일이 발송되었습니다."	});
+									$("#memberaddEmail").val(""); 
+								}
+								
+							}, error : function(){
+									swal( { "icon" : "error", "title" : "존재하지 않는 회원입니다."	});
+									// 이미 가입된 메일, 없는 회원 모두 해당 문구 출력.......
+							}
+							 */
+						});
+						
+			        });
+			        
+			        
 				},
 
 				dateClick : function(info) { // 날짜 빈칸 클릭 시
-					alert('Clicked on: ' + info.dateStr);
-					alert('Coordinates: ' + info.jsEvent.pageX + ','
-							+ info.jsEvent.pageY);
-					alert('Current view: ' + info.view.type);
+					//alert('Clicked on: ' + info.dateStr);
+					//alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+					//alert('Current view: ' + info.view.type);
 					// change the day's background color just for fun
-				},
+					
+					//info.el.style.borderColor = 'red';
+					//info.el.style.borderWidth = '2.5px';
+					
+					// 새일정 등록 을 위한 화면 연결
+					$("#insertBody").show(); // 모달에 작성되어있는 이 전 내용 삭제
+					
+					
 
-				// eventDidMount : 이벤트에 포함되지 않은 속성
+					
+					
+					
+				},				// eventDidMount : 이벤트에 포함되지 않은 속성
 				// info.event.extendedProps : 이벤트에 포함되지 않은 속성, 속성값이 객체로 저장되어있음(listNo, workNo 등등)
 				// info.el : 현재 화면(달력)에 출력된 이벤트요소(일정) <a>
 				eventDidMount : function(info) {
@@ -220,6 +267,8 @@
 					$(info.el).attr("data-toggle", "modal");
 					$(info.el).attr("data-target", "#calendarDetail");
 				}
+
+
 
 			});
 
@@ -260,30 +309,7 @@
 				})
 				
 				
-		// 색상표		
-        $(function () {
-            // 기본 인스턴스화: 
-            $('#fcolor-input').colorpicker();
-            
-            // 이벤트를 사용하여 #demo div 배경색을 변경하는 예 : 
-            $('#textColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
-        });
-        $(function () {
-            $('#bgcolor-input').colorpicker();
-            
-            $('#backgroundColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
-        });
-        $(function () {
-            $('#bdcolor-input').colorpicker();
-            
-            $('#borderColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
-        });
+
 	</script>
 </body>
 </html>

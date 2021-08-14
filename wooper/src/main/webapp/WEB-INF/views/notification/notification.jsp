@@ -11,6 +11,8 @@
 
 </head>
 <body>
+
+
     <div class="notificationcontainer">
         <div class="notificationname">
             <h1>알림</h1>
@@ -72,5 +74,33 @@
         </div>
 
     </div>
+    
+    <script>
+		let calendarSock = new SockJS("/calendar");
+		
+		const memberNo = "${loginMember.memberNo}";
+		const memberId = "${loginMember.memberId}";
+		const memberNm = "${loginMember.memberNm}";
+		const listNo = "${listNo}";
+		
+		$("#send").on("click", function(){
+			const chat = $("#inputcardNm").val(); // 입력한 카드내용
+			const chat = $("#inputlistNm").val(); // 입력한 리스트내용
+			
+			if(chat.trim().length == 0){
+				alert("채팅을 입력해주세요.");
+			}else{
+				var obj = { "memberNo" : memberNo,  
+							 	 "memberId" : memberId,
+								 "memberNm" : memberNm;
+				
+				chattingSock.send(JSON.stringify(obj));
+				
+				$("#inputcardNm").val("");
+				$("#inputlistNm").val("");
+			}
+		
+		
+    </script>
 </body>
 </html>
