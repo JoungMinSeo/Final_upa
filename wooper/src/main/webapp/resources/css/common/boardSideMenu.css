@@ -8,13 +8,6 @@
 		}
 		*{font-family: 'BMJUA';}
 
-        @font-face {
-            font-family: 'BMJUA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         div{
             /* border:1px solid black; */
             box-sizing:border-box;
@@ -27,7 +20,6 @@
             background-color:rgb(24,64,88);
             width:60px;
             height:935px;
-            float:left;
         }
         
         .mainmove, .workspacemove, .messagemove, .noticemove, .calendermove, .informationmove, .mypagemove{
@@ -76,3 +68,4 @@
         .side_mypage, .side_logout{
             margin-top:4px;
         }
+
