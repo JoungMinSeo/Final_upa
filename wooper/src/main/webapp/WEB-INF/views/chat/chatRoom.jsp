@@ -21,6 +21,12 @@
 	href="${pageContext.request.contextPath}/resources/css/chat/chatInvite.css">
 </head>
 <link rel="stylesheet" href="chatRoom.css">
+
+<style>
+	.pick{
+		background-color: pink;
+	}
+</style>
 <body>
 	<div id="color">
 		<div id="container">
@@ -146,9 +152,10 @@
 									<option value="memberNick">닉네임</option>
 									<option value="memberId">이메일</option>
 									
-								</select> <input type="search" name="sv" class="form-control"
+								</select> 
+								<input type="search" name="sv" class="form-control"
 									id="signListSearch" name="signListSearch" placeholder=" 회원 검색">
-								<button type="button" class="signListSearchBtn" id="searchMember">
+								<button type="button" class="signListSearchBtn" id="searchMember" onclick="searchUser();">
 									<svg xmlns="http://www.w3.org/2000/svg" width="22" height="30"
 										fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path
@@ -165,22 +172,25 @@
 										<th>멤버 이메일</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody class="tbody">
 									<c:choose>
 										<c:when test="${empty memberList}">
-											<div id="searchList">검색 내역이 존재하지 않습니다.</div>
+										<tr class="searchArea">
+											<td class=searchList id="none">검색 내역이</td>
+											<td class=searchList>존재하지않습니다</td>
+										</tr>
 										</c:when>
 
 										<c:otherwise>
 											<c:forEach items="${memberList}" var="member">
-												<tr class="searchMemberArea">
-													<td class="memberNick">${member.memberNick}</td>
-													<td class="memberId">${member.memberId}</td>
-												</tr>
+											<tr class="searchArea">
+												<td class="searchList">${member.memberNick}</td>
+												<td class="searchList">${member.memberId}</td>
+											</tr>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
-									
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -193,11 +203,6 @@
 						<ion-icon name="chevron-forward-circle-outline"
 							id="signLine-forward"></ion-icon>
 					</button>
-					<br>
-					<button type="button" id="signLine-back-btn"
-						onclick="deleteSignLine();">
-						<ion-icon name="chevron-back-circle-outline" id="signLine-back"></ion-icon>
-					</button>
 				</div>
 
 				<div class="signLine-info">
@@ -209,17 +214,11 @@
 							<thead class="thead-light">
 								<tr>
 									<th>초대한 사람 이메일</th>
-									<th width="40px"></th>
+									<th></th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody class="inviteMember">
 								<tr>
-									<td></td>
-									<td>&times;</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>&times;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -233,42 +232,76 @@
 	</div>
 </div>
 <script>
-$("#searchMember").click(function(){
+	
+function searchUser(){
 	
 	const sk = $("#signList-search-option").val();
 	const sv = $("#signListSearch").val();
 	
-	console.log(sk);
-	console.log(sv);
 	
 	$.ajax({
 		url : "memberList",
-		data : {"sk":sk,
-				"sv":sv},
+		data : {"sk":sk, "sv":sv},
 		type : "POST",
+		async : false,
+		dataType : "JSON",
 		success:function(memberList){
+			console.log(memberList);
 			
-			console.log("검색됨" + memberList);
+		$(".tbody").html("");
+		
+		$.each(memberList,function(index,item){
 			
-			$(".searchList").html("");
-			$.each(JSON.parse(memberList),function(index,item){
-				
-				var area = $("<tr>").addClass("searchMemberArea");
-				var memberNick = $("<td>").addClass("memberNick").text(item.memberNick);
-				var memberId = $("<td>").addClass("memberId").text(item.memberId);
-				
-				area.append(memberNick).append(memberId);
-				$(".searchList").append(area);
-			});
+			var tr = $("<tr>").addClass("searchArea").attr("id",item.memberNo);
+			var memberNick = $("<td>").addClass("searchList").text(item.memberNick);
+			var memberId = $("<td>").addClass("searchList").text(item.memberId);
+	
+			tr.append(memberNick).append(memberId);
+			
+			$(".tbody").append(tr);
+		});
+			
 			
 		},error:function(e){
-			console.log("ajax 통신 실패");
-			console.log(e);
+				console.log("ajax 통신 실패");
+				console.log(e);
 		}
-	});
+	})
+}
 
- });
+$(document).on("click",".searchArea",function(){
 	
+	
+	if( $(this).hasClass("pick") ){
+		$(this).removeClass("pick");
+	}else{
+		$(this).addClass("pick");
+	}
+	    
+});
+
+$("#signLine-forward-btn").click(function(){
+	
+
+	$(".pick").each(function(){
+		console.log( $(this).attr("id") );
+		console.log( $(this).children().eq(0).text() );
+		console.log( $(this).children().eq(1).text() );
+		
+		var tr = $("<tr>").attr("id",$(this).attr("id"));
+		var memberNick = $("<td>").addClass("memberNick").text($(this).children().eq(1).text());
+		var cencel = $("<td>").addClass("cencel").text("x");
+		
+		tr.append(memberNick).append(cencel);
+		
+		$(".inviteMember").append(tr);
+		
+	});
+	
+	$(".pick").removeClass("pick");
+	
+});
+
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
