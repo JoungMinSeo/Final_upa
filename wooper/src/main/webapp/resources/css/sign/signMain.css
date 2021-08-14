@@ -1,9 +1,17 @@
+body{
+	background-color: rgb(213, 232, 243);
+}
+
+.sideMenu{
+	float: left;
+}
+
 #document-container{
     box-sizing: border-box;
-    height: 1000px;
+    height: 935px;
     width: 80%;
-    padding-top: 80px;
-    margin: auto;
+    padding-bottom: 0px;
+    float: left;
 }
 
 .tab_content{
@@ -18,26 +26,31 @@ input[type="radio"]{
 input[type="radio"] + label{
     display: inline-block;
     padding: 13px;
-    font-size: 18px;
+    font-size: 20px;
+    color: #000;
     cursor: pointer;
     border: 1px solid rgb(42, 111, 154);
+    background-color: rgb(213, 232, 243);
     border-bottom: none;
+    margin-top: 36px;
     margin-bottom: 0;
 }
 
 input[type="radio"]:checked + label{
-    background-color: rgb(213, 232, 243);
-    color: #000;
+    background-color: rgb(42, 111, 154);
+    color: white;
 }
 
 .conbox{
+	max-width: 1400px;
     height: 90%;
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 2%;
+    padding-right: 2%;
     display: none;
     border: 1px solid rgb(42, 111, 154);
     background-color: rgb(213, 232, 243);
     position: relative;
+    margin-bottom: 0;
 }
 
 /* 각 탭이 클릭 되었을때 뿌려지는 내용 */
@@ -58,24 +71,37 @@ input[id="tab04"]:checked ~ .con4{
 }
 
 #document-view-menubar{
-    margin-top: 1%;
+    margin-top: 2%;
 }
 
 #document-view-optionbar{
     width: fit-content;
     margin: 1%;
     float: left;
+    font-size: 18px;
 }
 
 #newDocument, #signAllDocument, #deleteDocument, #deleteAllDocument{
     float: right;
     margin: 1%;
+    font-size: 18px;
+    background-color: rgb(42, 111, 154);
+    border: 1px solid rgb(42, 111, 154);
 }
 
 #document-list-content{
     padding-top: 1%;
     margin: 1%;
     clear: both;
+    font-size: 18px;
+}
+
+.table thead th {
+    border-bottom: 2px solid rgb(42, 111, 154);
+}
+
+.table td, .table th {
+	border-top: 1px solid rgb(42, 111, 154);
 }
 
 .document-list-table{
@@ -105,4 +131,19 @@ div{
 
 #documentType-img, #documentType-close-btn{
     font-size: 40px;
+}
+
+.documentTypeBtn{
+	width: 100%;
+	height: 100%;
+	background: none;
+	border: none;
+}
+
+.card-body{
+	padding: 15px;
+}
+
+.card-title{
+	margin: 0;
 }

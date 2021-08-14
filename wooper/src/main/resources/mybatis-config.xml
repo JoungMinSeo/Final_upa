@@ -25,7 +25,6 @@
 		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.MeetingJoin" alias="MeetingJoin" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.PurchaseList" alias="PurchaseList" />
-		<typeAlias type="edu.fin.upa.sign.model.vo.Sign" alias="Sign" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.SignLine" alias="SignLine" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Vacation" alias="Vacation" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Viewer" alias="Viewer" />

@@ -7,15 +7,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>작성한 문서</title>
+    <title>전자 결재</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-	<link rel="stylesheet" href="${contextPath}/webapp/resources/css/sign/signMain.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/signMain.css">
+	<link rel="shortcut icon" href="#">
+	
 </head>
 <body>
-	<jsp:include page="../common/boardSideMenu.jsp"/>
+	<div class="sideMenu">
+		<jsp:include page="../common/boardSideMenu.jsp"/>
+	</div>
 
     <div id="document-container">
         <div class="tab_content">
@@ -43,7 +46,7 @@
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 결재 문서 조회 목록 -->
+                        <%-- 1) 결재 문서 조회 목록 --%>
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -52,94 +55,96 @@
                                     <th class="documentTitle">제목</th>
                                     <th class="signWriter">기안자</th>
                                     <th class="signDraftingDt">기안일</th>
+                                    <th class="signResult">결재 결과</th>
                                 </tr>
                             </thead>
     
-                            <!-- 결재 문서 목록 출력 -->
+                            <%-- 결재 문서 목록 출력 --%>
                             <tbody>
-                                <c:forEach items="${documentList}" var="document">
-                                    <tr class="item" id="document-list-body">
-                                        <!-- No. -->
-                                        <td></td>
-    
-                                        <!-- 문서 유형 -->
-                                        <td></td>
-    
-                                        <!-- 제목 -->
-                                        <td class="documentTitle">
-                                            <a href="#" style="color: black;"></a>
-                                        </td>
-    
-                                        <!-- 기안자 -->
-                                        <td></td>
-    
-                                        <!-- 기안일 -->
-                                        <td>
-                                            <!-- <fmt:formatDate var="signDraftingDt" value="${}" pattern="yyyy-MM-dd" />
-                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" /> -->
-                                            
-                                            <c:choose>
-                                                <!-- 글 작성일이 오늘이 아닐 경우 -->
-                                                <c:when test="${signDraftingDt != today}">
-                                                    ${signDraftingDt}
-                                                </c:when>
-    
-                                                <!-- 글 작성일이 오늘일 경우 -->
-                                                <c:otherwise>
-                                                    <fmt:formatDate value="" pattern="HH:mm" />
-                                                </c:otherwise>
-    
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                            	<c:choose>
+									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
+									<c:when test="${empty documentList}">
+										<tr>
+											<td colspan="6">작성된 문서가 없습니다.</td>
+										</tr>								
+									</c:when>
+									
+									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
+									<c:otherwise>
+                            	
+		                                <c:forEach items="${documentList}" var="document">
+		                                    <tr class="item" id="document-list-body">
+		                                        <!-- No. -->
+		                                        <td>${document.signNo}</td>
+		    
+		                                        <%-- 문서 유형 --%>
+		                                        <td>${document.documentType}</td>
+		    
+		                                        <%-- 제목 --%>
+		                                        <td class="documentTitle">
+		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                        </td>
+		    
+		                                        <%-- 기안자 --%>
+		                                        <td>${document.memberNm}</td>
+		    
+		                                        <%-- 기안일 --%>
+		                                        <td>
+		                                            <fmt:formatDate var="signDraftingDt" value="${document.signDraftingDt}" pattern="yyyy-MM-dd" />
+		                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
+		                                            
+		                                            <c:choose>
+		                                                <%-- 글 작성일이 오늘이 아닐 경우 --%>
+		                                                <c:when test="${signDraftingDt != today}">
+		                                                    ${signDraftingDt}
+		                                                </c:when>
+		    
+		                                                <%-- 글 작성일이 오늘일 경우 --%>
+		                                                <c:otherwise>
+		                                                    <fmt:formatDate value="${document.signDraftingDt}" pattern="HH:mm" />
+		                                                </c:otherwise>
+		                                            </c:choose>
+		                                        </td>
+		                                        
+		                                       	<%-- 결재 결과 --%>
+		                                       	<td>${document.signResult}</td>
+		                                    </tr>
+		                                </c:forEach>
+		                    		</c:otherwise>
+		                    	</c:choose>       
                             </tbody>
                         </table>
                     </div>
     
-                    <div class="documentPg">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                              </li>
-                            </ul>
-                          </nav>
-                    </div>
     
-                    <!-- 2) pagination -->
-                    <!-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 -->
-                    <!-- <c:set var="prev" value="" />
-                    <c:set var="next" value="" />
+                    <%-- 2) pagination --%>
+                    <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
+                    <c:set var="pageURL" value="signMain"  />
+                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
     
                     <div class="pagebutton">
                         <nav class="pagebtn" aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center"> -->
+                            <ul class="pagination justify-content-center">
     
-                                <!-- 현재 페이지가 10페이지 초과인 경우 -->
-                                <!-- <c:if
-                                    test="${}">
+                                <%-- 현재 페이지가 10페이지 초과인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage > pagination.pageSize}">
                                     <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
-                                </c:if> -->
+                                </c:if>
     
-                                <!-- 현재 페이지가 2페이지 초과인 경우 -->
-                                <!-- <c:if test="${ > 2}">
+                                <%-- 현재 페이지가 2페이지 초과인 경우 --%>
+                                <c:if test="${pagination.currentPage > 2}">
                                     <li class="page-item">
-                                        <a class="pagelink" href="{ - 1}">&lt;</a>
+                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
                                     </li>
-                                </c:if> -->
+                                </c:if>
     
     
-                                <!-- 페이지 목록 -->
-                                <!-- <c:forEach var="p" begin="${}" end="${}">
+                                <%-- 페이지 목록 --%>
+                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
                                     <c:choose>
-                                        <c:when test="${p == }">
+                                        <c:when test="${p == pagination.currentPage}">
                                             <li class="page-item active">
                                                 <a class="pagelink">${p}</a>
                                             </li>
@@ -147,29 +152,30 @@
     
                                         <c:otherwise>
                                             <li class="page-item">
-                                                <a class="pagelink" href="#">${p}</a>
+                                                <a class="pagelink" href="${pageURL}?cp=${p}">${p}</a>
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
-                                </c:forEach> -->
+                                </c:forEach>
     
     
-                                <!-- 현재 페이지가 마지막 페이지 미만인 경우 -->
-                                <!-- <c:if
-                                    test="${}">
-                                    <li class="page-item"><a class="pagelink"
-                                        href="{ +  1}">&gt;</a></li>
-                                </c:if> -->
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    <li class="page-item">
+                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    </li>
+                                </c:if>
     
-                                <!-- 현재 페이지가 마지막 페이지 미만인 경우 -->
-                                <!-- <c:if test="${ < 0}">
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
                                     <li class="page-item">
                                         <a class="pagelink" href="${next}">&gt;&gt;</a>
                                     </li>
                                 </c:if>
                             </ul>
                         </nav>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         
@@ -189,7 +195,7 @@
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 결재 문서 조회 목록 -->
+                        <%-- 1) 결재 문서 조회 목록 --%>
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -198,63 +204,124 @@
                                     <th class="documentTitle">제목</th>
                                     <th class="signWriter">기안자</th>
                                     <th class="signDraftingDt">기안일</th>
+                                    <th class="signResult">결재 결과</th>
                                 </tr>
                             </thead>
     
-                            <!-- 결재 문서 목록 출력 -->
+                            <%-- 결재 문서 목록 출력 --%>
                             <tbody>
-                                <c:forEach items="${documentList}" var="document">
-                                    <tr class="item" id="document-list-body">
-                                        <!-- No. -->
-                                        <td></td>
-    
-                                        <!-- 문서 유형 -->
-                                        <td></td>
-    
-                                        <!-- 제목 -->
-                                        <td class="documentTitle">
-                                            <a href="#" style="color: black;"></a>
-                                        </td>
-    
-                                        <!-- 기안자 -->
-                                        <td></td>
-    
-                                        <!-- 기안일 -->
-                                        <td>
-                                            <!-- <fmt:formatDate var="signDraftingDt" value="${}" pattern="yyyy-MM-dd" /> -->
-                                            <!-- <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" /> -->
-                                            
-                                            <c:choose>
-                                                <!-- 글 작성일이 오늘이 아닐 경우 -->
-                                                <c:when test="${signDraftingDt != today}">
-                                                    ${signDraftingDt}
-                                                </c:when>
-    
-                                                <!-- 글 작성일이 오늘일 경우 -->
-                                                <c:otherwise>
-                                                    <fmt:formatDate value="" pattern="HH:mm" />
-                                                </c:otherwise>
-    
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                            	<c:choose>
+									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
+									<c:when test="${empty documentList}">
+										<tr>
+											<td colspan="6">작성된 문서가 없습니다.</td>
+										</tr>								
+									</c:when>
+									
+									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
+									<c:otherwise>
+                            	
+		                                <c:forEach items="${documentList}" var="document">
+		                                    <tr class="item" id="document-list-body">
+		                                        <!-- No. -->
+		                                        <td>${document.signNo}</td>
+		    
+		                                        <%-- 문서 유형 --%>
+		                                        <td>${document.documentType}</td>
+		    
+		                                        <%-- 제목 --%>
+		                                        <td class="documentTitle">
+		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                        </td>
+		    
+		                                        <%-- 기안자 --%>
+		                                        <td>${document.memberNm}</td>
+		    
+		                                        <%-- 기안일 --%>
+		                                        <td>
+		                                            <fmt:formatDate var="signDraftingDt" value="${document.signDraftingDt}" pattern="yyyy-MM-dd" />
+		                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
+		                                            
+		                                            <c:choose>
+		                                                <%-- 글 작성일이 오늘이 아닐 경우 --%>
+		                                                <c:when test="${signDraftingDt != today}">
+		                                                    ${signDraftingDt}
+		                                                </c:when>
+		    
+		                                                <%-- 글 작성일이 오늘일 경우 --%>
+		                                                <c:otherwise>
+		                                                    <fmt:formatDate value="${document.signDraftingDt}" pattern="HH:mm" />
+		                                                </c:otherwise>
+		                                            </c:choose>
+		                                        </td>
+		                                        
+		                                       	<%-- 결재 결과 --%>
+		                                       	<td>${document.signResult}</td>
+		                                    </tr>
+		                                </c:forEach>
+		                    		</c:otherwise>
+		                    	</c:choose>       
                             </tbody>
                         </table>
                     </div>
     
-                    <div class="documentPg">
-                        <nav aria-label="Page navigation example">
+    
+                    <%-- 2) pagination --%>
+                    <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
+                    <c:set var="pageURL" value="signMain"  />
+                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+    
+                    <div class="pagebutton">
+                        <nav class="pagebtn" aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                              </li>
+    
+                                <%-- 현재 페이지가 10페이지 초과인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 2페이지 초과인 경우 --%>
+                                <c:if test="${pagination.currentPage > 2}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                    </li>
+                                </c:if>
+    
+    
+                                <%-- 페이지 목록 --%>
+                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                    <c:choose>
+                                        <c:when test="${p == pagination.currentPage}">
+                                            <li class="page-item active">
+                                                <a class="pagelink">${p}</a>
+                                            </li>
+                                        </c:when>
+    
+                                        <c:otherwise>
+                                            <li class="page-item">
+                                                <a class="pagelink" href="${pageURL}?cp=${p}">${p}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+    
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    <li class="page-item">
+                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    </li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${next}">&gt;&gt;</a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>
@@ -276,7 +343,7 @@
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 결재 문서 조회 목록 -->
+                        <%-- 1) 결재 문서 조회 목록 --%>
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -285,65 +352,126 @@
                                     <th class="documentTitle">제목</th>
                                     <th class="signWriter">기안자</th>
                                     <th class="signDraftingDt">기안일</th>
+                                    <th class="signResult">결재 결과</th>
                                 </tr>
                             </thead>
     
-                            <!-- 결재 문서 목록 출력 -->
+                            <%-- 결재 문서 목록 출력 --%>
                             <tbody>
-                                <c:forEach items="${documentList}" var="document">
-                                    <tr class="item" id="document-list-body">
-                                        <!-- No. -->
-                                        <td></td>
-    
-                                        <!-- 문서 유형 -->
-                                        <td></td>
-    
-                                        <!-- 제목 -->
-                                        <td class="documentTitle">
-                                            <a href="#" style="color: black;"></a>
-                                        </td>
-    
-                                        <!-- 기안자 -->
-                                        <td></td>
-    
-                                        <!-- 기안일 -->
-                                        <td>
-                                            <!-- <fmt:formatDate var="signDraftingDt" value="${}" pattern="yyyy-MM-dd" />
-                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" /> -->
-                                            
-                                            <c:choose>
-                                                <!-- 글 작성일이 오늘이 아닐 경우 -->
-                                                <c:when test="${signDraftingDt != today}">
-                                                    ${signDraftingDt}
-                                                </c:when>
-    
-                                                <!-- 글 작성일이 오늘일 경우 -->
-                                                <c:otherwise>
-                                                    <fmt:formatDate value="" pattern="HH:mm" />
-                                                </c:otherwise>
-    
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                            	<c:choose>
+									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
+									<c:when test="${empty documentList}">
+										<tr>
+											<td colspan="6">작성된 문서가 없습니다.</td>
+										</tr>								
+									</c:when>
+									
+									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
+									<c:otherwise>
+                            	
+		                                <c:forEach items="${documentList}" var="document">
+		                                    <tr class="item" id="document-list-body">
+		                                        <!-- No. -->
+		                                        <td>${document.signNo}</td>
+		    
+		                                        <%-- 문서 유형 --%>
+		                                        <td>${document.documentType}</td>
+		    
+		                                        <%-- 제목 --%>
+		                                        <td class="documentTitle">
+		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                        </td>
+		    
+		                                        <%-- 기안자 --%>
+		                                        <td>${document.memberNm}</td>
+		    
+		                                        <%-- 기안일 --%>
+		                                        <td>
+		                                            <fmt:formatDate var="signDraftingDt" value="${document.signDraftingDt}" pattern="yyyy-MM-dd" />
+		                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
+		                                            
+		                                            <c:choose>
+		                                                <%-- 글 작성일이 오늘이 아닐 경우 --%>
+		                                                <c:when test="${signDraftingDt != today}">
+		                                                    ${signDraftingDt}
+		                                                </c:when>
+		    
+		                                                <%-- 글 작성일이 오늘일 경우 --%>
+		                                                <c:otherwise>
+		                                                    <fmt:formatDate value="${document.signDraftingDt}" pattern="HH:mm" />
+		                                                </c:otherwise>
+		                                            </c:choose>
+		                                        </td>
+		                                        
+		                                       	<%-- 결재 결과 --%>
+		                                       	<td>${document.signResult}</td>
+		                                    </tr>
+		                                </c:forEach>
+		                    		</c:otherwise>
+		                    	</c:choose>       
                             </tbody>
                         </table>
                     </div>
     
-                    <div class="documentPg">
-                        <nav aria-label="Page navigation example">
+    
+                    <%-- 2) pagination --%>
+                    <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
+                    <c:set var="pageURL" value="signMain"  />
+                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+    
+                    <div class="pagebutton">
+                        <nav class="pagebtn" aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                              </li>
+    
+                                <%-- 현재 페이지가 10페이지 초과인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 2페이지 초과인 경우 --%>
+                                <c:if test="${pagination.currentPage > 2}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                    </li>
+                                </c:if>
+    
+    
+                                <%-- 페이지 목록 --%>
+                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                    <c:choose>
+                                        <c:when test="${p == pagination.currentPage}">
+                                            <li class="page-item active">
+                                                <a class="pagelink">${p}</a>
+                                            </li>
+                                        </c:when>
+    
+                                        <c:otherwise>
+                                            <li class="page-item">
+                                                <a class="pagelink" href="${pageURL}?cp=${p}">${p}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+    
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    <li class="page-item">
+                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    </li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${next}">&gt;&gt;</a>
+                                    </li>
+                                </c:if>
                             </ul>
-                          </nav>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -365,7 +493,7 @@
                         </div>
                     </div>
                     <div id="document-list-content">
-                        <!-- 1) 결재 문서 조회 목록 -->
+                        <%-- 1) 결재 문서 조회 목록 --%>
                         <table class="table table-sm table-hover document-list-table">
                             <thead class="document-list-head">
                                 <tr>
@@ -374,71 +502,131 @@
                                     <th class="documentTitle">제목</th>
                                     <th class="signWriter">기안자</th>
                                     <th class="signDraftingDt">기안일</th>
+                                    <th class="signResult">결재 결과</th>
                                 </tr>
                             </thead>
     
-                            <!-- 결재 문서 목록 출력 -->
+                            <%-- 결재 문서 목록 출력 --%>
                             <tbody>
-                                <c:forEach items="${documentList}" var="document">
-                                    <tr class="item" id="document-list-body">
-                                        <!-- No. -->
-                                        <td></td>
-    
-                                        <!-- 문서 유형 -->
-                                        <td></td>
-    
-                                        <!-- 제목 -->
-                                        <td class="documentTitle">
-                                            <a href="#" style="color: black;"></a>
-                                        </td>
-    
-                                        <!-- 기안자 -->
-                                        <td></td>
-    
-                                        <!-- 기안일 -->
-                                        <td>
-                                            <!-- <fmt:formatDate var="signDraftingDt" value="${}" pattern="yyyy-MM-dd" />
-                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" /> -->
-                                            
-                                            <c:choose>
-                                                <!-- 글 작성일이 오늘이 아닐 경우 -->
-                                                <c:when test="${signDraftingDt != today}">
-                                                    ${signDraftingDt}
-                                                </c:when>
-    
-                                                <!-- 글 작성일이 오늘일 경우 -->
-                                                <c:otherwise>
-                                                    <fmt:formatDate value="" pattern="HH:mm" />
-                                                </c:otherwise>
-    
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                            	<c:choose>
+									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
+									<c:when test="${empty documentList}">
+										<tr>
+											<td colspan="6">작성된 문서가 없습니다.</td>
+										</tr>								
+									</c:when>
+									
+									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
+									<c:otherwise>
+                            	
+		                                <c:forEach items="${documentList}" var="document">
+		                                    <tr class="item" id="document-list-body">
+		                                        <!-- No. -->
+		                                        <td>${document.signNo}</td>
+		    
+		                                        <%-- 문서 유형 --%>
+		                                        <td>${document.documentType}</td>
+		    
+		                                        <%-- 제목 --%>
+		                                        <td class="documentTitle">
+		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                        </td>
+		    
+		                                        <%-- 기안자 --%>
+		                                        <td>${document.memberNm}</td>
+		    
+		                                        <%-- 기안일 --%>
+		                                        <td>
+		                                            <fmt:formatDate var="signDraftingDt" value="${document.signDraftingDt}" pattern="yyyy-MM-dd" />
+		                                            <fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
+		                                            
+		                                            <c:choose>
+		                                                <%-- 글 작성일이 오늘이 아닐 경우 --%>
+		                                                <c:when test="${signDraftingDt != today}">
+		                                                    ${signDraftingDt}
+		                                                </c:when>
+		    
+		                                                <%-- 글 작성일이 오늘일 경우 --%>
+		                                                <c:otherwise>
+		                                                    <fmt:formatDate value="${document.signDraftingDt}" pattern="HH:mm" />
+		                                                </c:otherwise>
+		                                            </c:choose>
+		                                        </td>
+		                                        
+		                                       	<%-- 결재 결과 --%>
+		                                       	<td>${document.signResult}</td>
+		                                    </tr>
+		                                </c:forEach>
+		                    		</c:otherwise>
+		                    	</c:choose>       
                             </tbody>
                         </table>
                     </div>
     
-                    <div class="documentPg">
-                        <nav aria-label="Page navigation example">
+    
+                    <%-- 2) pagination --%>
+                    <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
+                    <c:set var="pageURL" value="signMain"  />
+                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+    
+                    <div class="pagebutton">
+                        <nav class="pagebtn" aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                              </li>
+    
+                                <%-- 현재 페이지가 10페이지 초과인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 2페이지 초과인 경우 --%>
+                                <c:if test="${pagination.currentPage > 2}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                    </li>
+                                </c:if>
+    
+    
+                                <%-- 페이지 목록 --%>
+                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                    <c:choose>
+                                        <c:when test="${p == pagination.currentPage}">
+                                            <li class="page-item active">
+                                                <a class="pagelink">${p}</a>
+                                            </li>
+                                        </c:when>
+    
+                                        <c:otherwise>
+                                            <li class="page-item">
+                                                <a class="pagelink" href="${pageURL}?cp=${p}">${p}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+    
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if
+                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    <li class="page-item">
+                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    </li>
+                                </c:if>
+    
+                                <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
+                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                    <li class="page-item">
+                                        <a class="pagelink" href="${next}">&gt;&gt;</a>
+                                    </li>
+                                </c:if>
                             </ul>
-                          </nav>
+                        </nav>
                     </div>
                 </div>
             </div>
-        </div>
+    	</div>
     </div>
-    
     
     <!-- Modal -->
     <div class="modal fade" id="documentTypeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="documentTypeLabel" aria-hidden="true">
@@ -453,36 +641,45 @@
                 </div>
                 <div class="modal-body" id="documentType-container">
                     <div class="row row-cols-1 row-cols-md-3">
-                        <div class="col mb-4">
-                          <div class="card">
-                            <a href="/sign/expenseReport.jsp">
-                            	<img src="..." class="card-img-top" alt="품의서">
-                            </a>
-                            <div class="card-body">
-                              <h5 class="card-title">품의서</h5>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                          	<a href="/sign/meeting.jsp">
-                            	<img src="..." class="card-img-top" alt="회의록">
-                            </a>
-                            <div class="card-body">
-                              <h5 class="card-title">회의록</h5>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                          	<a href="/sign/vacation.jsp">
-                            	<img src="..." class="card-img-top" alt="휴가신청서">
-                            </a>
-                            <div class="card-body">
-                              <h5 class="card-title">휴가신청서</h5>
-                            </div>
-                          </div>
-                        </div>
+                    	<form action="insert" method="get">
+	                    	<div class="col mb-4">
+	                        	<div class="card">
+	                            	<input type="hidden" name="documentType" value="1" />
+	                            	<button class="documentTypeBtn">
+	                            		<img src="#" class="card-img-top" alt="품의서">
+	                            	</button>
+	                           		<div class="card-body">
+	                              		<h5 class="card-title">품의서</h5>
+	                            	</div>
+	                          	</div>
+	                        </div>
+	                    </form>
+	                    <form action="insert" method="get">
+	                        <div class="col mb-4">
+		                    	<div class="card">
+			                        <input type="hidden" name="documentType" value="2" />
+		                          	<button class="documentTypeBtn">
+		                            	<img src="#" class="card-img-top" alt="회의록">
+		                            </button>
+		                            <div class="card-body">
+		                            	<h5 class="card-title">회의록</h5>
+		                            </div>
+		                        </div>
+		                    </div>
+	                    </form>
+	                    <form action="insert" method="get">
+	                     	<div class="col mb-4">
+	                        	<div class="card">
+		                          	<input type="hidden" name="documentType" value="3" />
+	                          		<button class="documentTypeBtn">
+	                            		<img src="#" class="card-img-top" alt="휴가신청서">
+	                            	</button>
+	                            	<div class="card-body">
+	                              		<h5 class="card-title">휴가신청서</h5>
+	                            	</div>
+	                        	</div>
+	                        </div>
+                    	</form>
                     </div>
                     <div>* 작성할 문서 양식을 선택해주세요.</div>
                 </div>
@@ -490,12 +687,10 @@
         </div>
     </div>
 
-<input type="hidden" name=rank value="${workspaceJoin.memberRank}">
+ 
 
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 

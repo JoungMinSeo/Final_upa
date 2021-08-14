@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회의록</title>
+    <title>회의록 작성</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/autosize@5.0.1/dist/autosize.min.js" integrity="sha256-m4Mpmok7j1yQ4kI6y4CHBllrrzFAOUkvP58Dq53C2cI=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/resources/css/sign/meeting.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/meeting.css">
 
 
 </head>
@@ -19,7 +19,7 @@
         <h2>회의록</h2>
         <br>
 
-        <form action="meeting" method="post" onsubmit="return meetingValidate();">
+        <form action="insertMeeting" method="post" onsubmit="return meetingValidate();">
             <div class="meeting-infobox">
                 <div class="meeting-writeInfo">
                     <table class="table table-sm">
