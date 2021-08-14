@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fin.upa.calendar.model.vo.Calendar;
+import edu.fin.upa.calendar.model.vo.Card;
+import edu.fin.upa.member.model.vo.Member;
 
 @Repository
 public class CalendarDAO {
@@ -37,6 +39,23 @@ public class CalendarDAO {
 	 */
 	public List<Calendar> selectTeamCal(Map<String, Object> map) {
 		return sqlSession.selectList("calMapper.selectTeamCal", map);
+	}
+
+	
+	/** 팀 카드 목록 조회		
+	 * @param workNo
+	 * @return cardList
+	 */
+	public List<Card> selectCardList(int workNo) {
+		return sqlSession.selectList("calMapper.selectCardList", workNo);
+	}
+	
+	/** 팀 멤버 조회
+	 * @param workNo
+	 * @return memberList
+	 */
+	public List<Member> selectMemberList(int workNo) {
+		return sqlSession.selectList("calMapper.selectMemberList", workNo);
 	}
 	
 

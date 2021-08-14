@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.fin.upa.calendar.model.vo.Calendar;
+import edu.fin.upa.calendar.model.vo.Card;
+import edu.fin.upa.member.model.vo.Member;
 
 public interface CalendarService {
 
@@ -25,6 +27,10 @@ public interface CalendarService {
 	 * @return
 	 */
 	List<Calendar> selectTeamCal(Map<String, Object> map);
+
+	List<Card> selectCardList(int workNo);
+
+	List<Member> selectMemberList(int workNo);
 
 
 }

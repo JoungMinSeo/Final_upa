@@ -1,14 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
-<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
-<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<!-- 색상표 css & js -->
+<%-- 	
+    <link href="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/colorPicker/bootstrap-colorpicker.js"></script>
+     --%>
+	<!-- 캘린더 css & js -->
+	<link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>
+
+	<!-- 게시글 작성 css -->	
+	<link href='${pageContext.request.contextPath}/resources/css/calendar/calendarInsert.css' rel='stylesheet' />
+	
+	<!-- 스왈창 js -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<style>
 		#calendarc {
@@ -18,13 +30,13 @@
 		   /* background-color:rgb(242, 248, 252); */
 		}
 		
-		#calListUpdate, #calListDelete{
+		#calInsert, #calListDelete{
 		  background-color:rgb(24, 64, 88);
 		  color:white;
 		  border: 2px solid white;
 		  border-radius: 5px;
 		}
-		#calListUpdate:hover, #calListDelete:hover{
+		#calInsert:hover, #calListDelete:hover{
 		  background-color:rgb(42,111,154);
 		}
 		
@@ -33,7 +45,6 @@
 
 </head>
 <body>
-
 
    	<c:if test="${!empty title}">
 		<script>
@@ -52,7 +63,7 @@
       <div>
          <div>
             <jsp:include page="../workSpace/workSpaceHeader.jsp" />
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+            <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
          </div>
          <div>
             <div id="calendar"></div>
@@ -61,7 +72,7 @@
    </div>
    
    
-   <!-- 모달창 -->
+   <!-- 게시글 상세조회 모달창 -->
    <div class="modal fade" tabindex="-1" id="calendarDetail">
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
@@ -83,6 +94,119 @@
          </div>
       </div>
    </div>
+   
+   
+   
+   	<!-- 게시글 작성 모달창 -->
+	<div class="modal fade" tabindex="-1" id="calendarInsesrt">
+		<div class="modal-dialog modal-dialog-centered">
+			<form id="modal-form">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">리스트 작성</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="insertBody">
+				        <!-- 카드타이틀 -->
+				        <div class="calendartitle">
+				            <h5>카드타이틀</h5>
+				            <select id="modal-cardList">
+				            </select>
+				            
+				        </div>
+				        <div class="calendartitle">
+				            <h5>리스트타이틀</h5>
+				        	<div class="calendartitle2"><input type="text" class="listTitle"></div>
+				        </div>
+				
+				            
+				        <!-- 팀이름 -->
+				        <div class="calendartn"><h3>말도안되조</h3></div>
+				 
+				        <!-- 참여멤버 -->
+				        <div class="calendarmember">
+				            <div class="calendarmemberimg"><img src="${pageContext.request.contextPath}/resources/img/icon/group1_1.png" style="width:30px;"></div>
+				            <div class="calendarmemberip">
+				                <select id="modal-memberList">
+				                </select>
+				            </div>
+				        </div>
+				
+				        <!-- 상태변경 -->
+				        <div class="calendarstatus">
+				            <div class="calendarstatusimg"><img src="${pageContext.request.contextPath}/resources/img/icon/status1.png" style="width:30px;"></div>
+				            <div class="calendarstatusip">
+				                <select>
+				                    <option>해야하는일</option>
+				                    <option>하는중</option>
+				                    <option>막힘</option>
+				                    <option>완료</option>
+				                </select>
+				            </div>
+				        </div>
+	
+				        <!-- 날짜변경 -->
+				        <div class="addsedate" id="addsedate">
+				            <div class="calendardatechange" id="calendardatechange">
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
+				                <div class="calendardatechangeip">
+				                    <h5 class="calendarstart">시작일자</h5>
+				                    <input class="cstartdate" id="currentStartDT" type="datetime-local">
+				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+				                    <input class="cstarttime" type="time"> -->
+				                </div>
+				            </div>
+				
+				            <!-- datetime-local -->
+				            <div class="calendardatechange" id="calendardatechange">
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
+				                <div class="calendardatechangeip">
+				                    <h5 class="calendarend">종료일자</h5>
+				                    <input class="cenddate" id="currentEndDT" type="datetime-local">
+				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+				                    <input class="cendtime" type="time"> -->
+				                </div>
+				            </div>
+				        </div>
+				        
+	<!-- 			        
+				        색상첨부
+				        <div class="fcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="fcolor">글자색</h5>
+				            <input id="fcolor-input" type="text" value="white" palceholder="#colornumber" />
+				        </div>
+				        <div class="bgcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="bgcolor">배경색</h5>
+				            <input id="bgcolor-input" type="text" value="rgb(42,111,154)" palceholder="#colornumber" />
+				        </div>
+				        <div class="bdcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="bdcolor">테두리색</h5>
+				            <input id="bdcolor-input" type="text" value="rgb(213, 232, 243)" palceholder="#colornumber" />
+				        </div>
+				         -->
+	
+					
+					</div>
+					<div class="modal-footer">
+		               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
+		               <button type="button" class="btn btn-primary" id="calInsert">작성</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
    <script>
@@ -230,11 +354,48 @@
             },
 
             dateClick : function(info) { // 날짜 빈칸 클릭 시
-               alert('Clicked on: ' + info.dateStr);
-               alert('Coordinates: ' + info.jsEvent.pageX + ','
-                     + info.jsEvent.pageY);
-               alert('Current view: ' + info.view.type);
-               // change the day's background color just for fun
+               //alert('Clicked on: ' + info.dateStr);
+               //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+               //alert('Current view: ' + info.view.type); 
+               //info.dayEl.style.backgroundColor = 'rgb(42,111,154)'; // 빈공간 클릭 시 배경색 지정
+               
+				// 새일정 등록 을 위한 화면 연결
+				$("#modal-form")[0].reset();
+				
+               $.ajax({
+					url : "selectCM",
+					type : "POST",
+					dataType : "JSON",
+					success : function(result){
+						console.log(result.cardList);
+						console.log(result.memberList);
+
+						$("#modal-cardList").empty();
+						$("#modal-memberList").empty();
+						
+						
+						$.each(result.cardList, function(){
+							const option = $("<option>").text( this.cardNm ).val(this.cardNo);
+							$("#modal-cardList").append(option);
+						});
+						
+						$.each(result.memberList, function(){
+							const option = $("<option>").text( this.memberNm ).val(this.memberNo);
+							$("#modal-memberList").append(option);
+						});
+					}
+					
+               });
+               
+               
+               
+               $("#currentStartDT").val(info.dateStr + "T00:00");
+               $("#currentEndDT").val(info.dateStr + "T23:59");
+
+               
+               $("#calendarInsesrt").modal("show");	
+               
+               
             },
 
             // eventDidMount : 이벤트에 포함되지 않은 속성
@@ -251,6 +412,7 @@
                
                $(info.el).attr("data-toggle", "modal");
                $(info.el).attr("data-target", "#calendarDetail");
+               $(info.el).attr("data-target", "#calndarInsert");
             }
 
          });
@@ -290,6 +452,98 @@
                });
 
             })
+            
+            
+ /*              
+            		// 색상표		
+        $(function () {
+            // 기본 인스턴스화: 
+            $('#fcolor-input').colorpicker();
+            
+            // 이벤트를 사용하여 #demo div 배경색을 변경하는 예 : 
+            $('#textColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
+        $(function () {
+            $('#bgcolor-input').colorpicker();
+            
+            $('#backgroundColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
+        $(function () {
+            $('#bdcolor-input').colorpicker();
+            
+            $('#borderColor').on('colorpickerChange', function(event) {
+                $('#coloradd').css('background-color', event.color.toString());
+            });
+        });
+            
+         */
+        
+        
+
+        
+        // 모달창 리스트 삭제
+        $("#calListUpdate").on("click", function(){
+        	
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // 게시글 작성
+        
+        let count = 1;
+        
+        /* 파일추가 스크립트 */
+        function add(){
+            var addValue = document.getElementById('addvalue');
+
+            var p = document.createElement("div");
+
+            p.innerHTML = addValue.value;
+
+            var img = document.createElement("img");
+            var ip = document.createElement("input");
+            var btn = document.createElement("button");
+
+            btn.innerHTML = "삭제";
+
+            p.setAttribute("class", "addfilec");
+            img.setAttribute("src", "../common/icon/file1.png");
+            img.setAttribute("style", "width:30px;");
+            ip.setAttribute("type", "file");
+            ip.setAttribute("name", "file" + count++);
+            ip.setAttribute("class", "boardImg");
+            btn.setAttribute("class", "fileaddbtn")
+            btn.setAttribute("onclick", "deleteImage(this)");
+            
+            p.appendChild(img);
+            p.appendChild(ip);
+            p.appendChild(btn);
+
+            document.getElementById('addimg').appendChild(p); 
+
+            addValue.value = ' ';
+        }
+
+        function deleteImage(el){
+            el.parentElement.remove();
+            count--;
+        }
+
+        /* 일정에 현재 시간 자동 세팅 */
+        document.getElementById('currentStartDT').value= new Date().toISOString().slice(0, 19);
+        document.getElementById('currentEndDT').value= new Date().toISOString().slice(0, 19);
+
+            
    </script>
 </body>
 </html>
