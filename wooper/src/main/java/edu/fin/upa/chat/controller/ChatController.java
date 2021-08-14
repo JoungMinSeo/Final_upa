@@ -53,7 +53,6 @@ public class ChatController {
 		List<Member> memberList = service.selectMemberList(search);
 		
 		System.out.println("컨트롤러 memberList : " + memberList);
-		
 		Gson gson = new Gson();
 		
 		return gson.toJson(memberList);
