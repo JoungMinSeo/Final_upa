@@ -231,6 +231,8 @@ function  createList(){
 			"status" : "insertList" // insertList : list 추가 
 	}
 	
+	$("#addList").modal("hide");
+	
 	cardSock.send(JSON.stringify(obj));
 	
 }
@@ -303,9 +305,7 @@ cardSock.onmessage = function(event){
 			
 		
 		case "deleteCard" :
-			/* 리스트가 있으면 삭제되면 안됨.. 처리해주기 */
-			
-			console.log($("#"+obj.cardNo).children().next().children().is(".fill"));			
+			//console.log($("#"+obj.cardNo).children().next().children().is(".fill"));			
 			
 			if($("#"+obj.cardNo).children().next().children().is(".fill") == false){
 				$("#" + obj.cardNo).remove();
@@ -353,6 +353,7 @@ cardSock.onmessage = function(event){
 				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo).append(fileInfo);
 				
 				$("#" + obj.addListCardNo).find(".list").append(fill);
+				$("#" + obj.cardNo).remove();
 			
 		break;
 		
