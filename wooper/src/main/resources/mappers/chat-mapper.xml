@@ -61,4 +61,31 @@
 		</if>
 	</select>
 	
+	<!-- 다음 채팅창 번호 조회 -->
+	<select id="nextChatRoomNo" resultType="_int">
+		SELECT SEQ_CHAT_ROOM_NO.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 채팅방 만들기 -->
+	<insert id="createChatRoom" parameterType="ChatRoom">
+		INSERT INTO CHAT_ROOM VALUES
+		(#{chatRoomNo}, #{title}, DEFAULT, #{memberNo})
+	</insert>
+	
+	<!-- 멤버 넣기 -->
+	<insert id="insertChatRoom" parameterType="map">
+		INSERT INTO CHAT_ROOM_JOIN VALUES
+		(#{memberJoinNo},#{chatRoomNo})
+	</insert>
+	
+	<select id="selectChat" parameterType="_int" resultMap="chatMessage_rm">
+  	SELECT MESSAGE, CREATE_DT, MEMBER_NO, MEMBER_NM
+		FROM CHAT_MESSAGE
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE CHAT_ROOM_NO = #{chatRoomNo}
+		ORDER BY CM_NO
+  </select>
+	
+	
+	
 </mapper>
