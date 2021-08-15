@@ -18,6 +18,7 @@ import edu.fin.upa.list.model.service.ListService;
 import edu.fin.upa.list.model.vo.ListList;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.workspace.model.service.WorkspaceService;
+import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 @SessionAttributes({ "loginMember", "work" })
 @RequestMapping("/workspace/*")
@@ -77,6 +78,21 @@ public class WorkspaceController {
 		}
 		
 		return "/workSpace/boardMain";
+	}
+	
+	@RequestMapping(value="addWork", method=RequestMethod.POST)
+	public String addWork(@ModelAttribute("loginMember") Member loginMember, Model model, Workspace inputWork, WorkspaceJoin workspaceJoin ) {
+		
+		inputWork.setMemberNo(loginMember.getMemberNo());
+		
+		service.addWorkspace(inputWork);
+	
+		workspaceJoin.setMemberNo(inputWork.getMemberNo());
+		workspaceJoin.setWorkNo(inputWork.getWorkNo());
+		
+		service.addWorkspaceJoin(inputWork);
+		
+		return "redirect:/calendar/calendar";
 	}
 	
 	

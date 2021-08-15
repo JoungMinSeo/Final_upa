@@ -44,6 +44,7 @@
 			</div>
 			
 			<div class="col py-3 px-lg-5">
+				<button type="button" class="btn btn-info mypage font" onclick="location.href='${pageContext.request.contextPath}/member/myPage'">마이페이지</button>
 				<button type="button" class="btn btn-info logout font" onclick="location.href='${pageContext.request.contextPath}/member/logout'">로그아웃</button>
 			</div>
 		</div>
@@ -52,27 +53,51 @@
 		<c:choose>
 
 			<c:when test="${empty workList }">
-				<h3 clas="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
+				<h3 class="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
 			</c:when>
 
 			<c:otherwise>
 				<c:forEach items="${workList}" var="item" varStatus="vs">
 					<div class="project" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">
-						${item.workNo } , ${item.workNm }
+						<div class="projectListName ">${item.workNm }</div>
+						<div class="projectX">X</div>
 					</div>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-
-
-
-
-
-
-
-		<!-- 	<div class="project">
 		
-		</div> -->
+		<button type="button" class="addProject"  data-toggle="modal" data-target="#addWorkspace">프로젝트 생성하기</button>
+
+
+		
+		
+		<!-- 워크스페이스 추가 모달 -->
+		<div class="modal fade" id="addWorkspace" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">새로운 워크스페이스</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      	<form class="form-addWork" method="POST" action="${contextPath}/workspace/addWork">
+		      		<div class="modal-body addWork">
+			        <div class="addWorkNm">워크스페이스 이름</div>
+			        <input type="text" name="workNm">
+			        <div class="addWorkInfo">워크스페이스 소개</div>
+			        <input type="text" name="workInfo">
+			  		</div>
+			  		
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+			        <button type="submit" class="btn btn-primary">생성</button>
+			      </div>
+		      </form>
+		      
+		    </div>
+		  </div>
+		</div>
 
 
 		<hr>

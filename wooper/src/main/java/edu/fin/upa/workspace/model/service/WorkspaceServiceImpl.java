@@ -25,6 +25,21 @@ public class WorkspaceServiceImpl implements WorkspaceService{
 	public Workspace selectWorkspace(int workNo) {
 		return dao.selectWorkspace(workNo);
 	}
+
+	// 워크스페이스 추가
+	@Override
+	public void addWorkspace(Workspace inputWork) {
+		dao.addWorkspace(inputWork);
+	}
+
+	// 워크스페이스조인 추가
+	@Override
+	public void addWorkspaceJoin(Workspace inputWork) {
+		dao.addWorkspaceJoin(inputWork);
+	}
+	
+	
+	
 	
 	
 	

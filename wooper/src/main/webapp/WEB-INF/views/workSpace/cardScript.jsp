@@ -353,7 +353,7 @@ cardSock.onmessage = function(event){
 				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo).append(fileInfo);
 				
 				$("#" + obj.addListCardNo).find(".list").append(fill);
-				$("#" + obj.cardNo).remove();
+				//$("#" + obj.cardNo).remove();
 			
 		break;
 		
