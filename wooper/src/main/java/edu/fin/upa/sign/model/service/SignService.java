@@ -66,6 +66,11 @@ public interface SignService {
 	 */
 	int insertMeeting(Meeting meeting, Document document);
 
+	/** 휴가신청서 작성
+	 * @param vacation
+	 * @param document
+	 * @return documentNo
+	 */
 	int insertVacation(Vacation vacation, Document document);
 
 

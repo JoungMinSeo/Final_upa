@@ -13,6 +13,7 @@ import edu.fin.upa.management.model.vo.Pagination;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.sign.model.vo.Document;
 import edu.fin.upa.sign.model.vo.ExpenseReport;
+import edu.fin.upa.sign.model.vo.Meeting;
 import edu.fin.upa.sign.model.vo.PurchaseList;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
@@ -141,6 +142,16 @@ public class SignDAO {
 	 */
 	public void insertPurchaseList(List<PurchaseList> pList) {
 		sqlSession.insert("signMapper.insertPurchaseList", pList);
+	}
+
+
+	/** 회의록 작성
+	 * @param meeting
+	 * @param document
+	 * @return documentNo
+	 */
+	public int insertMeeting(Meeting meeting, Document document) {
+		return 0;
 	}
 
 	
