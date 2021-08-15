@@ -1,11 +1,16 @@
 package edu.fin.upa.chat.controller;
 
 
+import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.sonatype.inject.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +20,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.google.gson.Gson;
 
 import edu.fin.upa.chat.model.service.ChatService;
+import edu.fin.upa.chat.model.vo.ChatMessage;
 import edu.fin.upa.chat.model.vo.ChatRoom;
+import edu.fin.upa.chat.model.vo.ChatRoomJoin;
 import edu.fin.upa.chat.model.vo.Search;
 import edu.fin.upa.member.model.vo.Member;
 
@@ -26,7 +33,7 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 	
-	
+	// 채팅 목록 조회
 	@RequestMapping(value="/chat/chatRoom")
 	public String charRoomList(Model model) {
 		
@@ -57,7 +64,50 @@ public class ChatController {
 		
 		return gson.toJson(memberList);
 		
-		//헤헿 테스트임미둥
+	}
+	
+	// 채팅방 생성
+	@RequestMapping(value="/chat/createChatRoom",method=RequestMethod.POST)
+	public String createChatRoom(HttpServletRequest request, Model model,
+								@RequestParam("memberNo") int[] joinMemberNo,
+								ChatRoomJoin join,ChatRoom room,@RequestParam("chatTitle") String chatTitle,
+								@ModelAttribute("loginMember") Member loginMember) {
+		
+		room.setChatRoomNo(loginMember.getMemberNo());
+		room.setTitle(chatTitle);
+		
+		// 채팅방 먼저 개설
+		int chatRoomNo = service.createChatRoom(room);
+		
+		if (chatRoomNo > 0) {
+			// 채팅방에 사람 넣어버리기
+			for(int i =0; i<joinMemberNo.length; i++) {
+				
+				int memberJoinNo = joinMemberNo[i];
+				
+				int result = service.insertChatRoom(memberJoinNo,chatRoomNo);
+				System.out.println(joinMemberNo[i]);
+				
+			}
+		}
+		
+		
+		return "redirect:/chat/chatRoom";
+	}
+	
+	
+	@RequestMapping(value="/chat/selectChatMessage",method=RequestMethod.POST)
+	@ResponseBody
+	public String selectChatMessage(@RequestParam("chatRoomNo") int chatRoomNo) {
+		
+		
+		List<ChatMessage> list = service.selectChat(chatRoomNo);
+		
+		System.out.println("컨트롤러 리스트 : " + list);
+		
+		Gson gson = new Gson();
+		
+		return gson.toJson(list);
 	}
 	
 	
