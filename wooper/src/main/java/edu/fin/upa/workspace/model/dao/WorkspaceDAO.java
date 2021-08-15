@@ -30,5 +30,19 @@ public class WorkspaceDAO {
 		return sqlSession.selectOne("workspaceMapper.selectWorkspace", workNo);
 	}
 
+	/** 워크스페이스 추가
+	 * @param inputWork
+	 */
+	public void addWorkspace(Workspace inputWork) {
+		sqlSession.insert("workspaceMapper.addWorkspace", inputWork);
+	}
+
+	/** 워크스페이스조인 추가
+	 * @param inputWork
+	 */
+	public void addWorkspaceJoin(Workspace inputWork) {
+		sqlSession.insert("workspaceMapper.addWorkspaceJoin", inputWork);
+	}
+
 
 }

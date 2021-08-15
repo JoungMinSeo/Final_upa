@@ -25,5 +25,22 @@
 		WHERE WORK_NO = #{workNo}
 	
 	</select>
+	
+	<!-- 워크스페이스 추가 -->
+	<insert id="addWorkspace" parameterType="Workspace">
+	
+		<selectKey keyProperty="workNo" resultType="_int" order="BEFORE"> 
+			SELECT SEQ_CAL_WS.NEXTVAL FROM DUAL 
+		</selectKey>
+	
+		INSERT INTO WORKSPACE VALUES
+		(#{workNo}, #{memberNo}, #{workNm}, #{workInfo}, DEFAULT)
+	</insert>
+	
+	<!-- 워크스페이스조인 추가 -->
+	<insert id="addWorkspaceJoin" parameterType="Workspace">
+		INSERT INTO WORKSPACE_JOIN VALUES
+		(#{memberNo}, #{workNo}, DEFAULT)
+	</insert>
 
 </mapper>
