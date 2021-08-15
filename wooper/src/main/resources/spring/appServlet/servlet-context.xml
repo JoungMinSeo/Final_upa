@@ -70,14 +70,14 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	
-	<!-- <beans:bean id="calendarHandler" class="edu.fin.upa.calendar.websocket.CalendarWebsocketHandler" />
+	<beans:bean id="calendarHandler" class="edu.fin.upa.calendar.websocket.CalendarWebsocketHandler" />
 	<websocket:handlers>
-		<websocket:mapping handler="calendarHandler" path="/calendar" />
+		<websocket:mapping handler="calendarHandler" path="/calSock" />
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 		<websocket:sockjs/>
-	</websocket:handlers> -->
+	</websocket:handlers>
 	
 	
 	 

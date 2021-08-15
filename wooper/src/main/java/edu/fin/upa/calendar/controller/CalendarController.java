@@ -20,6 +20,7 @@ import edu.fin.upa.calendar.model.service.CalendarService;
 import edu.fin.upa.calendar.model.vo.Calendar;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.calendar.model.vo.Workspace;
+import edu.fin.upa.list.model.vo.ListList;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.workspace.model.service.WorkspaceService;
 
@@ -67,21 +68,6 @@ public class CalendarController {
 		 return new Gson().toJson(list); 
 	}
 	
-	// 개인캘린더 수정
-//	@RequestMapping(value="calListUpdate", method=RequestMethod.POST)
-//	public int updateCalendar(int listNo, Model model) {
-//		/*
-//		 * Map<String, Object> map = new HashMap<>();
-//		 * 
-//		 * map.put("listNo", listNo); map.put("title", title); map.put("start", start);
-//		 * map.put("end", end);
-//		 */
-//		System.out.println(listNo);
-//		int result = service.updateCalendar(listNo);
-//		
-//		return result;
-//	}
-	
 	// 팀캘린더
    @RequestMapping(value="{workNo}/teamcal", method=RequestMethod.GET)
    public String teamcal(@PathVariable("workNo") int workNo, Model model) {
@@ -113,6 +99,21 @@ public class CalendarController {
 		 
 		 return new Gson().toJson(list); 
 	}
+   
+	// 개인캘린더 수정
+//	@RequestMapping(value="calListUpdate", method=RequestMethod.POST)
+//	public int updateCalendar(int listNo, Model model) {
+//		/*
+//		 * Map<String, Object> map = new HashMap<>();
+//		 * 
+//		 * map.put("listNo", listNo); map.put("title", title); map.put("start", start);
+//		 * map.put("end", end);
+//		 */
+//		System.out.println(listNo);
+//		int result = service.updateCalendar(listNo);
+//		
+//		return result;
+//	}
 	   
 	// 새로운 일정 등록 시 조회할 카드번호,이름, 팀원 목록
 	 @RequestMapping(value = "{workNo}/selectCM" ,method=RequestMethod.POST)
@@ -128,7 +129,15 @@ public class CalendarController {
 		 map.put("memberList",	memberList);
 		 
 		 return new Gson().toJson(map);
+	 }
+	 
+	 // 새로운 일정 등록
+	 @RequestMapping(value = "{workNo}/insertCal" ,method=RequestMethod.POST)
+	 @ResponseBody
+	 public String insertCalendar(@PathVariable("workNo") int workNo) {
 		 
+		 
+		 return null;
 	 }
 
 	
