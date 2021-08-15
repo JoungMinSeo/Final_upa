@@ -43,7 +43,7 @@
 		
 		INSERT INTO LIST  
 		VALUES
-		(SEQ_CAL_LIST.NEXTVAL, #{cardNo}, #{listNm}, DEFAULT, DEFAULT, SYSTIMESTAMP, NULL, DEFAULT, DEFAULT, DEFAULT, #{memberNo},
+		(#{listNo}, #{cardNo}, #{listNm}, DEFAULT, DEFAULT, SYSTIMESTAMP, NULL, DEFAULT, DEFAULT, DEFAULT, #{memberNo},
 		 TO_DATE(#{listCreateDt}, 'RRRR-MM-DD"T"HH24:MI') , TO_DATE(#{listEndDt}, 'RRRR-MM-DD"T"HH24:MI')
  		)
 	</insert>
