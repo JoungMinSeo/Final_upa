@@ -16,6 +16,7 @@ import edu.fin.upa.sign.model.vo.Document;
 import edu.fin.upa.sign.model.vo.ExpenseReport;
 import edu.fin.upa.sign.model.vo.Meeting;
 import edu.fin.upa.sign.model.vo.PurchaseList;
+import edu.fin.upa.sign.model.vo.Vacation;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 @Service
@@ -124,6 +125,11 @@ public class SignServiceImpl implements SignService {
 		return DocumentNo;
 	}
 	
+	// 휴가신청서 작성
+	@Override
+	public int insertVacation(Vacation vacation, Document document) {
+		return 0;
+	}
 	
 	
 	
@@ -162,6 +168,7 @@ public class SignServiceImpl implements SignService {
 				
 				return result;
 			}
+
 
 
 
