@@ -1,6 +1,6 @@
 package edu.fin.upa.sign.model.vo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 
 public class ExpenseReport {
@@ -8,9 +8,9 @@ public class ExpenseReport {
 	private String expenseDept;
 	private String expensePurpose;
 	private String accountPhone;
-	private Timestamp accountDt;
-	private Timestamp deliveryStartDt;
-	private Timestamp deliveryEndDt;
+	private Date accountDt;
+	private Date deliveryStartDt;
+	private Date deliveryEndDt;
 	private String paymentMethod;
 	private List<PurchaseList> pList;
 	
@@ -48,27 +48,27 @@ public class ExpenseReport {
 		this.accountPhone = accountPhone;
 	}
 
-	public Timestamp getAccountDt() {
+	public Date getAccountDt() {
 		return accountDt;
 	}
 
-	public void setAccountDt(Timestamp accountDt) {
+	public void setAccountDt(Date accountDt) {
 		this.accountDt = accountDt;
 	}
 
-	public Timestamp getDeliveryStartDt() {
+	public Date getDeliveryStartDt() {
 		return deliveryStartDt;
 	}
 
-	public void setDeliveryStartDt(Timestamp deliveryStartDt) {
+	public void setDeliveryStartDt(Date deliveryStartDt) {
 		this.deliveryStartDt = deliveryStartDt;
 	}
 
-	public Timestamp getDeliveryEndDt() {
+	public Date getDeliveryEndDt() {
 		return deliveryEndDt;
 	}
 
-	public void setDeliveryEndDt(Timestamp deliveryEndDt) {
+	public void setDeliveryEndDt(Date deliveryEndDt) {
 		this.deliveryEndDt = deliveryEndDt;
 	}
 

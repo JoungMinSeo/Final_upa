@@ -145,5 +145,47 @@
 		WHERE WORK_NO = #{workNo}
 		ORDER BY MEMBER_RANK DESC
 	</select>
+	
+	<!-- 회원 직급 조회 -->
+	<select id="selectRank" parameterType="map" resultType="string">
+		SELECT MEMBER_RANK FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo} 
+		AND MEMBER_NO = #{memberNo}
+	</select>
+
+	<!-- 품의서 작성 -->
+	<insert id="insertExpenseReport1" parameterType="map" useGeneratedKeys="true">
+		<selectKey keyProperty="documentNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_DOC_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO DOCUMENT VALUES
+			( #{documentNo}, 0, '1', #{documentTitle}, #{documentEtc}, DEFAULT )
+	</insert>
+	<insert id="insertExpenseReport2" parameterType="map">
+		INSERT INTO SIGN VALUES
+			( 0, SYSTIMESTAMP, 'S', #{memberNo}, #{workNo} )
+	</insert>
+	<insert id="insertExpenseReport3" parameterType="map">
+		INSERT INTO EXPENSE_REPORT VALUES
+				( #{documentNo}, #{expenseDept}, #{expensePurpose}, #{accountPhone}, #{accountDt}, 
+				  #{deliveryStartDt}, #{deliveryEndDt}, #{paymentMethod} )
+	</insert>
+	
+	<!-- 구매 목록 삽입(List) -->
+	<insert id="insertPurchaseList" parameterType="list">
+		INSERT INTO PURCHASE_LIST
+		SELECT SEQ_PL_NO.NEXTVAL, P.* FROM {
+			
+			<foreach collection="list" item="pl" separator="UNION ALL">
+				SELECT #{pl.itemNm} ITEM_NM,
+					   #{pl.itemUnit} ITEM_UNIT,
+					   #{pl.itemAmount} ITEM_AMOUNT,
+					   #{pl.unitPrice} UNIT_PRICE,
+					   #{pl.totalPrice} TOTAL_PRICE,
+					   #{pl.documentNo} DOCUMENT_NO FROM DUAL
+			</foreach>
+		) P
+	</insert>
 
 </mapper>

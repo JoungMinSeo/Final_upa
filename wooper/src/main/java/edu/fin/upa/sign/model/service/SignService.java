@@ -5,6 +5,9 @@ import java.util.List;
 import edu.fin.upa.management.model.vo.Pagination;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.sign.model.vo.Document;
+import edu.fin.upa.sign.model.vo.ExpenseReport;
+import edu.fin.upa.sign.model.vo.Meeting;
+import edu.fin.upa.sign.model.vo.Vacation;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 public interface SignService {
@@ -41,6 +44,30 @@ public interface SignService {
 	 * @return workspaceJoin
 	 */
 	List<WorkspaceJoin> selectWorkspaceJoin(int workNo);
+
+	/** 회원 직급 조회
+	 * @param workNo
+	 * @param memberNo
+	 * @return memberRank
+	 */
+	String selectRank(int workNo, int memberNo);
+
+	/** 품의서 작성
+	 * @param expenseReport
+	 * @param document
+	 * @return documentNo
+	 */
+	int insertExpenseReport(ExpenseReport expenseReport, Document document);
+
+	/** 회의록 작성
+	 * @param meeting
+	 * @param document
+	 * @return documentNo
+	 */
+	int insertMeeting(Meeting meeting, Document document);
+
+	int insertVacation(Vacation vacation, Document document);
+
 
 
 

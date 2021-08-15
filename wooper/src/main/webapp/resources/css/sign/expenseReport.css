@@ -1,3 +1,16 @@
+body{
+	background-color: rgb(213, 232, 243);
+}
+
+input{
+	background-color: rgb(213, 232, 243);
+	border: hidden;
+}
+
+textarea{
+	background-color: rgb(213, 232, 243);
+}
+
 div{
     box-sizing: border-box;
     text-align: center;
@@ -21,6 +34,10 @@ div{
     position: absolute;
     left: 0;
     bottom: 0;
+}
+
+#expense-dept{
+	width: 100%;
 }
 
 .signInfo{
@@ -60,8 +77,19 @@ input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
     margin-bottom: 0;
 }
 
+#account-dt, #delivery-start-dt, #delivery-end-dt{
+	text-align: center;
+}
+
 #expense-report-content-table{
     margin-bottom: 0;
+}
+
+.rowbtn{
+	background-color: rgb(213, 232, 243);
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
 }
 
 #document-etc{
