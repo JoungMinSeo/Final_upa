@@ -7,6 +7,7 @@ public class Document {
 	private int signNo; // 결재 번호
 	private String documentType; // 문서 유형(1:품의서, 2:회의록, 3:휴가신청서)
 	private String documentTitle; // 문서 제목
+	private String documentEtc; // 비고란
 	private String documentStatus; // 문서 상태(S:저장, Y:완료, N:삭제)
 	private Timestamp signDraftingDt; // 기안 일자
 	private String signResult; // 최종 결재 결과(반려:N,보류:S,결재:Y)
@@ -55,6 +56,16 @@ public class Document {
 
 	public void setDocumentTitle(String documentTitle) {
 		this.documentTitle = documentTitle;
+	}
+
+
+	public String getDocumentEtc() {
+		return documentEtc;
+	}
+
+
+	public void setDocumentEtc(String documentEtc) {
+		this.documentEtc = documentEtc;
 	}
 
 
@@ -121,12 +132,11 @@ public class Document {
 	@Override
 	public String toString() {
 		return "Document [documentNo=" + documentNo + ", signNo=" + signNo + ", documentType=" + documentType
-				+ ", documentTitle=" + documentTitle + ", documentStatus=" + documentStatus + ", signDraftingDt="
-				+ signDraftingDt + ", signResult=" + signResult + ", memberNo=" + memberNo + ", memberNm=" + memberNm
-				+ ", workNo=" + workNo + "]";
+				+ ", documentTitle=" + documentTitle + ", documentEtc=" + documentEtc + ", documentStatus="
+				+ documentStatus + ", signDraftingDt=" + signDraftingDt + ", signResult=" + signResult + ", memberNo="
+				+ memberNo + ", memberNm=" + memberNm + ", workNo=" + workNo + "]";
 	}
 
-	
-	
+
 	
 }

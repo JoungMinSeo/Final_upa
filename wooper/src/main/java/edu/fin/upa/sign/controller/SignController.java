@@ -1,5 +1,6 @@
 package edu.fin.upa.sign.controller;
 
+import java.io.Console;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import edu.fin.upa.sign.model.service.SignService;
 import edu.fin.upa.sign.model.vo.Document;
 import edu.fin.upa.sign.model.vo.ExpenseReport;
 import edu.fin.upa.sign.model.vo.Meeting;
+import edu.fin.upa.sign.model.vo.Vacation;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 
@@ -84,13 +86,19 @@ public class SignController {
 	// 결재 문서 작성 화면 전환
 	@RequestMapping(value="{workNo}/insert", method = RequestMethod.GET)
 	public String insertMeetingForm(@PathVariable("workNo") int workNo, 
-									@RequestParam("documentType") int documentType, Model model) {
+									@RequestParam("documentType") int documentType, 
+									@ModelAttribute("loginMember") Member loginMember,
+									Model model) {
 		
 		// 워크스페이스 참가자 목록 조회
 		List<WorkspaceJoin> workspaceJoin = service.selectWorkspaceJoin(workNo);
 		
+		// 로그인한 회원 직급 조회
+		String memberRank = service.selectRank(workNo, loginMember.getMemberNo());
+		
 		// 요청 위임 페이지에서 사용할 수 있도록 데이터 전달
 		model.addAttribute("workspaceJoin", workspaceJoin);
+		model.addAttribute("memberRank", memberRank);
 		
 		String path = "sign/insert";
 		
@@ -104,5 +112,103 @@ public class SignController {
 	}
 	
 	
+	// 품의서 작성 + 임시 저장
+	@RequestMapping(value="{workNo}/insertExpenseReport", method=RequestMethod.POST)
+	public String insertExpenseReport(@PathVariable("workNo") int workNo,
+									  @ModelAttribute ExpenseReport expenseReport,
+									  @ModelAttribute Document document,
+									  @ModelAttribute("loginMember") Member loginMember,
+									  HttpServletRequest request) {
+		
+		document.setMemberNo( loginMember.getMemberNo() );
+		document.setWorkNo(workNo);
+		document.setDocumentType("1");
+		document.setMemberNm( loginMember.getMemberNm() );
+		
+		String[] phone = request.getParameterValues("accountPhone");
+		expenseReport.setAccountPhone( String.join("-", phone) );
+		
+		System.out.println(document);
+		System.out.println(expenseReport);
+		
+		
+		int documentNo = service.insertExpenseReport(expenseReport, document);
+		
+		String path = null;
+		
+		if(documentNo > 0) {
+			path = "redirect:" + documentNo;
+			
+		}else {
+			path = "redirect:" + request.getHeader("referer");
+		}
+		
+		return path;
+	}
+
+	
+	// 회의록 작성
+	@RequestMapping(value="{workNo}/insertMeeting", method=RequestMethod.POST)
+	public String insertMeeting(@PathVariable("workNo") int workNo,
+								@ModelAttribute Meeting meeting,
+			  					@ModelAttribute Document document,
+			  					@ModelAttribute("loginMember") Member loginMember,
+			  					HttpServletRequest request) {
+		
+		document.setMemberNo( loginMember.getMemberNo() );
+		document.setWorkNo(workNo);
+		document.setDocumentType("2");
+		document.setMemberNm( loginMember.getMemberNm() );
+		
+		System.out.println(document);
+		System.out.println(meeting);
+		
+		
+		int documentNo = service.insertMeeting(meeting, document);
+		
+		String path = null;
+		
+		if(documentNo > 0) {
+			path = "redirect:" + documentNo;
+			
+		}else {
+			path = "redirect:" + request.getHeader("referer");
+		}
+		
+		return path;
+		
+	}
+	
+	
+	// 휴가신청서 작성
+	@RequestMapping(value="{workNo}/insertVacation", method=RequestMethod.POST)
+	public String insertVacation(@PathVariable("workNo") int workNo,
+								 @ModelAttribute Vacation vacation,
+								 @ModelAttribute Document document,
+								 @ModelAttribute("loginMember") Member loginMember,
+								 HttpServletRequest request) {
+		
+		document.setMemberNo( loginMember.getMemberNo() );
+		document.setWorkNo(workNo);
+		document.setDocumentType("3");
+		document.setMemberNm( loginMember.getMemberNm() );
+		
+		System.out.println(document);
+		System.out.println(vacation);
+		
+		
+		int documentNo = service.insertVacation(vacation, document);
+		
+		String path = null;
+		
+		if(documentNo > 0) {
+			path = "redirect:" + documentNo;
+			
+		}else {
+			path = "redirect:" + request.getHeader("referer");
+		}
+		
+		return path;
+	}
 
 }

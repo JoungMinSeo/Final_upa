@@ -1,13 +1,13 @@
 package edu.fin.upa.sign.model.vo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 
 import edu.fin.upa.member.model.vo.Member;
 
 public class Meeting {
 	private int documentNo; // 문서 번호
-	private Timestamp meetingDt; // 회의 일자
+	private Date meetingDt; // 회의 일자
 	private String meetingDept; // 회의 부서
 	private String meetingPurpose; // 회의 목적
 	private String meetingContent; // 회의 내용
@@ -23,11 +23,11 @@ public class Meeting {
 		this.documentNo = documentNo;
 	}
 
-	public Timestamp getMeetingDt() {
+	public Date getMeetingDt() {
 		return meetingDt;
 	}
 
-	public void setMeetingDt(Timestamp meetingDt) {
+	public void setMeetingDt(Date meetingDt) {
 		this.meetingDt = meetingDt;
 	}
 

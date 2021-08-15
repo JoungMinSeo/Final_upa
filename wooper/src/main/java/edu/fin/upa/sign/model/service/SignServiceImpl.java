@@ -1,5 +1,7 @@
 package edu.fin.upa.sign.model.service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,9 @@ import edu.fin.upa.management.model.vo.Pagination;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.sign.model.dao.SignDAO;
 import edu.fin.upa.sign.model.vo.Document;
+import edu.fin.upa.sign.model.vo.ExpenseReport;
+import edu.fin.upa.sign.model.vo.Meeting;
+import edu.fin.upa.sign.model.vo.PurchaseList;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 @Service
@@ -67,7 +72,97 @@ public class SignServiceImpl implements SignService {
 	public List<WorkspaceJoin> selectWorkspaceJoin(int workNo) {
 		return dao.selectWorkspaceJoin(workNo);
 	}
+
+	// 회원 직급 조회
+	@Override
+	public String selectRank(int workNo, int memberNo) {
+		
+		Map<String , Object> rMap = new HashMap<String, Object>();
+		rMap.put("workNo", workNo);
+		rMap.put("memberNo", memberNo);
+		
+		return dao.selectRank(rMap);
+	}
+
+	// 품의서 작성
+	@Override
+	public int insertExpenseReport(ExpenseReport expenseReport, Document document) {
+		
+		expenseReport.setExpenseDept( replaceParameter( expenseReport.getExpenseDept() ) );
+		document.setDocumentTitle( replaceParameter( document.getDocumentTitle() ) );
+		expenseReport.setExpensePurpose( replaceParameter( expenseReport.getExpensePurpose() ) );
+		expenseReport.setPaymentMethod( replaceParameter( expenseReport.getPaymentMethod() ) );
+		document.setDocumentEtc( replaceParameter( document.getDocumentEtc() ) );
+		document.setDocumentEtc( document.getDocumentEtc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") );
+		
+		int DocumentNo = dao.insertExpenseReport(expenseReport, document);
+		
+		if(DocumentNo > 0) {
+			List<PurchaseList> pList = new ArrayList<PurchaseList>();
+			
+			if(!pList.isEmpty()) {
+				
+				dao.insertPurchaseList(pList);
+			}
+		}
+		return DocumentNo;
+	}
 	
+	// 회의록 작성
+	@Override
+	public int insertMeeting(Meeting meeting, Document document) {
+
+		meeting.setMeetingDept( replaceParameter( meeting.getMeetingDept() ) );
+		document.setDocumentTitle( replaceParameter( document.getDocumentTitle() ) );
+		meeting.setMeetingPurpose( replaceParameter( meeting.getMeetingPurpose() ) );
+		meeting.setMeetingPurpose( meeting.getMeetingPurpose().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") );
+		meeting.setMeetingContent( replaceParameter( meeting.getMeetingContent() ) );
+		meeting.setMeetingContent( meeting.getMeetingContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") );
+		
+		int DocumentNo = dao.insertMeeting(meeting, document);
+		
+		return DocumentNo;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 크로스 사이트 스크립트 방지 처리 메소드
+			public static String replaceParameter(String param) {
+				String result = param;
+				if(param != null) {
+					result = result.replaceAll("&", "&amp;");
+					result = result.replaceAll("<", "&lt;");
+					result = result.replaceAll(">", "&gt;");
+					result = result.replaceAll("\"", "&quot;");
+				}
+				
+				return result;
+			}
+
 
 
 
