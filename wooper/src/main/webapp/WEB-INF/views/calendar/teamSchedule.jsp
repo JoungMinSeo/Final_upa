@@ -39,8 +39,15 @@
 		#calInsert:hover, #calListDelete:hover{
 		  background-color:rgb(42,111,154);
 		}
-		
 		.side{float:left;} 
+		
+		#memTag, .participants, .selectMemNm, .cencel{
+			float:left;
+		}
+		.participants{
+		  border: 3px solid gray;
+		  border-radius: 5px;
+		}
 	</style>
 
 </head>
@@ -72,12 +79,125 @@
    </div>
    
    
-   <!-- 게시글 상세조회 모달창 -->
+   	<!-- 게시글 작성 모달창 -->
+	<div class="modal fade" tabindex="-1" id="calendarInsesrt">
+		<div class="modal-dialog modal-dialog-centered">
+			<form id="modal-form">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">[${work.workNm}]팀 새 일정 등록</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="insertBody">
+					
+				        <!-- 팀이름 -->
+				        
+				        <%-- <div class="calendartn"><h3>${work.workNm}</h3></div> --%>
+				        
+				        <!-- 카드타이틀 -->
+				        <div class="calendartitle">
+				            <h5>카드타이틀</h5>
+				            <select id="modal-cardList" name="cardNo">
+				            </select>
+				            
+				        </div>
+				        <div class="calendartitle">
+				            <h5>리스트타이틀</h5>
+				        	<div class="calendartitle2"><input type="text" class="listTitle" name="title"></div>
+				        </div>
+				
+				            
+				 
+				        <!-- 참여멤버 -->
+				        <div class="calendarmember">
+				            <div class="calendarmemberimg"><img src="${pageContext.request.contextPath}/resources/img/icon/group1_1.png" style="width:30px;"></div>
+				            <div class="calendarmemberip">
+				                <select id="modal-memberList">
+				                </select>
+				                <div id="memTag"></div>
+				            </div>
+				        </div>
+				
+				        <!-- 상태변경 -->
+				        <div class="calendarstatus">
+				            <div class="calendarstatusimg"><img src="${pageContext.request.contextPath}/resources/img/icon/status1.png" style="width:30px;"></div>
+				            <div class="calendarstatusip">
+				                <select id="statusList" name="doName">
+				                    <option value="todo">해야하는일</option>
+				                    <option value="doing">하는중</option>
+				                    <option value="blocked">막힘</option>
+				                    <option value="complete">완료</option>
+				                </select>
+				            </div>
+				        </div>
+	
+				        <!-- 날짜변경 -->
+				        <div class="addsedate" id="addsedate">
+				            <div class="calendardatechange" id="calendardatechange">
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
+				                <div class="calendardatechangeip">
+				                    <h5 class="calendarstart">시작일자</h5>
+				                    <input class="cstartdate" id="currentStartDT" type="datetime-local" name="start">
+				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+				                    <input class="cstarttime" type="time"> -->
+				                </div>
+				            </div>
+				
+				            <!-- datetime-local -->
+				            <div class="calendardatechange" id="calendardatechange">
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
+				                <div class="calendardatechangeip">
+				                    <h5 class="calendarend">종료일자</h5>
+				                    <input class="cenddate" id="currentEndDT" type="datetime-local" name="end">
+				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
+				                    <input class="cendtime" type="time"> -->
+				                </div>
+				            </div>
+				        </div>
+				        
+				        <!-- 색상첨부 -->
+				        <div class="fcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="fcolor">글자색</h5>
+				            <input id="fcolor-input" type="text" value="white" name="textColor"/>
+				        </div>
+				        <div class="bgcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="bgcolor">배경색</h5>
+				            <input id="bgcolor-input" type="text" value="rgb(42,111,154)" name="backgroundColor"/>
+				        </div>
+				        <div class="bdcoloradd">
+				            <div>
+				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/color.png" style="width:30px;"></div>
+				            </div>
+				            <h5 class="bdcolor">테두리색</h5>
+				            <input id="bdcolor-input" type="text" value="rgb(213, 232, 243)" name="borderColor" />
+				        </div>
+
+					
+					</div>
+					<div class="modal-footer">
+		               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
+		               <button type="button" class="btn btn-primary" id="calInsert">작성</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	   <!-- 게시글 상세조회 모달창 -->
    <div class="modal fade" tabindex="-1" id="calendarDetail">
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
             <div class="modal-header">
-               <h5 class="modal-title">리스트상세보기&수정</h5>
+               <h5 class="modal-title">일정 상세보기 및 수정, 삭제</h5>
                <button type="button" class="close" data-dismiss="modal"
                   aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -94,121 +214,11 @@
          </div>
       </div>
    </div>
-   
-   
-   
-   	<!-- 게시글 작성 모달창 -->
-	<div class="modal fade" tabindex="-1" id="calendarInsesrt">
-		<div class="modal-dialog modal-dialog-centered">
-			<form id="modal-form">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">리스트 작성</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" id="insertBody">
-				        <!-- 카드타이틀 -->
-				        <div class="calendartitle">
-				            <h5>카드타이틀</h5>
-				            <select id="modal-cardList">
-				            </select>
-				            
-				        </div>
-				        <div class="calendartitle">
-				            <h5>리스트타이틀</h5>
-				        	<div class="calendartitle2"><input type="text" class="listTitle"></div>
-				        </div>
-				
-				            
-				        <!-- 팀이름 -->
-				        <div class="calendartn"><h3>말도안되조</h3></div>
-				 
-				        <!-- 참여멤버 -->
-				        <div class="calendarmember">
-				            <div class="calendarmemberimg"><img src="${pageContext.request.contextPath}/resources/img/icon/group1_1.png" style="width:30px;"></div>
-				            <div class="calendarmemberip">
-				                <select id="modal-memberList">
-				                </select>
-				            </div>
-				        </div>
-				
-				        <!-- 상태변경 -->
-				        <div class="calendarstatus">
-				            <div class="calendarstatusimg"><img src="${pageContext.request.contextPath}/resources/img/icon/status1.png" style="width:30px;"></div>
-				            <div class="calendarstatusip">
-				                <select>
-				                    <option>해야하는일</option>
-				                    <option>하는중</option>
-				                    <option>막힘</option>
-				                    <option>완료</option>
-				                </select>
-				            </div>
-				        </div>
-	
-				        <!-- 날짜변경 -->
-				        <div class="addsedate" id="addsedate">
-				            <div class="calendardatechange" id="calendardatechange">
-				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
-				                <div class="calendardatechangeip">
-				                    <h5 class="calendarstart">시작일자</h5>
-				                    <input class="cstartdate" id="currentStartDT" type="datetime-local">
-				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
-				                    <input class="cstarttime" type="time"> -->
-				                </div>
-				            </div>
-				
-				            <!-- datetime-local -->
-				            <div class="calendardatechange" id="calendardatechange">
-				                <div class="calendardatechangeimg"><img src="${pageContext.request.contextPath}/resources/img/icon/calendar1.png" style="width:30px;"></div>
-				                <div class="calendardatechangeip">
-				                    <h5 class="calendarend">종료일자</h5>
-				                    <input class="cenddate" id="currentEndDT" type="datetime-local">
-				                    <!-- <div class="cstarttimeimg"><img src="../common/icon/time.png" style="width:30px;"></div>
-				                    <input class="cendtime" type="time"> -->
-				                </div>
-				            </div>
-				        </div>
-				        
-	<!-- 			        
-				        색상첨부
-				        <div class="fcoloradd">
-				            <div>
-				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
-				            </div>
-				            <h5 class="fcolor">글자색</h5>
-				            <input id="fcolor-input" type="text" value="white" palceholder="#colornumber" />
-				        </div>
-				        <div class="bgcoloradd">
-				            <div>
-				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
-				            </div>
-				            <h5 class="bgcolor">배경색</h5>
-				            <input id="bgcolor-input" type="text" value="rgb(42,111,154)" palceholder="#colornumber" />
-				        </div>
-				        <div class="bdcoloradd">
-				            <div>
-				                <div class="calendardatechangeimg"><img src="../common/icon/color.png" style="width:30px;"></div>
-				            </div>
-				            <h5 class="bdcolor">테두리색</h5>
-				            <input id="bdcolor-input" type="text" value="rgb(213, 232, 243)" palceholder="#colornumber" />
-				        </div>
-				         -->
-	
-					
-					</div>
-					<div class="modal-footer">
-		               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
-		               <button type="button" class="btn btn-primary" id="calInsert">작성</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
 
 
+
+
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
    <script>
       let calendar; // 만들어진 Full Calendar 달력을 저장할 변수
 
@@ -233,8 +243,7 @@
                   + "-"("0" + date.getDate()).slice(-2);
             
             
-         }
-         ;
+         };
 
          // 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
          $.ajax({
@@ -253,6 +262,10 @@
          });
       });
 
+      
+      
+      
+      
       // 달력을 보여줄 함수
       function createCalendar(list) {
          var calendarEl = document.getElementById('calendar');
@@ -286,6 +299,8 @@
                info.el.style.borderColor = 'red';
                // alert($(info.el).attr("workNm"));
                
+               $("#calendarDetail").modal("show");	
+               
                $("#detailBody").empty(); // 모달에 작성되어있는 이 전 내용 삭제
                
 				const ul = $("<ul>");
@@ -313,45 +328,9 @@
 				const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
 				const li11 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
 				
-				
 				ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
 				$("#detailBody").append(ul);
-/* 				
-				// 캘린더 내용 수정
-				$("#calListUpdate").on("click",function(){
-				    var ckMemberNo = [];     // 배열 초기화
-				    var changeRank= [];     // 배열 초기화
-				    $.each( $("[name='ckMemberNo']:checked"), function(){
-				    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-				    	
-				    	const idx = $("[name='ckMemberNo']").index( $(this) );
-				    	
-				    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
-				    	
-				    });
-				    
-			    	console.log(ckMemberNo);
-			    	console.log(changeRank);
-				 
-				    $.ajax({
-				        url: '../calListUpdate', 
-				        type: 'POST',
-				        dataType: 'text',
-				        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
-						data : {"ckMemberNo" : ckMemberNo,
-				       			 "changeRank" : changeRank },
-			    		success : function(result){
-			    			console.log(result);
-							if(result > 0){
-								swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
-							}else{
-								swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
-								$("#ckMemberNo").val(""); 
-							}
-			    		}
-				    });
-				});
-*/
+
             },
 
             dateClick : function(info) { // 날짜 빈칸 클릭 시
@@ -368,12 +347,9 @@
 					type : "POST",
 					dataType : "JSON",
 					success : function(result){
-						console.log(result.cardList);
-						console.log(result.memberList);
 
 						$("#modal-cardList").empty();
 						$("#modal-memberList").empty();
-						
 						
 						$.each(result.cardList, function(){
 							const option = $("<option>").text( this.cardNm ).val(this.cardNo);
@@ -385,18 +361,20 @@
 							$("#modal-memberList").append(option);
 						});
 					}
-					
                });
                
-               
-               
+               /* 일정에 현재 시간 자동 세팅 */
                $("#currentStartDT").val(info.dateStr + "T00:00");
                $("#currentEndDT").val(info.dateStr + "T23:59");
-
+               
+            	// 참여자 리스트 초기화
+	           $("#memTag").html("");
                
                $("#calendarInsesrt").modal("show");	
-               
-               
+       
+				
+
+
             },
 
             // eventDidMount : 이벤트에 포함되지 않은 속성
@@ -415,137 +393,219 @@
                $(info.el).attr("data-target", "#calendarDetail");
                $(info.el).attr("data-target", "#calndarInsert");
                
-               
-               
             }
 
          });
 
          calendar.render();
-      }
+	}
+    // 달력 생성 끝
+         
+      
+  	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  	// 일정 등록
+  	
+	// 참여자 리스트 클릭 시 클릭한 멤버만 추가
+   $("#modal-memberList").change(function(){
+	   	const selectMemNo = $("#modal-memberList option:selected").val();
+	   	const selectMemNm = $("#modal-memberList option:selected").text();
+		console.log(selectMemNo);
+		console.log(selectMemNm);
+	   	
+		const participants = $("<div>").addClass("participants");
+		const memNm = $("<div>").addClass("memberNm").text(selectMemNm);
+		const memNo = $("<input>").attr("type","hidden").attr("name","selectMemNo").val(selectMemNo);
+		const cencel = $("<div>").addClass("cencel").text("x");
+	  
+		participants.append(memNm).append(memNo).append(cencel);
+	  	$("#memTag").append(participants);
+	  
+		console.log(memTag);
+	});
+	       
+	
+	   // 추가된 참여자 요소에서 x를 눌러 삭제하기
+	  $(document).on("click", ".cencel", function() {
+	   $(this).parent().remove();
+	});
+	    
+	// 이전, 다음 버튼이 눌러졌을때
+		$(document).on("click", ".fc-button",  function() {
+			console.log(calendar.view.title); // 2021년 8월 --> 2021-08
+			
+			const title = calendar.view.title;
+			const year = title.substring(0, title.indexOf("년"));
+			let month = title.substring(title.indexOf("년") + 2, title .indexOf("월"));
+			
+			if (month < 10) month = "0" + month;
+			startDate = year + "-" + month;
+			
+			$.ajax({
+			   url : 'selectCalTest',
+			   type : 'post',
+			   data : {
+			      'startDate' : startDate
+			   },
+			   dataType : "json",
+			
+			   success : function(list) {
+			      console.log(list);
+			      createCalendar(list);
+			   }
+			});
+	     });
+	    
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 일정 등록 웹소켓
 
-      // 이전, 다음 버튼이 눌러졌을때
-      $(document).on(
-            "click",
-            ".fc-button",
-            function() {
-               console.log(calendar.view.title); // 2021년 8월 --> 2021-08
+	let calendarSock = new SockJS("<c:url value='/calSock' />");
+	
+	$("#calInsert").on("click", function(){
+		    	
+	    	const formData = new FormData(document.getElementById("modal-form"));
+	    	
+			//const data = JSON.parse(JSON.stringify( $("#modal-form").serializeArray() );
+			//const data = JSON.parse(formData );
+			//const data = JSON.parse(formData );
+	    	
+	    	//console.log(data);
+	    	
+	    	//console.log($("#modal-form").serialize());
+	    	console.log($("#modal-form").serializeArray());
+	    	
+	    	const obj = {};
+	    	const arr = $("#modal-form").serializeArray();
+	    	
+	    	for(let key in arr){
+	    		console.log( arr[key]);
+	    		obj[ arr[key].name ] = arr[key].value;
+	    	}
+	    	
+	    	
+	    	const selectMemNo = [];
+	    	$("[name='selectMemNo']").each(function(){
+	    		selectMemNo.push($(this).val());
+	    		
+	    	});
+	    	
+    		obj['selectMemNo'] = selectMemNo;
+	    	
+	    	console.log(obj);
+	    	calendarSock.send(JSON.stringify(obj));
 
-               const title = calendar.view.title;
-               const year = title.substring(0, title.indexOf("년"));
-               let month = title.substring(title.indexOf("년") + 2, title
-                     .indexOf("월"));
+	});
+	            
+    
+	calendarSock.onmessage = function(event){
+		const obj = JSON.parse(event.data);
+		
+		console.log(obj);
+		
+	   // 페이지 로딩이 완료된 후 2021-07 일정 데이터를 ajax로 조회해서 달력 만들기
+        $.ajax({
 
-               if (month < 10)
-                  month = "0" + month;
+           url : 'teamSchedule', // 요청 주소 보내는곳
+           type : 'post', // 어떤 타입으로 보낼지
+           data : {
+              'startDate' : startDate
+           }, // 해당 월에 해당하는 데이터를 불러옴 -> db에 8월에 해당하는 데이터가 있어도 안 불러옴
+           dataType : "json", // 어떤 데이터(?)로 보낼지
 
-               startDate = year + "-" + month;
-
-               $.ajax({
-                  url : 'selectCalTest',
-                  type : 'post',
-                  data : {
-                     'startDate' : startDate
-                  },
-                  dataType : "json",
-
-                  success : function(list) {
-                     console.log(list);
-                     createCalendar(list);
-                  }
-               });
-
-            })
-            
-            
- /*              
-            		// 색상표		
-        $(function () {
-            // 기본 인스턴스화: 
-            $('#fcolor-input').colorpicker();
-            
-            // 이벤트를 사용하여 #demo div 배경색을 변경하는 예 : 
-            $('#textColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
+           success : function(list) {
+              console.log(list);
+              createCalendar(list);
+           }
         });
-        $(function () {
-            $('#bgcolor-input').colorpicker();
+	}
+         
+         
+
+	
             
-            $('#backgroundColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
-        });
-        $(function () {
-            $('#bdcolor-input').colorpicker();
-            
-            $('#borderColor').on('colorpickerChange', function(event) {
-                $('#coloradd').css('background-color', event.color.toString());
-            });
-        });
-            
-         */
+
+
+        
+        
+        /* 				
+		// 캘린더 내용 수정
+		$("#calListUpdate").on("click",function(){
+		    var ckMemberNo = [];     // 배열 초기화
+		    var changeRank= [];     // 배열 초기화
+		    $.each( $("[name='ckMemberNo']:checked"), function(){
+		    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+		    	
+		    	const idx = $("[name='ckMemberNo']").index( $(this) );
+		    	
+		    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
+		    	
+		    });
+		    
+	    	console.log(ckMemberNo);
+	    	console.log(changeRank);
+		 
+		    $.ajax({
+		        url: '../calListUpdate', 
+		        type: 'POST',
+		        dataType: 'text',
+		        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+				data : {"ckMemberNo" : ckMemberNo,
+		       			 "changeRank" : changeRank },
+	    		success : function(result){
+	    			console.log(result);
+					if(result > 0){
+						swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
+					}else{
+						swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
+						$("#ckMemberNo").val(""); 
+					}
+	    		}
+		    });
+		});
+	*/
+	        
+	  
+	 /*
+	 "cardNm" : $("#modal-cardList").val(), // 카드 이름
+	"title" : $("#calendartitle").val(), // 리스트 이름
+	//"addd" : $("#modal-memberList").val(), // 멤버 리스트
+	"doName" : $("#statusList").val(), // 상태
+	"start" : $("#currentStartDT").val(), // 시작일자
+	"end" : $("#currentEndDT").val(), // 종료일자
+	"textColor" : $("#fcolor-input").val(), //글자색
+	"backgroundColor" : $("#bgcolor-input").val(), // 배경색
+	"borderColor" : $("#bdcolor-input").val(), // 테두리색
+	 */
+	
+		
+	
+	
+	/*          
+	// 캘린더 내용 수정
+	$("#calListUpdate").on("click",function(){
+	var ckMemberNo = [];     // 배열 초기화
+	var changeRank= [];     // 배열 초기화
+	$.each( $("[name='ckMemberNo']:checked"), function(){
+	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	
+	const idx = $("[name='ckMemberNo']").index( $(this) );
+	
+	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
+	
+	});
+	
+	// 일정 삭제
+	$("#calListUpdate").on("click", function(){
+	
+	});
+	
+	*/    
+        
         
         
 
         
-        // 모달창 리스트 삭제
-        $("#calListUpdate").on("click", function(){
-        	
-        });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // 게시글 작성
-        
-        let count = 1;
-        
-        /* 파일추가 스크립트 */
-        function add(){
-            var addValue = document.getElementById('addvalue');
-
-            var p = document.createElement("div");
-
-            p.innerHTML = addValue.value;
-
-            var img = document.createElement("img");
-            var ip = document.createElement("input");
-            var btn = document.createElement("button");
-
-            btn.innerHTML = "삭제";
-
-            p.setAttribute("class", "addfilec");
-            img.setAttribute("src", "../common/icon/file1.png");
-            img.setAttribute("style", "width:30px;");
-            ip.setAttribute("type", "file");
-            ip.setAttribute("name", "file" + count++);
-            ip.setAttribute("class", "boardImg");
-            btn.setAttribute("class", "fileaddbtn")
-            btn.setAttribute("onclick", "deleteImage(this)");
-            
-            p.appendChild(img);
-            p.appendChild(ip);
-            p.appendChild(btn);
-
-            document.getElementById('addimg').appendChild(p); 
-
-            addValue.value = ' ';
-        }
-
-        function deleteImage(el){
-            el.parentElement.remove();
-            count--;
-        }
-
-        /* 일정에 현재 시간 자동 세팅 */
-        document.getElementById('currentStartDT').value= new Date().toISOString().slice(0, 19);
-        document.getElementById('currentEndDT').value= new Date().toISOString().slice(0, 19);
+        //document.getElementById('currentStartDT').value= new Date().toISOString().slice(0, 19);
+        //document.getElementById('currentEndDT').value= new Date().toISOString().slice(0, 19);
 
             
    </script>

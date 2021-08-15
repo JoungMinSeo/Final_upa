@@ -2,6 +2,7 @@ package edu.fin.upa.calendar.model.vo;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 public class Calendar {
 	private int cardNo;
@@ -20,6 +21,9 @@ public class Calendar {
 	
 	private int workNo;
 	private String workNm;
+	
+	private String doName;
+	private int[] selectMemNo;
 	
 	public Calendar() {}
 
@@ -134,14 +138,38 @@ public class Calendar {
 	public void setWorkNm(String workNm) {
 		this.workNm = workNm;
 	}
+	
+	public String getDoName() {
+		return doName;
+	}
+
+	public void setDoName(String doName) {
+		this.doName = doName;
+	}
+
+	public int[] getSelectMemNo() {
+		return selectMemNo;
+	}
+
+	public void setSelectMemNo(int[] selectMemNo) {
+		this.selectMemNo = selectMemNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Calendar [cardNo=" + cardNo + ", cardNm=" + cardNm + ", listNo=" + listNo + ", title=" + title
 				+ ", listStatus=" + listStatus + ", start=" + start + ", end=" + end + ", listMDt=" + listMDt
 				+ ", listDDt=" + listDDt + ", textColor=" + textColor + ", backgroundColor=" + backgroundColor
-				+ ", borderColor=" + borderColor + ", workNo=" + workNo + ", workNm=" + workNm + "]";
+				+ ", borderColor=" + borderColor + ", workNo=" + workNo + ", workNm=" + workNm + ", doName=" + doName
+				+ ", selectMemNo=" + Arrays.toString(selectMemNo) + "]";
 	}
+
+	
+
+
+	
+	
+
 
 	
 
