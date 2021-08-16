@@ -52,4 +52,9 @@ public class ChatDAO {
 		return sqlSession.selectList("chatMapper.selectChat",chatRoomNo);
 	}
 	
+	// 채팅 내용 삽입
+	public int insertMessage(ChatMessage cm) {
+		return sqlSession.insert("chatMapper.insertMessage",cm);
+	}
+	
 }

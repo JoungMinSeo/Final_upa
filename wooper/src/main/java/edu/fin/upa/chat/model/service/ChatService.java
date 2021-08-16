@@ -23,5 +23,8 @@ public interface ChatService {
 	
 	// 채팅 조회하기
 	List<ChatMessage> selectChat(int chatRoomNo);
+	
+	// 채팅 삽입 하기
+	int insertMessage(ChatMessage cm);
 
 }

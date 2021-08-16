@@ -78,14 +78,21 @@
 		(#{memberJoinNo},#{chatRoomNo})
 	</insert>
 	
+	<!-- 채팅 조회 -->
 	<select id="selectChat" parameterType="_int" resultMap="chatMessage_rm">
-  	SELECT MESSAGE, CREATE_DT, MEMBER_NO, MEMBER_NM
+  	SELECT CHAT_MESSAGE.MESSAGE, CHAT_MESSAGE.CREATE_DT, CHAT_MESSAGE.MEMBER_NO, MEMBER.MEMBER_NM, CHAT_ROOM.TITLE
 		FROM CHAT_MESSAGE
-		JOIN MEMBER USING(MEMBER_NO)
-		WHERE CHAT_ROOM_NO = #{chatRoomNo}
+		JOIN MEMBER ON(MEMBER.MEMBER_NO=CHAT_MESSAGE.MEMBER_NO)
+		JOIN CHAT_ROOM ON(CHAT_MESSAGE.CHAT_ROOM_NO=CHAT_ROOM.CHAT_ROOM_NO)
+		WHERE CHAT_ROOM.CHAT_ROOM_NO = #{chatRoomNo}
 		ORDER BY CM_NO
   </select>
 	
+	<!-- 채팅 내용 삽입 -->
+  <insert id="insertMessage" parameterType="ChatMessage">
+  	INSERT INTO CHAT_MESSAGE
+  	VALUES(SEQ_CM_NO.NEXTVAL, #{message}, DEFAULT, #{chatRoomNo}, #{memberNo})
+  </insert>
 	
 	
 </mapper>

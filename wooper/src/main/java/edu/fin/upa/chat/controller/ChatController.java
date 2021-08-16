@@ -1,12 +1,10 @@
 package edu.fin.upa.chat.controller;
 
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.sonatype.inject.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +25,7 @@ import edu.fin.upa.chat.model.vo.Search;
 import edu.fin.upa.member.model.vo.Member;
 
 @Controller
-@SessionAttributes({"loginMember"})
+@SessionAttributes({"loginMember","chatRoomNo"})
 public class ChatController {
 	
 	@Autowired
@@ -54,12 +52,8 @@ public class ChatController {
 		search.setSk(sk);
 		search.setSv(sv);
 		
-		System.out.println("컨트롤러 임미당 : " + sk);
-		System.out.println("----------------" + sv);
-		
 		List<Member> memberList = service.selectMemberList(search);
 		
-		System.out.println("컨트롤러 memberList : " + memberList);
 		Gson gson = new Gson();
 		
 		return gson.toJson(memberList);
@@ -79,6 +73,8 @@ public class ChatController {
 		// 채팅방 먼저 개설
 		int chatRoomNo = service.createChatRoom(room);
 		
+		model.addAttribute("chatRoomNo", chatRoomNo);
+		
 		if (chatRoomNo > 0) {
 			// 채팅방에 사람 넣어버리기
 			for(int i =0; i<joinMemberNo.length; i++) {
@@ -96,14 +92,15 @@ public class ChatController {
 	}
 	
 	
+	// 채팅한거 조회
 	@RequestMapping(value="/chat/selectChatMessage",method=RequestMethod.POST)
 	@ResponseBody
-	public String selectChatMessage(@RequestParam("chatRoomNo") int chatRoomNo) {
+	public String selectChatMessage(@RequestParam("chatRoomNo") int chatRoomNo, Model model) {
 		
 		
 		List<ChatMessage> list = service.selectChat(chatRoomNo);
 		
-		System.out.println("컨트롤러 리스트 : " + list);
+		model.addAttribute("chatRoomNo", chatRoomNo);
 		
 		Gson gson = new Gson();
 		

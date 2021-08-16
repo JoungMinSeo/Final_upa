@@ -58,6 +58,26 @@
 	</interceptors>
 	
 	
+	
+	<!-- ChatWebSocketHandler 클래스를 bean으로 등록 -->
+	<beans:bean id="chatHandler" class="edu.fin.upa.chat.websocket.ChatWebSocketHandler" />
+	
+		<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat" />
+
+		<websocket:handshake-interceptors>
+			<!-- interceptor : HTTP 통신에서 request, response를 가로채는 역할 handshake : HttpSession에 
+				있는 값을 가로채서 WebSocketSession에 넣어주는 역할 -->
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		
+		<websocket:sockjs/>
+		
+	</websocket:handlers>
+	
+	
+	
+	
 	<!-- CardWebSocketHandler 클래스를 bean으로 등록 -->
 	<beans:bean id="cardHandler" class="edu.fin.upa.card.websocket.CardWebsocketHandler" />
 		
