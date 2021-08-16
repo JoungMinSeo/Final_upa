@@ -46,8 +46,6 @@
           <div class="dropdown-menu font" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item font" href="${contextPath}/calendar/${workNo}/teamcal">팀캘린더</a>
             <a class="dropdown-item font" href="${contextPath}/sign/${workNo}/signMain">전자 결재</a>
-            <a class="dropdown-item font" href="#">히스토리</a>
-            <a class="dropdown-item font" href="#">파일</a>
             <a class="dropdown-item font" href="${contextPath}/management/${workNo}/member/list">멤버</a>
           </div>
         </div>

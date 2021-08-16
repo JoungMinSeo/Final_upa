@@ -44,5 +44,37 @@ public class WorkspaceDAO {
 		sqlSession.insert("workspaceMapper.addWorkspaceJoin", inputWork);
 	}
 
+	/** 워크스페이스 나가기 조인테이블 delete
+	 * @param workNo
+	 * @return result
+	 */
+	public int deleteWorkspace(int workNo) {
+		return sqlSession.delete("workspaceMapper.deleteWorkspace", workNo);
+	}
+
+	/** 워크스페이스에 왕도롱뇽이 몇명인지 확인
+	 * @param workNo
+	 * @return king
+	 */
+	public int selectKing(int workNo) {
+		return sqlSession.selectOne("workspaceMapper.selectKing", workNo);
+	}
+
+	
+	/** 워크스페이스에 멤버가 몇명인지 확인
+	 * @param workNo
+	 * @return joinMember
+	 */
+	public int selectJoinMember(int workNo) {
+		return sqlSession.selectOne("workspaceMapper.selectJoinMember", workNo);
+	}
+
+	/** 워크스페이스 상태 n 만들기
+	 * @param workNo
+	 */
+	public void updateWorkspaceStatus(int workNo) {
+		sqlSession.update("workspaceMapper.updateWorkspaceStatus", workNo);
+	}
+
 
 }

@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import edu.fin.upa.calendar.model.service.CalendarService;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.calendar.model.vo.Workspace;
 import edu.fin.upa.card.model.service.CardService;
@@ -34,12 +39,15 @@ public class WorkspaceController {
 	@Autowired
 	private ListService listService;
 	
+	@Autowired
+	private CalendarService calService; 
+	
 	
 	// 임시 화면
-		@RequestMapping(value = "workSpace", method = RequestMethod.GET)
-		public String result() {
-			return "/workSpace/boardMain";
-	}
+	@RequestMapping(value = "workSpace", method = RequestMethod.GET)
+	public String result() {
+		return "/workSpace/boardMain";
+	}	
 	
 	
 	// 내가 참여한 워크스페이스 목록 얻어오기 (로그인하자마자 보이는 페이지)
@@ -50,7 +58,7 @@ public class WorkspaceController {
 
 		model.addAttribute("workList", workList);
 
-		System.out.println(workList.toString());
+		//System.out.println(workList.toString());
 
 		return "redirect:/workSpace/workSpace";
 	}
@@ -77,6 +85,9 @@ public class WorkspaceController {
 			model.addAttribute("listList", listList);
 		}
 		
+		List<Member> memList = calService.selectMemberList(workNo);
+		model.addAttribute("memList", memList);
+		
 		return "/workSpace/boardMain";
 	}
 	
@@ -95,6 +106,55 @@ public class WorkspaceController {
 		return "redirect:/calendar/calendar";
 	}
 	
+	// 워크스페이스 나가기
+	@ResponseBody
+	@RequestMapping(value="deleteWorkspace", method=RequestMethod.GET)
+	public int deleteWorkspace(int workNo, @ModelAttribute("loginMember") Member loginMember) {
+		//System.out.println(workNo);
+		
+		// 워크스페이스에 왕도롱뇽이 몇명인지 확인
+		int king = service.selectKing(workNo);
+		//System.out.println(king);
+		
+		int joinMember = service.selectJoinMember(workNo);
+		//System.out.println(joinMember);
+		
+		//List<Workspace> workList = null;
+		
+		int result = 0;
+		
+		if(king == 1 && joinMember == 1) {
+			service.deleteWorkspace(workNo);
+			service.updateWorkspaceStatus(workNo);
+			
+			//workList = service.selectWorkList(loginMember.getMemberNo());
+			result = 1;
+			
+		}else if(king == 1 && joinMember > 1) {
+			//workList = service.selectWorkList(loginMember.getMemberNo());
+			result = 2;
+		}else if(king > 1 && joinMember > 1) {
+			service.updateWorkspaceStatus(workNo);
+			
+			//workList = service.selectWorkList(loginMember.getMemberNo());
+			result = 3;
+		}
+	
+		return result;
+	}
+	
+	// 워크스페이스 재조회 
+	@ResponseBody
+	@RequestMapping(value="workList2", method=RequestMethod.POST)
+	public String selectWorkList2(int memberNo) {
+				
+		//System.out.println(memberNo + "넘어오니?");
+		List<Workspace> wList = service.selectWorkList(memberNo);
+		
+		Gson gson = new Gson();
+		
+		return  gson.toJson(wList);
+	}
 	
 
 }

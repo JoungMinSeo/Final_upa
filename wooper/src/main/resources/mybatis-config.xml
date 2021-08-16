@@ -38,6 +38,7 @@
 		<!-- 민경 추가 vo -->
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Card" alias="Card" />
 		<typeAlias type="edu.fin.upa.list.model.vo.ListList" alias="ListList" />
+		<typeAlias type="edu.fin.upa.workspace.model.vo.WorkspaceJoin" alias="WorkspaceJoin" />
 	</typeAliases>
 
 	<!-- mapper 파일(SQL 작성되는파일) 위치 등록 부분 -->

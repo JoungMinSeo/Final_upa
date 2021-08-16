@@ -30,4 +30,27 @@ public interface WorkspaceService {
 	 */
 	void addWorkspaceJoin(Workspace inputWork);
 
+	/** 워크스페이스 나가기 조인테이블 delete
+	 * @param workNo
+	 * @return result
+	 */
+	int deleteWorkspace(int workNo);
+
+	/** 워크스페이스에 왕도롱뇽이 몇명인지 확인
+	 * @param workNo
+	 * @return king
+	 */
+	int selectKing(int workNo);
+
+	/** 워크스페이스에 멤버가 몇명인지 확인
+	 * @param workNo
+	 * @return joinMember
+	 */
+	int selectJoinMember(int workNo);
+
+	/** 워크스페이스 상태 n 만들기
+	 * @param workNo
+	 */
+	void updateWorkspaceStatus(int workNo);
+
 }

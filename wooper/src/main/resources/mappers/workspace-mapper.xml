@@ -12,6 +12,13 @@
 		<result property="workStatus" column="WORK_STATUS"/>
 	</resultMap>
 	
+	<resultMap type="WorkspaceJoin" id="workspaceJoin_rm">
+		<id property="memberNo" column="WORK_NO"/>
+		<id property="workNo" column="WORK_NO"/>
+		
+		<result property="memberRank" column="MEMBER_RANK"/>
+	</resultMap>
+	
 	
 	<select id="selectWorkList" parameterType="_int" resultMap="workspace_rm">
 	    SELECT WORK_NO, WORK_NM
@@ -42,5 +49,30 @@
 		INSERT INTO WORKSPACE_JOIN VALUES
 		(#{memberNo}, #{workNo}, DEFAULT)
 	</insert>
+	
+	<!-- 워크스페이스 나가기 -->
+	<delete id="deleteWorkspace" parameterType="_int">
+		DELETE FROM WORKSPACE_JOIN 
+		WHERE WORK_NO = #{workNo}
+	</delete>
+	
+	<!-- 워크스페이스에 왕도롱뇽이 몇명인지 확인 -->
+	<select id="selectKing" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo}
+		AND MEMBER_RANK = 1
+	</select>
 
+
+	<!-- 워크스페이스에 멤버가 몇명인지 확인 -->
+	<select id="selectJoinMember" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo}
+	</select>
+	
+	<!-- 워크스페이스 상태 n 만들기 -->
+	<update id="updateWorkspaceStatus" parameterType="_int">
+		UPDATE WORKSPACE SET WORK_STATUS = 'N'
+		WHERE WORK_NO = #{workNo}
+	</update>
 </mapper>
