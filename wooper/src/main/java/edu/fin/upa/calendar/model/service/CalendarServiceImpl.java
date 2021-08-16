@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.fin.upa.calendar.model.dao.CalendarDAO;
 import edu.fin.upa.calendar.model.vo.Calendar;
@@ -46,6 +47,36 @@ public class CalendarServiceImpl implements CalendarService{
 	@Override
 	public List<Member> selectMemberList(int workNo) {
 		return dao.selectMemberList(workNo);
+	}
+
+	// 새 일정 등록
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int insertList(Calendar cal) {
+		int result =dao.insertList(cal); 
+		
+		if(result > 0) {
+			if(cal.getSelectMemNo().length != 0) {
+				result = dao.insertListJoin(cal);
+			}
+			result = dao.insertListDo(cal);
+		}
+		
+		return  result;
+	}
+
+	// 일정 수정
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updateList(Calendar cal) {
+		return dao.updateList(cal);
+	}
+
+	// 일정 삭제 
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int deleteList(int listNo2) {
+		return dao.deleteList(listNo2);
 	}
 
 	

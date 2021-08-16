@@ -105,7 +105,52 @@
 		WHERE WORK_NO = #{workNo}
 		AND MEMBER_STATUS='Y'
 	</select>
-
+	
+	<!-- 새 일정 등록 -->
+	<insert id="insertList" parameterType="Calendar" >
+		<selectKey keyProperty="listNo" resultType="_int" order="BEFORE"> 
+			SELECT SEQ_CAL_LIST.NEXTVAL FROM DUAL 
+		</selectKey>
+	
+		INSERT INTO LIST VALUES(
+		#{listNo}, #{cardNo}, #{title}, DEFAULT, DEFAULT, NULL, NULL, 
+		#{textColor}, #{backgroundColor}, #{borderColor}, #{memberNo}, TO_DATE(#{start}, 'RRRR-MM-DD"T"HH24:MI'), TO_DATE(#{end}, 'RRRR-MM-DD"T"HH24:MI')
+		)
+	</insert>
+	
+	<!-- 참여자 추가 -->
+	<insert id="insertListJoin" parameterType="Calendar">
+		INSERT INTO LIST_JOIN 
+		SELECT SEQ_LJOIN_NO.NEXTVAL, A.* FROM(
+			<foreach collection="selectMemNo" item="item" separator="UNION ALL">
+				SELECT #{listNo} LIST_NO, 
+							 #{item} MEMBER_NO, 
+							 #{workNo} WORK_NO
+				FROM DUAL
+			</foreach>
+		) A
+	</insert> 
+	
+	<insert id="insertListDo" parameterType="Calendar">
+		INSERT INTO LIST_DO VALUES(
+			#{listNo}, #{doName}
+		)
+	</insert>
+	
+	<!-- 일정 수정 -->
+	<update id="updateList" parameterType="Calendar">
+		UPDATE LIST SET LIST_NM = #{listNm}, LIST_MODIFY_DT = SYSTIMESTAMP,
+								  LIST_TCOLOR = #{textColor}, LIST_BGCOLOR = #{backgroundColor}, LIST_BDCOLOR = #{borderColor}
+		WHERE LIST_NO = #{listNo}
+	</update>
+	
+	<!-- 일정 삭제 -->
+	<update id="deleteList" parameterType="Calendar">
+		UPDATE LIST SET LIST_STATUS = 'N', LIST_DELETE_DT = SYSTIMESTAMP
+		WHERE LIST_NO = #{listNo}
+	</update>
 
 
 </mapper>
+
+

@@ -11,6 +11,10 @@ import edu.fin.upa.calendar.model.vo.Calendar;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.member.model.vo.Member;
 
+/**
+ * @author 함나현
+ *
+ */
 @Repository
 public class CalendarDAO {
 
@@ -56,6 +60,46 @@ public class CalendarDAO {
 	 */
 	public List<Member> selectMemberList(int workNo) {
 		return sqlSession.selectList("calMapper.selectMemberList", workNo);
+	}
+
+	/** 새 일정 등록
+	 * @param cal
+	 * @return 
+	 */
+	public int insertList(Calendar cal) {
+		return sqlSession.insert("calMapper.insertList", cal);
+	}
+
+	/** 리스트 조인 추가
+	 * @param cal
+	 * @return
+	 */
+	public int insertListJoin(Calendar cal) {
+		return sqlSession.insert("calMapper.insertListJoin", cal);
+	}
+
+	/** 리스트 상태 추가
+	 * @param cal
+	 * @return
+	 */
+	public int insertListDo(Calendar cal) {
+		return sqlSession.insert("calMapper.insertListDo", cal);
+	}
+
+	/** 일정 수정
+	 * @param cal
+	 * @return
+	 */
+	public int updateList(Calendar cal) {
+		return sqlSession.update("calMapper.updateList", cal);
+	}
+
+	/** 일정 삭제
+	 * @param cal
+	 * @return
+	 */
+	public int deleteList(int listNo2) {
+		return sqlSession.update("calMapper.deleteList", listNo2);
 	}
 	
 

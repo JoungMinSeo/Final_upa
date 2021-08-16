@@ -41,12 +41,25 @@
 		}
 		.side{float:left;} 
 		
-		#memTag, .participants, .selectMemNm, .cencel{
-			float:left;
+		#memTag, .participants, .memberNm, .selectMemNm{
+			display: inline-block;
+		}
+		.cancel{
+			display:inline-block;
+			cursor:pointer;
 		}
 		.participants{
 		  border: 3px solid gray;
 		  border-radius: 5px;
+			display:inline-block;
+		}
+		
+		ul{
+			list-style:none;
+		}
+		.calendarmemberimg, .calendarmemberip{
+			display:inline-block;
+		
 		}
 	</style>
 
@@ -115,9 +128,9 @@
 				        <div class="calendarmember">
 				            <div class="calendarmemberimg"><img src="${pageContext.request.contextPath}/resources/img/icon/group1_1.png" style="width:30px;"></div>
 				            <div class="calendarmemberip">
+				                <div id="memTag"></div>
 				                <select id="modal-memberList">
 				                </select>
-				                <div id="memTag"></div>
 				            </div>
 				        </div>
 				
@@ -195,23 +208,25 @@
 	   <!-- 게시글 상세조회 모달창 -->
    <div class="modal fade" tabindex="-1" id="calendarDetail">
       <div class="modal-dialog modal-dialog-centered">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">일정 상세보기 및 수정, 삭제</h5>
-               <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body" id="detailBody">
-            
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
-               <button type="button" class="btn btn-primary" id="calListUpdate">수정</button>
-               <button type="button" class="btn btn-primary" id="calListDelete">삭제</button>
-            </div>
-         </div>
+		<form id="detail-form">
+	         <div class="modal-content">
+	            <div class="modal-header">
+	               <h5 class="modal-title">일정 상세보기 및 수정, 삭제</h5>
+	               <button type="button" class="close" data-dismiss="modal"
+	                  aria-label="Close">
+	                  <span aria-hidden="true">&times;</span>
+	               </button>
+	            </div>
+	            <div class="modal-body" id="detailBody">
+	            
+	            </div>
+	            <div class="modal-footer">
+	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
+	               <button type="button" class="btn btn-primary" id="calListUpdate">수정</button>
+	               <button type="button" class="btn btn-primary" id="calListDelete">삭제</button>
+	            </div>
+	         </div>
+         </form>
       </div>
    </div>
 
@@ -310,7 +325,7 @@
 				const li4 = $("<li>").text( $(info.el).attr("cardNm") ); // 카드이름
 				const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 				
-				const title = $("<input>").attr({"type": "text", "id" : "title"}).val(info.event.title);
+				const title = $("<input>").attr({"type": "text", "id" : "title", "name" : $(info.el).attr("listNo") }).val(info.event.title);
 				const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
 				
 				// attr : attribute
@@ -415,9 +430,9 @@
 		const participants = $("<div>").addClass("participants");
 		const memNm = $("<div>").addClass("memberNm").text(selectMemNm);
 		const memNo = $("<input>").attr("type","hidden").attr("name","selectMemNo").val(selectMemNo);
-		const cencel = $("<div>").addClass("cencel").text("x");
+		const cancel = $("<div>").addClass("cancel").text("x");
 	  
-		participants.append(memNm).append(memNo).append(cencel);
+		participants.append(memNm).append(memNo).append(cancel);
 	  	$("#memTag").append(participants);
 	  
 		console.log(memTag);
@@ -425,7 +440,7 @@
 	       
 	
 	   // 추가된 참여자 요소에서 x를 눌러 삭제하기
-	  $(document).on("click", ".cencel", function() {
+	  $(document).on("click", ".cancel", function() {
 	   $(this).parent().remove();
 	});
 	    
@@ -457,7 +472,6 @@
 	    
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 일정 등록 웹소켓
-
 	let calendarSock = new SockJS("<c:url value='/calSock' />");
 	
 	$("#calInsert").on("click", function(){
@@ -481,21 +495,114 @@
 	    		obj[ arr[key].name ] = arr[key].value;
 	    	}
 	    	
-	    	
 	    	const selectMemNo = [];
 	    	$("[name='selectMemNo']").each(function(){
 	    		selectMemNo.push($(this).val());
-	    		
 	    	});
 	    	
     		obj['selectMemNo'] = selectMemNo;
-	    	
+        	obj.status = "insert";
+        	
 	    	console.log(obj);
 	    	calendarSock.send(JSON.stringify(obj));
+	    	
+	    	$("#calendarInsesrt").modal("hide");
 
+	    	
+	    	// wjdalstj812@naver.com
+			// 정민서님이 새 일정을 등록하였습니다.
+			const allimContent = "${loginMember.memberId}<br>${loginMember.memberNm}님이 새 일정을 등록하였습니다.";
+			const allimObj = {"allimContent" : allimContent, "status" : "allimAdd" }
+	    	
+	    	allimSock.send(JSON.stringify(allimObj));
+	    	
+	});
+			
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	// 일정 수정 웹소켓
+/* 	
+	$("#calListUpdate").on("click",function(){
+		
+		const formData = new FormData(document.getElementById("detail-form"));
+		
+    	console.log($("#detail-form").serializeArray());
+    	
+    	const listNo = $("#title").attr("name");
+    
+    	const obj = {};
+    	obj.listNo = listNo;
+    	obj.status = "delete";
+    	console.log(obj);
+    	
+    	// 캘린더 일정 삭제
+    	calendarSock.send(JSON.stringify(obj));
+    	
+    	$("#calendarDetail").modal("hide");
+		
+		
+		
+		
+		
+		
+	    var ckMemberNo = [];     // 배열 초기화
+	    var changeRank= [];     // 배열 초기화
+	    $.each( $("[name='ckMemberNo']:checked"), function(){
+	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    	const idx = $("[name='ckMemberNo']").index( $(this) );
+	    	
+	    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    });
+	    
+    	console.log(ckMemberNo);
+    	console.log(changeRank);
+    	
+    	
+	    $.ajax({
+	        url: '../calListUpdate', 
+	        type: 'POST',
+	        dataType: 'text',
+	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+			data : {"ckMemberNo" : ckMemberNo,
+	       			 "changeRank" : changeRank },
+    		success : function(result){
+    			console.log(result);
+				if(result > 0){
+					swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
+				}else{
+					swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
+					$("#ckMemberNo").val(""); 
+				}
+    		}
+	    });
+	});
+ */	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	// 일정 삭제 웹소켓
+	$("#calListDelete").on("click", function(){
+	
+		const formData = new FormData(document.getElementById("detail-form"));
+		
+    	console.log($("#detail-form").serializeArray());
+    	
+    	const listNo = $("#title").attr("name");
+    
+    	const obj = {};
+    	obj.listNo = listNo;
+    	obj.status = "delete";
+    	console.log(obj);
+    	
+    	// 캘린더 일정 삭제
+    	calendarSock.send(JSON.stringify(obj));
+    	
+    	$("#calendarDetail").modal("hide");
+    	
 	});
 	            
-    
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	calendarSock.onmessage = function(event){
 		const obj = JSON.parse(event.data);
 		
@@ -525,44 +632,7 @@
 
 
         
-        
-        /* 				
-		// 캘린더 내용 수정
-		$("#calListUpdate").on("click",function(){
-		    var ckMemberNo = [];     // 배열 초기화
-		    var changeRank= [];     // 배열 초기화
-		    $.each( $("[name='ckMemberNo']:checked"), function(){
-		    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-		    	
-		    	const idx = $("[name='ckMemberNo']").index( $(this) );
-		    	
-		    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
-		    	
-		    });
-		    
-	    	console.log(ckMemberNo);
-	    	console.log(changeRank);
-		 
-		    $.ajax({
-		        url: '../calListUpdate', 
-		        type: 'POST',
-		        dataType: 'text',
-		        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
-				data : {"ckMemberNo" : ckMemberNo,
-		       			 "changeRank" : changeRank },
-	    		success : function(result){
-	    			console.log(result);
-					if(result > 0){
-						swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
-					}else{
-						swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
-						$("#ckMemberNo").val(""); 
-					}
-	    		}
-		    });
-		});
-	*/
-	        
+   
 	  
 	 /*
 	 "cardNm" : $("#modal-cardList").val(), // 카드 이름
@@ -592,6 +662,45 @@
 	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
 	
 	});
+	
+	
+	$("#calListUpdate").on("click",function(){
+	    var ckMemberNo = [];     // 배열 초기화
+	    var changeRank= [];     // 배열 초기화
+	    $.each( $("[name='ckMemberNo']:checked"), function(){
+	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    	const idx = $("[name='ckMemberNo']").index( $(this) );
+	    	
+	    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
+	    	
+	    });
+	    
+    	console.log(ckMemberNo);
+    	console.log(changeRank);
+	 
+	    $.ajax({
+	        url: '../calListUpdate', 
+	        type: 'POST',
+	        dataType: 'text',
+	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
+			data : {"ckMemberNo" : ckMemberNo,
+	       			 "changeRank" : changeRank },
+    		success : function(result){
+    			console.log(result);
+				if(result > 0){
+					swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
+				}else{
+					swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
+					$("#ckMemberNo").val(""); 
+				}
+    		}
+	    });
+	});
+	
+	
+	
+	
 	
 	// 일정 삭제
 	$("#calListUpdate").on("click", function(){

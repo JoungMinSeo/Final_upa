@@ -31,6 +31,24 @@ public interface CalendarService {
 	List<Card> selectCardList(int workNo);
 
 	List<Member> selectMemberList(int workNo);
+	
+	/** 새 일정 등록
+	 * @param cal
+	 * @return result
+	 */
+	int insertList(Calendar cal);
+
+	/** 일정 수정
+	 * @param cal
+	 * @return result
+	 */
+	int updateList(Calendar cal);
+
+	/** 일정 삭제
+	 * @param cal
+	 * @return result
+	 */
+	int deleteList(int listNo2);
 
 
 }

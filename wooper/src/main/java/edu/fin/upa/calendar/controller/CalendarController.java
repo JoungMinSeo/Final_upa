@@ -100,21 +100,6 @@ public class CalendarController {
 		 return new Gson().toJson(list); 
 	}
    
-	// 개인캘린더 수정
-//	@RequestMapping(value="calListUpdate", method=RequestMethod.POST)
-//	public int updateCalendar(int listNo, Model model) {
-//		/*
-//		 * Map<String, Object> map = new HashMap<>();
-//		 * 
-//		 * map.put("listNo", listNo); map.put("title", title); map.put("start", start);
-//		 * map.put("end", end);
-//		 */
-//		System.out.println(listNo);
-//		int result = service.updateCalendar(listNo);
-//		
-//		return result;
-//	}
-	   
 	// 새로운 일정 등록 시 조회할 카드번호,이름, 팀원 목록
 	 @RequestMapping(value = "{workNo}/selectCM" ,method=RequestMethod.POST)
 	 @ResponseBody
@@ -131,16 +116,33 @@ public class CalendarController {
 		 return new Gson().toJson(map);
 	 }
 	 
-	 // 새로운 일정 등록
-	 @RequestMapping(value = "{workNo}/insertCal" ,method=RequestMethod.POST)
-	 @ResponseBody
-	 public String insertCalendar(@PathVariable("workNo") int workNo) {
-		 
-		 
-		 return null;
-	 }
-
-	
+	 
+		/*
+		 * // 새로운 일정 등록
+		 * 
+		 * @RequestMapping(value = "{workNo}/insertCal" ,method=RequestMethod.POST)
+		 * 
+		 * @ResponseBody public String insertCalendar(@PathVariable("workNo") int
+		 * workNo) {
+		 * 
+		 * 
+		 * return null; }
+		 * 
+		 */	
+		// 개인캘린더 수정
+//		@RequestMapping(value="calListUpdate", method=RequestMethod.POST)
+//		public int updateCalendar(int listNo, Model model) {
+//			/*
+//			 * Map<String, Object> map = new HashMap<>();
+//			 * 
+//			 * map.put("listNo", listNo); map.put("title", title); map.put("start", start);
+//			 * map.put("end", end);
+//			 */
+//			System.out.println(listNo);
+//			int result = service.updateCalendar(listNo);
+//			
+//			return result;
+//		}
 	
 	
 }

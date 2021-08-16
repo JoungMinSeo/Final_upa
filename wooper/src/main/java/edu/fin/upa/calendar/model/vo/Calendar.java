@@ -24,6 +24,7 @@ public class Calendar {
 	
 	private String doName;
 	private int[] selectMemNo;
+	private int memberNo;
 	
 	public Calendar() {}
 
@@ -155,16 +156,24 @@ public class Calendar {
 		this.selectMemNo = selectMemNo;
 	}
 
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Calendar [cardNo=" + cardNo + ", cardNm=" + cardNm + ", listNo=" + listNo + ", title=" + title
 				+ ", listStatus=" + listStatus + ", start=" + start + ", end=" + end + ", listMDt=" + listMDt
 				+ ", listDDt=" + listDDt + ", textColor=" + textColor + ", backgroundColor=" + backgroundColor
 				+ ", borderColor=" + borderColor + ", workNo=" + workNo + ", workNm=" + workNm + ", doName=" + doName
-				+ ", selectMemNo=" + Arrays.toString(selectMemNo) + "]";
+				+ ", selectMemNo=" + Arrays.toString(selectMemNo) + ", memberNo=" + memberNo + "]";
 	}
 
-	
+
 
 
 	
