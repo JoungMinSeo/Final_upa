@@ -22,9 +22,10 @@
 
 
     <div class="container">
+
     	
 		<!-- 등록된 카드가 있을 경우 -->
-		<%-- ${listList } --%>
+
 				<c:forEach items="${cardList}" var="item" varStatus="vs">
 					
 					<div class="empty" id="${item.cardNo}">
@@ -34,9 +35,6 @@
 							</div>
 						</div>
 						
-						<!-- 포이치돌린다 (리스트) 
-							이프문 카드번호의 카드번호 == 리스트의 카드번호 출력 
-						 -->
 						<div class="list">
 							 <br><br>
 							 <c:forEach items="${listList}" var="list" varStatus="vs">
@@ -50,7 +48,7 @@
 
 									        <div class="memInfo">
 									            <div class="mem">참여멤버</div>
-									            <div class="memImg">프로필사진보임</div>
+									            <div class="memImg">참여멤버 이름</div>
 									        </div>
 									
 									        <div class="createInfo">
@@ -66,11 +64,6 @@
 									        <div class="statusInfo">
 									            <div class="lStatus">상태표시</div>
 									            <div class="statusCategory">얻어온 상태</div>
-									        </div>
-									
-									        <div class="fileInfo">
-									            <div class="Lfile">파일보기</div>
-									            <div class="listFile">파일보러가기버튼같은거</div>
 									        </div>
 																 				
 							 			</div>
@@ -94,6 +87,7 @@
     </div>
 
 
+
     <!-- 리스트 추가  modal -->
 
 
@@ -107,17 +101,20 @@
 	                    </button>
 	                </div>
 	                <div class="modal-body">
+	                
 	                    <div class="profile">
 	
 	                        <span class="profileMem font"> 참여 멤버 </span>
-	
-	                        <div class="pofileImg">
-	
-	                        </div>
-	
-	                        <button type="button" class="btn btn-primary font addMember" data-toggle="modal" data-target="#addMember">
-	                            일할 도롱뇽 추가
-	                        </button>
+							
+							  <div class="memTag"></div>
+							  
+							  <select id="modal-memberList"> 
+							  		
+							  		<c:forEach items="${memList}" var="item" varStatus="vs">
+					               		<option class="font" id="${item.memberNo}">${item.memberNm}</option>
+					               	</c:forEach>    
+							  
+							  </select>
 	
 	                    </div>
 	
@@ -142,16 +139,6 @@
 	                        </select>
 	                    </div>
 	
-	                    <div class="file">
-	
-	                        <span class="font addfilen">파일 추가</span>
-	
-	                        <label class="btn btn-file border font fileLabel">
-	                            파일추가 <input type="file" class="fileNone" id="fileUpload">
-	                        </label>
-	
-	                    </div>
-	
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="button" class="btn btn-secondary font" data-dismiss="modal">취소</button>
@@ -162,44 +149,9 @@
     </div>
 
 
-     <!-- 멤버 추가 모달 -->
-     <div class="modal fade modalMember" id="addMember" tabindex="-1" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title font" id="exampleModalLabel">모여라 도롱뇽 칭구들</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <div class="modal-body">
-             
-             <!-- 멤버 조회하는걸로 바꿔주기 -->
-                 <span class="font">멤버1 </span> <span class="font">이메일 </span> <button type="button"
-                     class="btn btn-primary addmem font">추가하기</button> <br>
-                 <span class="font">멤버1 </span> <span class="font">이메일 </span> <button type="button"
-                     class="btn btn-primary addmem font">추가하기</button> <br>
-                 <span class="font">멤버1 </span> <span class="font">이메일 </span> <button type="button"
-                     class="btn btn-primary addmem font">추가하기</button> <br>
-                 <span class="font">멤버1 </span> <span class="font">이메일 </span> <button type="button"
-                     class="btn btn-primary addmem font">추가하기</button> <br>
-                     
-                     
-             </div>
-             
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary font" data-dismiss="modal">취소</button>
-                 <button type="button" class="btn btn-primary font">도롱뇽 추가</button>
-             </div>
-         </div>
-     </div>
- </div>
 
 
 <jsp:include page="cardScript.jsp"/>
-
-
 
 </body>
 

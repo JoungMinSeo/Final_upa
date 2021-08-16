@@ -72,6 +72,7 @@
 
 .listStartDt{
     display: inline-block;
+    clear : both;
 }
 
 .LEndDt{
@@ -177,6 +178,47 @@
     display: inline-block;
 }
 
+/* 
 .fileNone {
     display: none;
+}
+
+
+#fileUpload-ul{
+	width: 100%;  
+	list-style: none;
+} */
+/* 
+.deleteBtn{
+	cursor: pointer;
+}
+ */
+
+/* *******************멤버 ***********************8 */
+
+.profile{
+	display: inline-block;
+}
+
+.profileMem{
+	display: inline-block;
+}
+
+.memTag{
+	display: inline-block;
+}
+
+.memNm{
+	display: inline-block;
+}
+
+ .cancel{
+ 	display: inline-block;
+	cursor: pointer;
+ }
+
+.participants {
+	display: inline-block;
+	border: 3px solid gray;
+	border-radius: 5px;
 }

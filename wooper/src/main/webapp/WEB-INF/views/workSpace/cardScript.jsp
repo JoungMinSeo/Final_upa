@@ -169,9 +169,6 @@ $(document).on("change", ".cardName", function(){
 	
 	}
 	 
-
-		
-		
  
 	cardSock.send(JSON.stringify(obj));
 
@@ -217,7 +214,8 @@ function  createList(){
 	console.log($("#listNm").val()); //리스트 이름 
 	console.log($("#listStartDt").val()); // 시작날짜 
 	console.log($("#statusCategory").val()); // 상태 카테고리값 
-	//console.log($("#fileUpload").val()); // 파일 
+	
+	
 	
 	var obj = {
 			"workNo" : workNo,
@@ -227,7 +225,6 @@ function  createList(){
 			"listStartDt" : $("#listStartDt").val(),
 			"listEndDt" : $("#listEndDt").val(),
 			"statusCategory" : $("#statusCategory").val(),
-			//"file" : $("#fileUpload").val()
 			"status" : "insertList" // insertList : list 추가 
 	}
 	
@@ -251,6 +248,34 @@ function deleteList(e){
 	cardSock.send(JSON.stringify(obj));
 	
 }
+
+
+/* 리스트 내의 멤버 추가  */
+ 
+$("#modal-memberList").change(function(){
+   	const selectMemNo = $("#modal-memberList option:selected").attr("id");
+   	const selectMemNm = $("#modal-memberList option:selected").text();
+	console.log(selectMemNo);
+	console.log(selectMemNm);
+
+   
+   	var participants = $("<div>").addClass("participants");
+   	var memNm = $("<div>").addClass("memNm").text(selectMemNm).attr("id", selectMemNo);
+   	var cancel = $("<div>").addClass("cancel").text("x");
+   	
+   	participants.append(memNm).append(cancel);
+   	
+   	$(".memTag").append(participants);
+   	
+   
+});
+ 
+ 
+// 추가된 참여자 요소에서 x를 눌러 삭제하기
+$(document).on("click", ".cancel", function() {
+ 	$(this).parent().remove();
+});
+  
 
 
 
@@ -338,19 +363,15 @@ cardSock.onmessage = function(event){
 				var LStatus = $("<div>").addClass("LStatus").text("상태 표시");
 				var statusCategory = $("<div>").addClass("statusCategory").text(obj.statusCategory);
 				
-				var fileInfo = $("<div>").addClass("fileInfo");
-				var Lfile = $("<div>").addClass("Lfile").text("파일보기");
-				var listFile = $("<div>").addClass("listFile").text("파일보는무언가");
 				
 				listHeader.append(listNm).append(deleteList);
 				memInfo.append(mem).append(memImg);
 				createInfo.append(LcreateDt).append(listStartDt);
 				endInfo.append(LEndDt).append(listEndDt);
 				statusInfo.append(LStatus).append(statusCategory);
-				fileInfo.append(Lfile).append(listFile);
 				 
 				// 리스트 모양 완성!
-				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo).append(fileInfo);
+				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo);
 				
 				$("#" + obj.addListCardNo).find(".list").append(fill);
 				//$("#" + obj.cardNo).remove();
@@ -378,6 +399,31 @@ cardSock.onmessage = function(event){
 	
 } // onmessage end
 
+
+function listFileUpload(input){
+	
+	const fileName = $(input).val().substring( $(input).val().lastIndexOf("\\") + 1 );
+	$(input).parent().next().text( fileName );
+
+	const deleteBtn = $("<span class='ml-5 deleteBtn'>").text("x").attr("onclick", "deleteFile(this)");
+	$(input).parent().next().after(deleteBtn);
+	
+	
+	const li = $("<li>");
+	const label1 = $("<label class='btn btn-file border font fileLabel'>").text("파일추가");
+	const inputFile = $('<input type="file" class="fileNone" name="fileUpaload" onchange="listFileUpload(this);">');
+	const label2 = $("<label>");
+	
+	label1.append(inputFile);
+	li.append(label1).append(label2);
+	
+	$("#fileUpload-ul").append(li);
+}
+
+function deleteFile(deleteBtn){
+	$(deleteBtn).parent().remove();
+	
+}
 
 
 

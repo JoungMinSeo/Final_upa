@@ -37,7 +37,6 @@
 
 		<div class="row mx-lg-n5">
 			<div class="col py-3 px-lg-5 ">
-
 				<h1 class="font projectName">${sessionScope.loginMember.memberNm}님의 프로젝트</h1>
 				<h2 class="font">나의 프로젝트</h2>
 
@@ -49,26 +48,25 @@
 			</div>
 		</div>
 
+		<div id="workListView">
+			<c:choose>
+				<c:when test="${empty workList }">
+					<h3 class="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
+				</c:when>
+	
+				<c:otherwise>
+					<c:forEach items="${workList}" var="item" varStatus="vs">
+						<div class="project">
+							<div class="projectListName" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">${item.workNm }</div>
+							<div class="projectX" onclick="deleteWorkspace(${item.workNo})">X</div>
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+			
+			<button type="button" class="addProject"  data-toggle="modal" data-target="#addWorkspace">프로젝트 생성하기</button>
 
-		<c:choose>
-
-			<c:when test="${empty workList }">
-				<h3 class="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
-			</c:when>
-
-			<c:otherwise>
-				<c:forEach items="${workList}" var="item" varStatus="vs">
-					<div class="project" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">
-						<div class="projectListName ">${item.workNm }</div>
-						<div class="projectX">X</div>
-					</div>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-		
-		<button type="button" class="addProject"  data-toggle="modal" data-target="#addWorkspace">프로젝트 생성하기</button>
-
-
+		</div>
 		
 		
 		<!-- 워크스페이스 추가 모달 -->
@@ -102,6 +100,85 @@
 
 		<hr>
 	</div>
+	
+	<script>
+	
+ 	function deleteWorkspace(workNo){
+		
+		if(confirm("워크스페이스를 나가겠습니가?")){
+			var url = "${contextPath}/workspace/deleteWorkspace";
+			
+			$.ajax({
+				url : url,
+				data : {"workNo" : workNo},
+				success : function(result){
+					if(result == 1){
+						console.log("삭제됨 다 없어짐");
+						//console.log(workList);
+						selectWorkList2();
+					}else if(result == 2){
+						console.log("삭제 못함 권한위임해");
+						
+					}else if(result == 3){
+						console.log("너만 나가면되");
+						//console.log(workList);
+						selectWorkList2();
+						
+					}
+				}
+			})
+			
+		}
+	};
+	
+	function selectWorkList2(){
+		
+		$.ajax({
+			url : "${contextPath}/workspace/workList2",
+			data : {"memberNo" : ${sessionScope.loginMember.memberNo}},
+			type : "POST",
+			dataType : "JSON",
+			success : function(wList){
+				//console.log(wList);
+				
+				$("#workListView").html("");
+				const addProject = $("<button>").addClass("addProject").attr("data-toggle", "modal").attr("data-target", "#addWorkspace").text("프로젝트 생성하기");
+				
+				if(wList != null){
+					
+					$.each(wList, function(index, item){
+						
+						var project = $("<div>").addClass("project");
+						var projectListName = $("<div>").addClass("projectListName").attr("onclick", "location.href='${contextPath}/workspace/"+item.workNo+"/boardMain'").text(item.workNm);
+						var projectX = $("<div>").addClass("projectX").attr("onclick", "deleteWorkspace("+item.workNo+")").text("x");
+						
+						
+						project.append(projectListName).append(projectX);
+						$("#workListView").append(project);
+					})
+					
+					$("#workListView").append(addProject);
+					
+				}
+				if(wList == null){
+					/* 화면에 나타나지 않는 현상 발생 */
+					var none = $("<h3>").addClass("font").text("참여중인 워크스페이스가 존재하지 않습니다.");
+					
+					$("#workListView").append(none).append(addProject);
+				}
+				
+				
+			},error : function(){
+				console.log("ajax 실패");
+			}
+			
+		});
+	}
+
+ 
+
+	
+	</script>
 
 
 </body>
