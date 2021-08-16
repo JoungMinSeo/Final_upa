@@ -11,8 +11,15 @@
 html{
 	background-color: rgb(213,232,243);
 }
+#side{
+	width: 80px;
+}
+#qwer{
+	position:absolute;
+}
 #color{
 	background-color: rgb(213,232,243);
+	position: absolute;
 }
 #container{
 	width:1050px;
@@ -22,6 +29,8 @@ html{
 	font-size:0;
 	border-radius:5px;
     margin-top: 50px;
+   	margin-left: 200px;
+    float: left;
 }
 .makeChatRoom{
     width: 200px;
@@ -209,7 +218,8 @@ main footer img{
 	height:30px;
 	cursor:pointer;
 }
-main footer a{
+#send{
+	border-radius:0px solid;
 	text-decoration:none;
 	text-transform:uppercase;
 	font-weight:bold;

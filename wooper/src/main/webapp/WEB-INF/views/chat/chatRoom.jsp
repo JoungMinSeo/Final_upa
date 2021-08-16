@@ -54,6 +54,9 @@
 </style>
 <body>
 	<div id="color">
+		<div id="qwer">
+			<jsp:include page="../common/boardSideMenu.jsp"/>
+		</div>
 		<div id="container">
 			<aside>
 				<c:choose>
@@ -83,6 +86,7 @@
 					data-target="#signLineModal">채팅방 개설</button>
 			</aside>
 			<main>
+			<div class="chattingRoom">
 				<header>
 					<div>
 						<h2>채팅방 이름</h2>
@@ -90,27 +94,13 @@
 				</header>
 				<ul id="chat">
 					<li class="you">
-						<div class="entete">
-							<span class="status green"></span>
-							<h2>정민서</h2>
-							<h3>10:12AM, Today</h3>
-						</div>
-						<div class="triangle"></div>
-						<div class="message">도대체 이게 모야</div>
-					</li>
-					<li class="me">
-						<div class="entete">
-							<h3>10:12AM, Today</h3>
-							<h2>Vincent</h2>
-							<span class="status blue"></span>
-						</div>
-						<div class="triangle"></div>
-						<div class="message">하하 진짜 힘드네요</div>
+						<h3 style="font-size:30px">채팅방을 클릭해주세요.</h3>
 					</li>
 				</ul>
+			</div>
 				<footer>
-					<textarea placeholder="메세지를 입력해주세요."></textarea>
-					<a href="#">Send</a>
+					<textarea id="inputChatting" placeholder="메세지를 입력해주세요."></textarea>
+					<button id="send">Send</button>
 				</footer>
 			</main>
 		</div>
@@ -223,7 +213,95 @@
 		</div>
 	</div>
 </div>
+<!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
+
+<!-- 
+	WebSocket : 브라우저와 웹 서버간의 전이중 통신을 지원하는 프로토콜
+	(WebSocket을 위한 객체는 HTTP를 이용해 생성되지만, 생성 후 동작은 HTTP와 별도로 진행됨)
+	
+	(전이중 통신(Full Duplex) : 두 단말기가 데이터를 송 수신하기 위해 각각 독립된 회선을 사용하는 것)
+	
+	WebSocket을 사용하기 위한 객체를 Javascript가 기본적으로 제공하고 있지만
+	웹소켓을 제공하지 않는 브라우저도 있다.
+	-> sockjs를 이용하면 문제가 해결됨
+	
+	SockJs : 브라우저가 WebSocket을 제공하지 않을 때 비슷한 다른 객체를 찾아서
+				웹소켓 통신이 가능하도록 하는 Javascript 라이브러리
+ -->
+
+
+<!-- https://github.com/sockjs/sockjs-client -->
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
+
+let chattingSock = new SockJS("<c:url value='/chat' />");
+
+		
+const memberNo = "${loginMember.memberNo}"; 
+const memberId = "${loginMember.memberId}"; 
+const memberName = "${loginMember.memberNm}"; 
+let chatRoomNo;
+
+$("#send").on("click", function(){
+		const chat = $("#inputChatting").val();
+		
+		if(chat.trim().length == 0){
+			alert("채팅을 입력해주세요.");
+		}else{
+			var obj = { "memberNo" : memberNo,  
+									"memberId" : memberId,
+									"memberName" : memberName,
+									"chat" : chat,
+									"chatRoomNo" : chatRoomNo};
+			
+			chattingSock.send(JSON.stringify(obj));
+			
+			$("#inputChatting").val("");
+		}
+});
+
+chattingSock.onmessage = function(event){
+		
+		const obj = JSON.parse(event.data);
+		console.log(obj);
+		
+		if (obj.memberNo == memberNo) {
+			
+			const li = $("<li>").addClass("me");
+			const div = $("<div>").addClass("entete");
+			const time = $("<h3>").html(obj.createDate);
+			const name = $("<h2>").html(obj.memberName);
+			const span = $("<span>").addClass("status blue");
+			const triangle = $("<div>").addClass("triangle");
+			const message = $("<div>").addClass("message").text(obj.chat);
+			
+			div.append(time).append(name).append(span);
+			li.append(div).append(triangle).append(message);
+			
+			$("#chat").append(li);
+		}else{
+			
+			const li = $("<li>").addClass("you");
+			const div = $("<div>").addClass("entete");
+			const span = $("<span>").addClass("status green");
+			const name = $("<h2>").html(obj.memberName);
+			const time = $("<h3>").html(obj.createDate);
+			const triangle = $("<div>").addClass("triangle");
+			const message = $("<div>").addClass("message").text(obj.chat);
+			
+			div.append(span).append(name).append(time);
+			li.append(div).append(triangle).append(message);
+			$("#chat").append(li);
+		}
+		
+		
+		$("#chat").scrollTop($("#chat")[0].scrollHeight);
+		
+	}
+
+
+
 	function searchUser() {
 
 		const sk = $("#signList-search-option").val();
@@ -306,8 +384,9 @@ $(document).on("click", ".cencle", function() {
 
 $(".title").click(function(){
 	
-	var chatRoomNo = $(this).children().val();
+	chatRoomNo = $(this).children().val();
 	
+	const headerTitle = $(this).find("h2").text();
 	
 	$.ajax({
 		url : "selectChatMessage",
@@ -315,65 +394,74 @@ $(".title").click(function(){
 		type : "POST",
 		dataType : "JSON",
 		success : function(chatList) {
-			
-			
 			console.log(chatList);
-			/* <li class="you">
-			<div class="entete">
-				<span class="status green"></span>
-				<h2>정민서</h2>
-				<h3>10:12AM, Today</h3>
-			</div>
-			<div class="triangle"></div>
-			<div class="message">도대체 이게 모야</div>
-		</li>
-		<li class="me">
-			<div class="entete">
-				<h3>10:12AM, Today</h3>
-				<h2>Vincent</h2>
-				<span class="status blue"></span>
-			</div>
-			<div class="triangle"></div>
-			<div class="message">하하 진짜 힘드네요</div>
-		</li> */
-		
+			
+			$(".chattingRoom").html("");
+			
+			const header = $("<header>");
+			const div1 = $("<div>");
+			const h2 = $("<h2>").text( headerTitle );
+			 
+			div1.append(h2);
+			header.append(div1);
+			
+			const ul = $("<ul>").attr("id","chat");
+				
 			$.each(chatList,function(index,item){
-			if (${loginMember.memberNo} == item.memberNo) {
+				console.log("${loginMember.memberNo}");
+				console.log( item.memberNo);
 				
-				var li = $("<li>").addClass("me");
-				var div = $("<div>").addClass("entete");
-				var h3 = $("<h3>").text(item.createDate);
-				var h2 = $("<h2>").text(item.memberNm);
-				var span = $("<span>").addClass("status bule");
-				var triangle = $("<div>").addClass("triangle");
-				var message = $("<div>").addClass("message").text(item.message);
-				
-				div.append(h3).append(h2).append(span);
-				li.append(div).append(triangle).append(message);
-				
-				$("#chat").html(li);
+				if (${loginMember.memberNo} == item.memberNo) {
+					
+					const li = $("<li>").addClass("me");
+					const div = $("<div>").addClass("entete");
+					const time = $("<h3>").text(item.createDate);
+					const name = $("<h2>").text(item.memberName);
+					const span = $("<span>").addClass("status bule");
+					const triangle = $("<div>").addClass("triangle");
+					const message = $("<div>").addClass("message").text(item.message);
+					
+					div.append(time).append(name).append(span);
+					li.append(div).append(triangle).append(message);
+					
+					ul.append(li);
+					
+				}else{
+					
+					const li2 = $("<li>").addClass("you");
+					const div2 = $("<div>").addClass("entete");
+					const span2 = $("<span>").addClass("status green");
+					const name2 = $("<h2>").text(item.memberName);
+					const time2 = $("<h3>").text(item.createDate);
+					const triangle2 = $("<div>").addClass("triangle");
+					const message2 = $("<div>").addClass("message").text(item.message);
+					
+					div2.append(span2).append(name2).append(time2);
+					li2.append(div2).append(triangle2).append(message2);
+					
+					ul.append(li2);
 				}
-			})else{
+					
+					
+				})
+				$(".chattingRoom").append(header).append(ul);
 				
+				
+			},error : function(e) {
+				console.log("ajax 통신 실패");
+				console.log(e);
 			}
 			
-		
-		
-			
-		},error : function(e) {
-			console.log("ajax 통신 실패");
-			console.log(e);
-		}
-		
-	});
+		});
 	
 	
 	
 	
 });
-	
-		
+
 </script>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
