@@ -19,7 +19,6 @@
 		<typeAlias type="edu.fin.upa.chat.model.vo.ChatRoomJoin" alias="ChatRoomJoin" />
 		<typeAlias type="edu.fin.upa.chat.model.vo.Search" alias="Search"/>
 
-
 		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
@@ -34,6 +33,7 @@
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Calendar" alias="Calendar" />
 		<typeAlias type="edu.fin.upa.management.model.vo.Management" alias="Management" />
 		<typeAlias type="edu.fin.upa.management.model.vo.Pagination" alias="Pagination" />
+		<typeAlias type="edu.fin.upa.notice.model.vo.Allim" alias="Allim" />
 		
 		<!-- 민경 추가 vo -->
 		<typeAlias type="edu.fin.upa.calendar.model.vo.Card" alias="Card" />
@@ -47,9 +47,11 @@
 		
 		<mapper resource="/mappers/calendar-mapper.xml" />
 		<mapper resource="/mappers/sign-mapper.xml" />
+		
 		<!-- 함나현 mapper임둥 -->
 		<mapper resource="/mappers/workspace-mapper.xml" />
 		<mapper resource="/mappers/management-mapper.xml" />
+		<mapper resource="/mappers/allim-mapper.xml" />
 		
 		<!-- 민경 추가 mapper -->
 		<mapper resource="/mappers/card-mapper.xml" />

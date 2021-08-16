@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import edu.emory.mathcs.backport.java.util.Collections;
+import edu.fin.upa.calendar.model.service.CalendarService;
 import edu.fin.upa.calendar.model.vo.Calendar;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.calendar.model.vo.Workspace;
@@ -35,6 +36,9 @@ public class CalendarWebsocketHandler extends TextWebSocketHandler{
 		
 		@Autowired
 		private ListService listService;
+
+		@Autowired
+		private CalendarService calendarService;
 		
 		// SockJs가 연결되면 WebSocketSession으로 들어옴 
 		// -> 연결된 클라이언트의 Session을 다룰 수 있음
@@ -73,18 +77,36 @@ public class CalendarWebsocketHandler extends TextWebSocketHandler{
 			System.out.println("memberNo : " + memberNo);
 			System.out.println("workNo : " + workNo);
 			
+			String status = convertedObj.get("status").toString().replaceAll("\"", "");
+
 			
-			// JSON으로 받아온 정보를 Calendar 객체로 변환
-			ObjectMapper objectMapper = new ObjectMapper();
-			Calendar cal = objectMapper.readValue(convertedObj.toString(), Calendar.class);
+
 			
-			System.out.println(cal);
-			
-			
-			
-			
-			
-			
+			switch(status) {
+				case "insert" :
+					
+					// JSON으로 받아온 정보를 Calendar 객체로 변환
+					ObjectMapper objectMapper = new ObjectMapper();
+					Calendar cal = objectMapper.readValue(convertedObj.toString(), Calendar.class);
+					cal.setWorkNo(workNo);
+					cal.setMemberNo(memberNo);
+					
+					System.out.println(cal);
+					
+					int result = calendarService.insertList(cal);
+					
+					break;
+				case "delete" : 
+					int  listNo = Integer.parseInt(convertedObj.get("listNo").toString().replaceAll("\"", ""));
+					int dResult = calendarService.deleteList(listNo);
+					
+					break;
+				/*
+				 * case "update" : // int uResult = calendarService.updateList(cal);
+				 * 
+				 * break;
+				 */	
+			}
 			
 			
 			// 화면에 보이게.... 

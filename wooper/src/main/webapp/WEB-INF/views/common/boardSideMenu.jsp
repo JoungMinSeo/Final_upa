@@ -88,6 +88,28 @@
         	float:right;
         }
 		 */
+		 
+ 	#newAllim{
+		position:absolute; /* 항상 제일위에 올라와서 절대적인 위치를 가질 수 있음 */
+		bottom:5px;
+		right:5px;
+		display:inline-block;
+		width:20px;
+		height:20px;
+		text-align:center;
+		background-color:rgba(216, 36, 73, 0.89);
+		color:white;
+		border-radius:50%;
+		line-height:20px;
+		font-weight:bold;
+		cursor:pointer;
+		display:none;
+	}
+/* 	
+	.newAllim:hover{
+		background-color:rgba(50,50,50,0.5);
+	}
+	 */
 	</style>
 </head>
 <body>
@@ -117,9 +139,14 @@
             
             <!-- 알림 -->      
             <div class="noticemove">
-                <a href="${pageContext.request.contextPath}/notification/notification">
+                <a href="${pageContext.request.contextPath}/notice/notice">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/notice.png" style="height:40px;">
                 </a>
+                
+                <!-- 새 알림이 왔을 때 노출시킬 것 알림 수 count or N -->
+                <span id="newAllim">N</span>
+            
+            
             </div>    
              
             <!-- 캘린더 지울 예정-->    
@@ -168,6 +195,6 @@
         </div>
     </div>
 
-    
+    <jsp:include page="allim.jsp"/>  
 </body>
 </html>

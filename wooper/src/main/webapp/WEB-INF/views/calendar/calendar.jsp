@@ -63,7 +63,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">일정 상세보기</h5>
+					<h5 class="modal-title">${work.workNm}</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -174,12 +174,16 @@
 					// attr : attribute
 					// 2021-08-05T23:11:00+09:00 
 					
-					const start = $("<h5>").attr({"id" : "start"}).text(info.event.startStr.substring(0, 19));
+					const start = $("<h5>").attr({"id" : "start"}).text(info.event.startStr.substring(0, 10) + " " + info.event.startStr.substring(11, 19));
 					const li7 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
 					
-					const end = $("<h5>").attr({"id" : "end"}).text(info.event.endStr.substring(0, 19));
+					const end = $("<h5>").attr({"id" : "end"}).text(info.event.endStr.substring(0, 10) + " " + info.event.endStr.substring(11, 19));
 					const li8 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
-					
+/* 					
+					<c:forEach items="${memberList}" var="item" varStatus="status">
+					const li7 = $("<li>").text($(info.el).attr("mem.memberNm")); 
+					</c:forEach>
+ */
 					/*
 					const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
 					const li9 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
@@ -190,7 +194,7 @@
 					 */
 					
 					
-					ul.append(li1, li6, li7, li8);
+					ul.append(li6, li7, li8);
 					$("#detailBody").append(ul);
 					
 					

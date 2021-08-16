@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="allimMapper">
+
+	<resultMap type="Allim" id="allim_rm">
+		<id property="allimNo" column="ALLIM_NO"/>
+		
+		<result property="allimContent" column="ALLIM_CONTENT"/>
+		<result property="allimStatus" column="ALLIM_STATUS"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
+	<insert id="insertAllim" parameterType="Allim">
+		INSERT INTO ALLIM
+		SELECT SEQ_ALLIM_NO.NEXTVAL, A.* FROM (
+			SELECT  #{allimContent} ALLIM_CONTENT, 
+							'N' ALLIM_STATUS,
+							MEMBER_NO 
+							FROM WORKSPACE_JOIN 
+							WHERE WORK_NO = #{workNo}
+							AND MEMBER_NO != #{memberNo}
+						
+		) A
+	</insert>
+
+	<select id="selectMemberList" parameterType="Allim" resultType="int">
+		SELECT MEMBER_NO 
+		FROM WORKSPACE_JOIN
+		WHERE WORK_NO = #{workNo}
+		AND MEMBER_NO != #{memberNo}
+	</select>
+
+
+
+
+</mapper>

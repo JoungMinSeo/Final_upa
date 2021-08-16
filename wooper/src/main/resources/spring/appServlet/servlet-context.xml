@@ -90,9 +90,20 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	
+	<!-- 일정등록 웹소켓 -->
 	<beans:bean id="calendarHandler" class="edu.fin.upa.calendar.websocket.CalendarWebsocketHandler" />
 	<websocket:handlers>
 		<websocket:mapping handler="calendarHandler" path="/calSock" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
+	
+	<!-- 알림 웹소켓 -->
+	<beans:bean id="allimHandler" class="edu.fin.upa.notice.websocket.AllimWebsocketHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="allimHandler" path="/allimSock" />
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
