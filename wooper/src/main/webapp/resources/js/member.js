@@ -210,36 +210,26 @@ function startTimer(count, display) {
              isRunning = true;
 }
 
+let proofNo = "";
+
 $("#btn").on("click",function(){
 	
-	$("#hide-area").show();
-	alert("인증번호를 발송하였습니다.");
-});
-
-$("#btn").click(function(){
+	
+	const phone = $("[name='phone']");	
+	const memberPhone = $(phone[0]).val() + "-" + $(phone[1]).val() + "-" + $(phone[2]).val();
 	
 	checkObj.sign = true;
-	
-});
-
-// 휴대폰 인증 유효성 검사
-$("#proof").click(function(){
-	
-	const certificationNo = $("#phoneCheck").val();
-	
-	$.ajax({
-		url: "phoneCheck",
-		data: {"certificationNo":certificationNo},
-		type: "post",
-		success:function(result){
-			consol.log(result);
 			
-			if(result > 0){
-				alert("인증번호가 알맞지 않습니다.");
-				checkObj.proof = false;
-			}else{
-				checkObj.proof = true;
-			}
+	$.ajax({
+		url: "sendSMS",
+		data: {"memberPhone":memberPhone},
+		type: "post",
+		success:function(numStr){
+			
+			proofNo = numStr;
+			$("#hide-area").show();
+			alert("인증번호를 발송하였습니다.");
+			
 		},
 		error:function(e){
 			console.log("ajax 통신 실패");
@@ -248,6 +238,25 @@ $("#proof").click(function(){
 		}
 	})
 	
+	
+});
+
+// 휴대폰 인증 유효성 검사
+$("#proof").click(function(){
+	
+	if ($.trim(proofNo) == $("#phoneCheck").val()) {
+			checkObj.proof = true;
+			swal({
+				"icon": "success",
+				"title": "휴대폰 인증이 정상적으로 완료되었습니다.",
+			})
+		} else {
+			checkObj.proof = false;
+			swal({
+				"icon": "error",
+				"title": "인증 번호가 일치하지 않습니다."
+			})
+		}
 	
 });
 

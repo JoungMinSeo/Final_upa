@@ -59,3 +59,7 @@ input[type=checkbox] {
 .main-btn{
 	cursor: pointer;
 }
+#kakaoImg{
+	width: 400px;
+	height: 50px;
+}

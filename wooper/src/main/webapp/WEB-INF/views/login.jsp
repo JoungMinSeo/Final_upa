@@ -30,7 +30,7 @@
             </div>
             <div class="btn-area">
             <a href="https://kauth.kakao.com/oauth/authorize?client_id=553db56a5579581d35b20b05bdcdb925&redirect_uri=http://localhost:8080/wooper/kakaoLogin&response_type=code">
-                <img src="${pageContext.request.contextPath}/resources/img/kakao.png"></a>
+                <img id="kakaoImg" src="${pageContext.request.contextPath}/resources/img/kakao.png"></a>
             </div>
             <div class="btn-area">
                 <input type="checkbox" id="autoLogin" name="autoLogin" value="T"> <span>&nbsp;로그인 유지</span>

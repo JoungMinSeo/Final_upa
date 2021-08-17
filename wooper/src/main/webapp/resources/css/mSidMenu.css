@@ -5,6 +5,11 @@
     font-style: normal;
 }
 *{font-family: 'BMJUA';}
+a{
+	color: #fff; text-decoration: none; outline: none
+}
+a:hover, a:active {text-decoration: none; color:#fff;}
+
 #hr{
     width: 150px;
     height: 3px;
