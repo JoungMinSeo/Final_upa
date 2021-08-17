@@ -22,7 +22,6 @@
 
 
     <div class="container">
-
     	
 		<!-- 등록된 카드가 있을 경우 -->
 
@@ -46,9 +45,13 @@
 							 				<button type="button" class="undo btn font" onclick="deleteList(event);">x</button> 
 							 				</div>
 
-									        <div class="memInfo">
+									       <div class="memInfo">
 									            <div class="mem">참여멤버</div>
-									            <div class="memImg">참여멤버 이름</div>
+									            <c:forEach items="${listJoinMemList}" var="joinList" varStatus="vs">
+									            	<c:if test="${list.listNo == joinList.listNo }">
+											            <div class="memImg" id="${joinList.memberNo }">${joinList.memberNm }</div>
+									            	</c:if>
+									            </c:forEach>
 									        </div>
 									
 									        <div class="createInfo">
@@ -62,8 +65,8 @@
 									        </div>
 									
 									        <div class="statusInfo">
-									            <div class="lStatus">상태표시</div>
-									            <div class="statusCategory">얻어온 상태</div>
+									            <div class="lStatus">상태</div>
+									            <div class="statusCategory">${list.doName}</div>
 									        </div>
 																 				
 							 			</div>
@@ -147,7 +150,6 @@
 	            </div>
         </div>
     </div>
-
 
 
 

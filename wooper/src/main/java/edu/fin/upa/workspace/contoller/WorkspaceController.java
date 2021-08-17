@@ -81,10 +81,17 @@ public class WorkspaceController {
 		// 리스트 조회
 		if(!cardList.isEmpty()) {
 			List<ListList> listList = listService.selectList(cardList);
-			
 			model.addAttribute("listList", listList);
+			
+			if(!listList.isEmpty()) {
+				List<Member> listJoinMemList = listService.listJoinMemList(listList);
+				//System.out.println("제발 되라 ㅜㅜ " + listJoinMemList);
+				model.addAttribute("listJoinMemList", listJoinMemList);
+			}
+			
 		}
 		
+		// 워크스페이스 참여 멤버 
 		List<Member> memList = calService.selectMemberList(workNo);
 		model.addAttribute("memList", memList);
 		

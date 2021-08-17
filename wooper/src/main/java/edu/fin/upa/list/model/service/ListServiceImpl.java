@@ -70,6 +70,12 @@ public class ListServiceImpl implements ListService {
 		return dao.selectMemList(dropListNo);
 	}
 
+	// 해당 리스트 참여 멤버 조회
+	@Override
+	public List<Member> listJoinMemList(List<ListList> listList) {
+		return dao.listJoinMemList(listList);
+	}
+
 	
 	
 	
