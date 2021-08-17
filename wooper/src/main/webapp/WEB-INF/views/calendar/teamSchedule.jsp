@@ -218,7 +218,16 @@
 	               </button>
 	            </div>
 	            <div class="modal-body" id="detailBody">
-	            
+<%-- 	            
+		        	<div class="calendarmember">
+			            <div class="calendarmemberimg"><img src="${pageContext.request.contextPath}/resources/img/icon/group1_1.png" style="width:30px;"></div>
+			            	<div class="calendarmemberip">
+			                	<div id="memTag"></div>
+			                		<select id="modal-memberList">
+			                	</select>
+			            </div>
+			        </div>
+ --%>	            
 	            </div>
 	            <div class="modal-footer">
 	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
@@ -325,23 +334,35 @@
 				const li4 = $("<li>").text( $(info.el).attr("cardNm") ); // 카드이름
 				const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 				
-				const title = $("<input>").attr({"type": "text", "id" : "title", "name" : $(info.el).attr("listNo") }).val(info.event.title);
+				const title = $("<input>").attr({"type": "text", "id" : "title", "name" : "title" , "listNo" : $(info.el).attr("listNo")}).val(info.event.title);
 				const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
 				
 				// attr : attribute
 				// 2021-08-05T23:11:00+09:00 
-				const start = $("<input>").attr({"type": "datetime-local", "id" : "start"}).val(info.event.startStr.substring(0, 19));
+				const start = $("<input>").attr({"type": "datetime-local", "id" : "start", "name" : "start"}).val(info.event.startStr.substring(0, 19));
 				const li7 = $("<li>").text( "시작일자 : ").append(start); // 시작일자
 				
-				const end = $("<input>").attr({"type": "datetime-local", "id" : "end"}).val(info.event.endStr.substring(0, 19));
+				const end = $("<input>").attr({"type": "datetime-local", "id" : "end", "name" : "end"}).val(info.event.endStr.substring(0, 19));
 				const li8 = $("<li>").text( "종료일자 : ").append(end); // 종료일자
 				
-				const textColor = $("<input>").attr({"type": "text", "id" : "textColor"}).val(info.event.textColor);
+				const textColor = $("<input>").attr({"type": "text", "id" : "textColor", "name" : "textColor"}).val(info.event.textColor);
 				const li9 = $("<li>").text( "글자색 : ").append(textColor); // 글자색
-				const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor"}).val(info.event.backgroundColor);
+				const backgroundColor = $("<input>").attr({"type": "text", "id" : "backgroundColor", "name" : "backgroundColor"}).val(info.event.backgroundColor);
 				const li10 = $("<li>").text( "배경색 : ").append(backgroundColor); // 배경색 
-				const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor"}).val(info.event.borderColor);
+				const borderColor = $("<input>").attr({"type": "text", "id" : "borderColor", "name" : "borderColor"}).val(info.event.borderColor);
 				const li11 = $("<li>").text( "테두리색 : ").append(borderColor); // 테두리색
+				
+				/* 
+					$.each(result.cardList, function(){
+						const option = $("<option>").text( this.cardNm ).val(this.cardNo);
+						$("#modal-cardList").append(option);
+					});
+					
+					$.each(result.memberList, function(){
+						const option = $("<option>").text( this.memberNm ).val(this.memberNo);
+						$("#modal-memberList").append(option);
+					});
+				*/
 				
 				ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
 				$("#detailBody").append(ul);
@@ -512,7 +533,7 @@
 	    	// wjdalstj812@naver.com
 			// 정민서님이 새 일정을 등록하였습니다.
 			const allimContent = "${loginMember.memberId}<br>${loginMember.memberNm}님이 새 일정을 등록하였습니다.";
-			const allimObj = {"allimContent" : allimContent, "status" : "allimAdd" }
+			const allimObj = {"allimContent" : allimContent, "status" : "newAllim" }
 	    	
 	    	allimSock.send(JSON.stringify(allimObj));
 	    	
@@ -520,30 +541,40 @@
 			
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// 일정 수정 웹소켓
-/* 	
 	$("#calListUpdate").on("click",function(){
 		
 		const formData = new FormData(document.getElementById("detail-form"));
-		
     	console.log($("#detail-form").serializeArray());
     	
-    	const listNo = $("#title").attr("name");
+    	const listNo = $("#title").attr("listNo");
     
     	const obj = {};
+		const arr = $("#detail-form").serializeArray();
+		
+    	for(let key in arr){
+    		console.log( arr[key]);
+    		obj[ arr[key].name ] = arr[key].value;
+    	}
+		
     	obj.listNo = listNo;
-    	obj.status = "delete";
+    	obj.status = "update";
     	console.log(obj);
     	
-    	// 캘린더 일정 삭제
+    	// 캘린더 일정 수정
     	calendarSock.send(JSON.stringify(obj));
     	
     	$("#calendarDetail").modal("hide");
 		
+    	// wjdalstj812@naver.com
+		// 정민서님이 일정을 수정하였습니다.
+		const allimContent = "${loginMember.memberId}<br>${loginMember.memberNm}님이 일정을 수정하였습니다.";
+		const allimObj = {"allimContent" : allimContent, "status" : "allimUpdate" }
+    	
+    	allimSock.send(JSON.stringify(allimObj));
 		
 		
 		
-		
-		
+	/* 	
 	    var ckMemberNo = [];     // 배열 초기화
 	    var changeRank= [];     // 배열 초기화
 	    $.each( $("[name='ckMemberNo']:checked"), function(){
@@ -557,27 +588,9 @@
 	    
     	console.log(ckMemberNo);
     	console.log(changeRank);
-    	
-    	
-	    $.ajax({
-	        url: '../calListUpdate', 
-	        type: 'POST',
-	        dataType: 'text',
-	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
-			data : {"ckMemberNo" : ckMemberNo,
-	       			 "changeRank" : changeRank },
-    		success : function(result){
-    			console.log(result);
-				if(result > 0){
-					swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
-				}else{
-					swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
-					$("#ckMemberNo").val(""); 
-				}
-    		}
-	    });
+    	 */
+	    
 	});
- */	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// 일정 삭제 웹소켓
 	$("#calListDelete").on("click", function(){
@@ -586,7 +599,7 @@
 		
     	console.log($("#detail-form").serializeArray());
     	
-    	const listNo = $("#title").attr("name");
+    	const listNo = $("#title").attr("listNo");
     
     	const obj = {};
     	obj.listNo = listNo;

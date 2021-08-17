@@ -20,8 +20,9 @@ public interface CalendarService {
 	 * @param listNo
 	 * @return
 	 */
-	int updateCalendar(int listNo);
-
+	/*
+	 * int updateCalendar(int listNo);
+	 */
 	/** 팀캘린더조회
 	 * @param map
 	 * @return
@@ -42,7 +43,7 @@ public interface CalendarService {
 	 * @param cal
 	 * @return result
 	 */
-	int updateList(Calendar cal);
+	int updateList(int listNo, Calendar cal);
 
 	/** 일정 삭제
 	 * @param cal
