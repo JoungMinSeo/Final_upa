@@ -44,15 +44,7 @@
 
 </head>
 <body>
-   	<c:if test="${!empty title}">
-		<script>
-			swal({
-				icon : "${icon}",
-				title : "${title}",
-				text : "${text}"
-			});
-		</script>
-	</c:if>
+
 
 	<div class="container" id="calendarc">
 		<div id='calendar'></div>

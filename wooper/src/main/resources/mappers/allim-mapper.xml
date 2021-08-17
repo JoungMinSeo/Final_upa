@@ -31,12 +31,29 @@
 		WHERE WORK_NO = #{workNo}
 		AND MEMBER_NO != #{memberNo}
 	</select>
+	
+	<!-- 모든 알람내역 조회 -->
+	<select id="selectAllim" parameterType="Allim">
+		SELECT ALLIM_NO, ALLIM_CONTENT, ALLIM_STATUS, MEMBER_NO FROM ALLIM
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
 
 	<!-- 알림상태변경 : 안읽음 -> 읽음 -->
 	<update id="readAllim" parameterType="Allim">
 		UPDATE ALLIM SET ALLIM_STATUS = 'Y'
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
+	<!-- 알림상태변경 : 읽음 -> 안읽음 -->
+	<update id="unreadAllim" parameterType="Allim">
+		UPDATE ALLIM SET ALLIM_STATUS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 알림삭제 -->
+	<delete id="deleteAllim" parameterType="Allim">
+		DELETE FROM ALLIM
+		WHERE MEMBER_NO = #{memberNo}
+	</delete>
 	
 
 
