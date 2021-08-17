@@ -12,6 +12,32 @@ public interface AllimService {
 	 */
 	List<Integer> insertAllim(Allim allim);
 
+	/** 알림 조회
+	 * @param allim
+	 * @return
+	 */
+	List<Integer> selectAllim(Allim allim);
+
+	/** 알림 조회 시 읽음 처리
+	 * @param allim
+	 * @return
+	 */
+	int readAllim(Allim allim);
+
+	/** 알림 조회 시 읽지않음 처리
+	 * @param allim
+	 * @return
+	 */
+	int unreadAllim(Allim allim);
+
+	/** 알림삭제
+	 * @param allim
+	 * @return
+	 */
+	int deleteAllim(Allim allim);
+
+
+
 
 
 }

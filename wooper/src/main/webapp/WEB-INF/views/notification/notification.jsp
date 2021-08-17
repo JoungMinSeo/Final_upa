@@ -23,7 +23,6 @@
 
 
     <div class="notificationcontainer">
-		<form id="allim-form">
 	        <div class="noticeSideMenu">
 		         <jsp:include page="../common/boardSideMenu.jsp"/>
 	        </div>
@@ -35,15 +34,17 @@
 		
 		        <div class="notificationif">
 		            <div class="notificationbtn">
-	<!-- 	            
+<!-- 	            
 		                <a href="#"><h3>모든내역</h3></a>
-	 -->	                
+-->	                
 		                <a href="#"><h3>캘린더</h3></a>
+<!-- 		                
 		                <a href="#"><h3>전자결재</h3></a>
+ -->		                
 		            </div>
 		
 		            <div class="loginmemberemail">
-		                <h3 class="teammember" id="loginmemberemail">hammcoder@gmail.com</h3>
+		                <h3 class="teammember" id="loginmemberemail">${loginMember.memberId}</h3>
 		            </div>
 		        </div>
 		
@@ -56,19 +57,23 @@
 		                </div>
 		                <div class="memberinfo">
 		                    <div class="memberinfo1">
+		                    
 		                        <div class="memberinfoemail"><b>wjdalstj812@naver.com</b></div>
+		                        
+<!-- 		                        
 		                        <div class="memberinfohms">1m</div>
+ -->		                        
 		                    </div>
-		                    <div class="memberinfo2">정민서님이 새 일정을 등록하였습니다.</div>
+		                    
 		                </div>
 		            </div>
 		        </div>
 			</div>
 			
-		</form>
     </div>
     
     <script>
+/*     
 		let calendarSock = new SockJS("/calendar");
 		
 		const memberNo = "${loginMember.memberNo}";
@@ -92,9 +97,9 @@
 				$("#inputcardNm").val("");
 				$("#inputlistNm").val("");
 			}
-		
+ */		
 		
     </script>
-    
+      <jsp:include page="../common/allim.jsp"/>    
 </body>
 </html>

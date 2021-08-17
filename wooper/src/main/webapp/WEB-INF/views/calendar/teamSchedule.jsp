@@ -494,7 +494,7 @@
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 일정 등록 웹소켓
 	let calendarSock = new SockJS("<c:url value='/calSock' />");
-	
+
 	$("#calInsert").on("click", function(){
 		    	
 	    	const formData = new FormData(document.getElementById("modal-form"));
@@ -544,7 +544,7 @@
 	$("#calListUpdate").on("click",function(){
 		
 		const formData = new FormData(document.getElementById("detail-form"));
-    	console.log($("#detail-form").serializeArray());
+    	//console.log($("#detail-form").serializeArray());
     	
     	const listNo = $("#title").attr("listNo");
     
@@ -552,13 +552,13 @@
 		const arr = $("#detail-form").serializeArray();
 		
     	for(let key in arr){
-    		console.log( arr[key]);
+    		//console.log( arr[key]);
     		obj[ arr[key].name ] = arr[key].value;
     	}
 		
     	obj.listNo = listNo;
     	obj.status = "update";
-    	console.log(obj);
+    	//console.log(obj);
     	
     	// 캘린더 일정 수정
     	calendarSock.send(JSON.stringify(obj));
@@ -638,97 +638,36 @@
         });
 	}
          
-         
-
-	
-            
-
-
-        
-   
-	  
-	 /*
-	 "cardNm" : $("#modal-cardList").val(), // 카드 이름
-	"title" : $("#calendartitle").val(), // 리스트 이름
-	//"addd" : $("#modal-memberList").val(), // 멤버 리스트
-	"doName" : $("#statusList").val(), // 상태
-	"start" : $("#currentStartDT").val(), // 시작일자
-	"end" : $("#currentEndDT").val(), // 종료일자
-	"textColor" : $("#fcolor-input").val(), //글자색
-	"backgroundColor" : $("#bgcolor-input").val(), // 배경색
-	"borderColor" : $("#bdcolor-input").val(), // 테두리색
-	 */
-	
+           
+    /////////////////////////////////////////////////////////////////////////////////////    
+	// 날짜 유효성검사
+	$("#currentEndDT").on("change", function(){
 		
-	
-	
-	/*          
-	// 캘린더 내용 수정
-	$("#calListUpdate").on("click",function(){
-	var ckMemberNo = [];     // 배열 초기화
-	var changeRank= [];     // 배열 초기화
-	$.each( $("[name='ckMemberNo']:checked"), function(){
-	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-	
-	const idx = $("[name='ckMemberNo']").index( $(this) );
-	
-	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
-	
+		var startDt = $("#currentStartDT").val();
+		var endDt = $("#currentEndDT").val();
+		
+		if(startDt > endDt){
+		        swal( { "icon" : "error", "title" : "종료일자는 시작일자를 초과할 수 없습니다."	});
+		        return false;
+		}	
 	});
 	
-	
-	$("#calListUpdate").on("click",function(){
-	    var ckMemberNo = [];     // 배열 초기화
-	    var changeRank= [];     // 배열 초기화
-	    $.each( $("[name='ckMemberNo']:checked"), function(){
-	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-	    	
-	    	const idx = $("[name='ckMemberNo']").index( $(this) );
-	    	
-	    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
-	    	
-	    });
-	    
-    	console.log(ckMemberNo);
-    	console.log(changeRank);
-	 
-	    $.ajax({
-	        url: '../calListUpdate', 
-	        type: 'POST',
-	        dataType: 'text',
-	        traditional : true , // 배열을 서버에 전달할 수 있게 해줌
-			data : {"ckMemberNo" : ckMemberNo,
-	       			 "changeRank" : changeRank },
-    		success : function(result){
-    			console.log(result);
-				if(result > 0){
-					swal( { "icon" : "success", "title" : "리스트 수정이 완료되었습니다."	});
-				}else{
-					swal( { "icon" : "error", "title" : "리스트 수정이 실패하였습니다."	});
-					$("#ckMemberNo").val(""); 
-				}
-    		}
-	    });
+	$(document).on("change","#end",function(){
+		
+		var startDate = $("#start").val();
+		var endDate = $("#end").val();
+		
+		console.log(startDate);
+		console.log(endDate);
+		
+		if(startDate > endDate){
+			swal( { "icon" : "error", "title" : "종료일자는 시작일자를 초과할 수 없습니다."	});
+			return false;
+		}
 	});
-	
-	
-	
-	
-	
-	// 일정 삭제
-	$("#calListUpdate").on("click", function(){
-	
-	});
-	
-	*/    
-        
-        
-        
-
-        
+		
         //document.getElementById('currentStartDT').value= new Date().toISOString().slice(0, 19);
         //document.getElementById('currentEndDT').value= new Date().toISOString().slice(0, 19);
-
             
    </script>
 </body>
