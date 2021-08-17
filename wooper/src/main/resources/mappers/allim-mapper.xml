@@ -10,6 +10,7 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 	</resultMap>
 	
+	<!-- 알림추가 -->
 	<insert id="insertAllim" parameterType="Allim">
 		INSERT INTO ALLIM
 		SELECT SEQ_ALLIM_NO.NEXTVAL, A.* FROM (
@@ -23,6 +24,7 @@
 		) A
 	</insert>
 
+	<!-- 알림전송받을 멤버 조회 : 현재 워크스페이스에 참여중인 멤버 -->
 	<select id="selectMemberList" parameterType="Allim" resultType="int">
 		SELECT MEMBER_NO 
 		FROM WORKSPACE_JOIN
@@ -30,6 +32,12 @@
 		AND MEMBER_NO != #{memberNo}
 	</select>
 
+	<!-- 알림상태변경 : 안읽음 -> 읽음 -->
+	<update id="readAllim" parameterType="Allim">
+		UPDATE ALLIM SET ALLIM_STATUS = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
 
 
 

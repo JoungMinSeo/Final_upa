@@ -37,7 +37,7 @@ public class AllimWebsocketHandler extends TextWebSocketHandler{
 		// Set에 접속한 사람의 정보를 모아둠 (같은 워크스페이스를 사용하는 사람의 정보가 모임 / 워크스페이스별 사람들을 모을 수 있다는것)
 		sessions.add(session);
 		
-		System.out.println(session.getId() + "연결됨");
+		System.out.println(session.getId() + "알림연결됨");
 		System.out.println( ( (Member)session.getAttributes().get("loginMember") ).getMemberNm() );
 	}
 
@@ -48,7 +48,7 @@ public class AllimWebsocketHandler extends TextWebSocketHandler{
 		// message : JSON으로 전환된 문자열이 담겨있다
 		
 		// sockJs로 들어온 내용을 출력해봄
-		System.out.println("전달받은 내용" + message.getPayload());
+		System.out.println("알림전달받은 내용" + message.getPayload());
 		
 		// JSON 형태의 문자열을 JsonObject로 변경하여 값을 꺼낼쓸 수 있는 형태로 변환
 		JsonObject convertedObj = new Gson().fromJson(message.getPayload(), JsonObject.class);
@@ -63,11 +63,14 @@ public class AllimWebsocketHandler extends TextWebSocketHandler{
 		
 		String status = convertedObj.get("status").toString();
 		
+		
+		
 		switch(status) {
-		case "allimAdd" :
+		// 게시글 추가 시 알림
+		case "newAllim" :
 			// JSON으로 받아온 정보를 String으로 변환
 			String allimContent = convertedObj.get("allimContent").toString();
-			
+
 			Allim allim = new Allim();
 			allim.setAllimContent(allimContent);
 			allim.setWorkNo(workNo);
@@ -90,11 +93,14 @@ public class AllimWebsocketHandler extends TextWebSocketHandler{
 					s.sendMessage(new TextMessage(new Gson().toJson(convertedObj)));
 				}
 			}
-			
 			break;
-		case "allimDelete" : 
 			
-			break;
+		// 알림 조회 시 읽음 처리
+		/*
+		 * case "readAllim" :
+		 * 
+		 * break;
+		 */	
 		}
 		
 		

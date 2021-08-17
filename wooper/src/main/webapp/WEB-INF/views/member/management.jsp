@@ -76,8 +76,8 @@
 					                        <option value="3">작은도롱뇽</option>
 					                        <option value="4" selected>아기도롱뇽</option>
 					                    </select>
-					                    <input type="text" id="memberaddEmail" placeholder="이메일을 입력해주세요">
-					                    <span id="checkEmail">&nbsp;</span>
+					                    <input type="email" id="memberaddEmail" placeholder="이메일을 입력해주세요">
+					                    <!-- <span id="checkEmail">&nbsp;</span> -->
 					                    <button id="memberaddbtn">초대요청</button>
 					                </h3>
 					            </div>
