@@ -81,8 +81,7 @@ public class ChatController {
 				
 				int memberJoinNo = joinMemberNo[i];
 				
-				int result = service.insertChatRoom(memberJoinNo,chatRoomNo);
-				System.out.println(joinMemberNo[i]);
+				service.insertChatRoom(memberJoinNo,chatRoomNo);
 				
 			}
 		}
