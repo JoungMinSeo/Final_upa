@@ -32,6 +32,24 @@
 
 <body>
 
+   <%-- 로그인 실패와 같은 메세지가 서버로 부터 전달되어 온 경우 출력 --%>
+   <c:if test="${!empty title }">
+      <script>
+         swal({
+            "icon"  : "${icon}",
+            "title" : "${title}",
+            "text"  : "${text}"
+         });
+         
+      </script>
+      
+      <%-- 특정 스코프에 있는 속성(변수)를 제거할 수 있음 --%>
+      <%-- 서버로 부터 전달 받은 메세지를 1회 출력 후 제거 -> 반복 출력 되지 않음 --%>
+      <c:remove var="icon" />
+      <c:remove var="title" />
+      <c:remove var="text" />
+   </c:if>
+
 	<div class="container">
 
 

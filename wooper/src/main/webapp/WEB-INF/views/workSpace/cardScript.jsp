@@ -1,9 +1,11 @@
 <!-- https://github.com/sockjs/sockjs-client 웹소켓 라이브러리 추가 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <script>
+
 
 /* 드래그앤드랍 */
 const fills = document.querySelectorAll('.fill');
@@ -60,12 +62,23 @@ function dragDrop(){
     
     console.log($(moveFill).attr("id"));
     console.log($(moveFill).parents(".empty").attr("id"));
+    console.log($(moveFill).find(".memImg").attr("id"));
+    
+    
+    const memJoinList = [];
+    const memJoinNmList = [];
+	$(moveFill).find(".memImg").each(function(){
+		memJoinList.push($(this).attr("id"));
+		memJoinNmList.push($(this).text());
+	});
     	
     var obj = {
     		"workNo" : workNo,
 			"memberNo" : memberNo,
 			"dropCardNo" : $(moveFill).parents(".empty").attr("id"),
 			"dropListNo" : $(moveFill).attr("id"),
+			"memJoinList" : memJoinList,
+			"memJoinNmList" : memJoinNmList,
 			"status" : "dropList"
     }
     
@@ -233,6 +246,21 @@ $(document).on("click", ".cancel", function() {
 });
   
 
+// 날짜 유효성 검사 
+$("#listEndDt").on("change", function(){
+	
+	var listStartDt = $("#listStartDt").val();
+	var listEndDt = $("#listEndDt").val();
+	console.log(listStartDt);
+	console.log(listEndDt);
+	
+	if(listStartDt > listEndDt){
+		swal({"icon" : "error","title": "종료일자는 시작일자를 초과할 수 없습니다."}); 
+		return false;
+	}
+	
+});
+
 
 /* 리스트 추가 */
 function  createList(){
@@ -243,9 +271,12 @@ function  createList(){
 	console.log($("#statusCategory").val()); // 상태 카테고리값 
 	
 	const memList = [];
+	const memNmList = [];
 	$(".memNm").each(function(){
 		memList.push($(this).attr("id"));
+		memNmList.push($(this).text());
 	});
+	
 	
 	var obj = {
 			"workNo" : workNo,
@@ -256,7 +287,8 @@ function  createList(){
 			"listEndDt" : $("#listEndDt").val(),
 			"statusCategory" : $("#statusCategory").val(),
 			"status" : "insertList", // insertList : list 추가 
-			"memList" : memList
+			"memList" : memList,
+			"memNmList" : memNmList
 	}
 	
 	$("#addList").modal("hide");
@@ -354,7 +386,15 @@ cardSock.onmessage = function(event){
 				
 				var memInfo = $("<div>").addClass("memInfo");
 				var mem = $("<div>").addClass("mem").text("참여멤버");
-				var memImg = $("<div>").addClass("memImg").text(obj.memList);
+				
+				//memInfo.append(memImg)
+				for(let i=0; i<obj.memList.length ; i++){
+					const memImg = $("<div>").addClass("memImg").text(obj.memNmList[i]).attr("id", obj.memList[i]);
+					memInfo.append(memImg);
+				}
+				
+				
+				
 				
 				var createInfo = $("<div>").addClass("createInfo");
 				var LcreateDt = $("<div>").addClass("LcreateDt").text("시작날짜");
@@ -370,7 +410,10 @@ cardSock.onmessage = function(event){
 				
 				
 				listHeader.append(listNm).append(deleteList);
-				memInfo.append(mem).append(memImg);
+				//memInfo.append(mem).append(memImg);
+				memInfo.prepend(mem);
+				
+				
 				createInfo.append(LcreateDt).append(listStartDt);
 				endInfo.append(LEndDt).append(listEndDt);
 				statusInfo.append(LStatus).append(statusCategory);
@@ -394,6 +437,8 @@ cardSock.onmessage = function(event){
 			
 			if(obj.memberNo != "${loginMember.memberNo}"){
 				
+				$("#" + obj.listNo).remove();
+				
 				var fill = $("<div>").addClass("fill").prop("draggable", "true").attr("id",obj.listNo);
 				$(fill).on('dragstart', dragStart).on('dragend', dragEnd);
 				
@@ -403,7 +448,13 @@ cardSock.onmessage = function(event){
 				
 				var memInfo = $("<div>").addClass("memInfo");
 				var mem = $("<div>").addClass("mem").text("참여멤버");
-				var memImg = $("<div>").addClass("memImg").text(obj.memList);
+				
+				//memInfo.append(memImg)
+				for(let i=0; i<obj.memJoinList.length ; i++){
+					const joinmemNm = $("<div>").addClass("memImg").text(obj.memJoinNmList[i]).attr("id", obj.memJoinList[i]);
+					memInfo.append(joinmemNm);
+				}
+				
 				
 				var createInfo = $("<div>").addClass("createInfo");
 				var LcreateDt = $("<div>").addClass("LcreateDt").text("시작날짜");
@@ -414,12 +465,15 @@ cardSock.onmessage = function(event){
 				var listEndDt = $("<div>").addClass("listEndDt").text(obj.listEndDt);
 				
 				var statusInfo = $("<div>").addClass("statusInfo");
-				var LStatus = $("<div>").addClass("LStatus").text("상태 표시");
-				var statusCategory = $("<div>").addClass("statusCategory").text(obj.statusCategory);
+				var LStatus = $("<div>").addClass("LStatus").text("상태 표시"); 
+				var statusCategory = $("<div>").addClass("statusCategory").text(obj.doName);
 				
 				
 				listHeader.append(listNm).append(deleteList);
-				memInfo.append(mem).append(memImg);
+				//memInfo.append(mem).append(memImg);
+				memInfo.prepend(mem);
+				
+				
 				createInfo.append(LcreateDt).append(listStartDt);
 				endInfo.append(LEndDt).append(listEndDt);
 				statusInfo.append(LStatus).append(statusCategory);
@@ -428,7 +482,8 @@ cardSock.onmessage = function(event){
 				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo);
 				
 				
-				$("#"+ obj.dropCardNo).find(".list").append("#"+obj.dropListNo);
+				
+				$("#"+ obj.dropCardNo).find(".list").append(fill);
 				
 				
 				

@@ -83,6 +83,15 @@ public class ListDAO {
 	}
 
 
+	/** 해당 리스트 참여 멤버 조회
+	 * @param listList
+	 * @return listJoinMemList
+	 */
+	public List<Member> listJoinMemList(List<ListList> listList) {
+		return sqlSession.selectList("listMapper.listJoinMemList", listList);
+	}
+
+
 	
 
 
