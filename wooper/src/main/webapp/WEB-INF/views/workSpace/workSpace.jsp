@@ -82,7 +82,7 @@
 		      	<form class="form-addWork" method="POST" action="${contextPath}/workspace/addWork">
 		      		<div class="modal-body addWork">
 			        <div class="addWorkNm">워크스페이스 이름</div>
-			        <input type="text" name="workNm">
+			        <input type="text" name="workNm" required>
 			        <div class="addWorkInfo">워크스페이스 소개</div>
 			        <input type="text" name="workInfo">
 			  		</div>

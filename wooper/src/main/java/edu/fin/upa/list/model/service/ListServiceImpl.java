@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.list.model.dao.ListDAO;
 import edu.fin.upa.list.model.vo.ListList;
+import edu.fin.upa.member.model.vo.Member;
 
 @Service
 public class ListServiceImpl implements ListService {
@@ -41,7 +42,37 @@ public class ListServiceImpl implements ListService {
 	@Override
 	public void dropList(ListList dlist) {
 		dao.dropList(dlist);
-	} 
+	}
+
+	// 단순 리스트 조회
+	@Override
+	public ListList selectListView(int dropListNo) {
+		return dao.selectListView(dropListNo);
+	}
+
+	// 리스트 참여자 멤버 삽입
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public void insertListJoin(ListList llist) {
+		dao.insertListJoin(llist);
+	}
+
+	// 리스트 삽입 상태
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public void insertListDo(ListList llist) {
+		dao.insertListDo(llist);
+	}
+
+	// 리스트 참여 멤버 조회
+	@Override
+	public List<Member> selectMemList(int dropListNo) {
+		return dao.selectMemList(dropListNo);
+	}
+
+	
+	
+	
 	
 	
 	

@@ -19,9 +19,12 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="listStartDt" column="LIST_START_DT"/>
 		<result property="listEndDt" column="LIST_END_DT"/>
+		
+		<result property="doName" column="DO_NAME"/>
+		<result property="memberNm" column="MEMBER_NM"/>
 	</resultMap>
 	
-	
+	<!-- 해당 카드에 대한 리스트 조회 -->
 	<select id="selectList" parameterType="list" resultMap="list_rm">
 		SELECT CARD_NO, CARD_NM, LIST_NO, LIST_NM, LIST_START_DT, LIST_END_DT
 		FROM CARD C
@@ -48,6 +51,28 @@
  		)
 	</insert>
 	
+	
+	<!-- 리스트 참여자 멤버 삽입 -->
+	<insert id="insertListJoin" parameterType="ListList">
+		INSERT INTO LIST_JOIN 
+		SELECT SEQ_LJOIN_NO.NEXTVAL, A.* FROM(
+			<foreach collection="memList" item="item" separator="UNION ALL">
+				SELECT #{listNo} LIST_NO, 
+							 #{item} MEMBER_NO, 
+							 #{workNo} WORK_NO
+				FROM DUAL
+			</foreach>
+		) A
+	</insert> 
+	
+	
+	<!-- 리스트 삽입 상태 -->
+	<insert id="insertListDo" parameterType="ListList">
+		INSERT INTO LIST_DO VALUES(
+			#{listNo}, #{doName}
+		)
+	</insert>
+	
 	<!-- 리스트 삭제 -->
 	<update id="deleteList" parameterType="_int">
 		UPDATE LIST SET LIST_STATUS = 'N'
@@ -61,6 +86,19 @@
 	</update>
 	
 	
-
+	<!-- 단순 리스트 조회 -->
+ 	<select id="selectListView" parameterType="_int" resultMap="list_rm">
+		SELECT LIST_NM, LIST_START_DT, LIST_END_DT, DO_NAME
+		FROM LIST 
+		JOIN LIST_DO USING (LIST_NO)
+		WHERE LIST_NO = #{listNo}
+	</select>
+	
+	<!-- 리스트 참여 멤버 조회 -->
+	<select id="selectMemList" parameterType="_int" resultMap="list_rm">
+		SELECT MEMBER_NO, MEMBER_NM FROM LIST_JOIN
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE LIST_NO = #{listNo}
+	</select>
 
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.list.model.vo.ListList;
+import edu.fin.upa.member.model.vo.Member;
 
 @Repository
 public class ListDAO {
@@ -46,4 +47,43 @@ public class ListDAO {
 	public void dropList(ListList dlist) {
 		sqlSession.update("listMapper.dropList", dlist);
 	}
+
+
+	/** 단순 리스트 조회
+	 * @param dropListNo
+	 * @return list
+	 */
+	public ListList selectListView(int dropListNo) {
+		return sqlSession.selectOne("listMapper.selectListView", dropListNo);
+	}
+
+
+	/** 리스트 참여자 멤버 삽입
+	 * @param llist
+	 */
+	public void insertListJoin(ListList llist) {
+		sqlSession.insert("listMapper.insertListJoin", llist);
+	}
+
+ 
+	/** 리스트 삽입 상태
+	 * @param llist
+	 */
+	public void insertListDo(ListList llist) {
+		sqlSession.insert("listMapper.insertListDo", llist);
+	}
+
+
+	/** 리스트 참여 멤버 조회
+	 * @param dropListNo
+	 * @return joinMemList
+	 */
+	public List<Member> selectMemList(int dropListNo) {
+		return sqlSession.selectList("listMapper.selectMemList", dropListNo);
+	}
+
+
+	
+
+
 }
