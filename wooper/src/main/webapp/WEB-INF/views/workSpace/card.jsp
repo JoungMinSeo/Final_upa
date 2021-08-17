@@ -132,10 +132,10 @@
 	                        <span class="font status"> 상태 </span>
 	
 	                        <select class="form-select form-select-lg mb-3 font statusCategory" id="statusCategory">
-	                            <option selected value="1" class="font">하는 중</option>
-	                            <option value="2" class="font">해야할 일</option>
-	                            <option value="3" class="font">막힘</option>
-	                            <option value="4" class="font">완료</option>
+	                            <option selected value="doing" class="font">하는 중</option>
+	                            <option value="todo" class="font">해야할 일</option>
+	                            <option value="blocked" class="font">막힘</option>
+	                            <option value="complete" class="font">완료</option>
 	                        </select>
 	                    </div>
 	
