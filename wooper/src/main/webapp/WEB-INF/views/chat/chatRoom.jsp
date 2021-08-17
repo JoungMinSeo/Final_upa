@@ -383,8 +383,8 @@ $(document).on("click", ".cencle", function() {
 });
 
 $(".title").click(function(){
-	
 	chatRoomNo = $(this).children().val();
+	window.sessionStorage.setItem("chatRoomNo", chatRoomNo);
 	
 	const headerTitle = $(this).find("h2").text();
 	
@@ -394,6 +394,9 @@ $(".title").click(function(){
 		type : "POST",
 		dataType : "JSON",
 		success : function(chatList) {
+			
+			
+			
 			console.log(chatList);
 			
 			$(".chattingRoom").html("");
