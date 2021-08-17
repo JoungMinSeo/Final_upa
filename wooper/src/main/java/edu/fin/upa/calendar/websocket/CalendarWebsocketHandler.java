@@ -64,7 +64,7 @@ public class CalendarWebsocketHandler extends TextWebSocketHandler{
 			// message : JSON으로 전환된 문자열이 담겨있다
 			
 			// sockJs로 들어온 내용을 출력해봄
-			System.out.println("전달받은 내용" + message.getPayload());
+			System.out.println("캘린더전달받은 내용" + message.getPayload());
 			
 			// JSON 형태의 문자열을 JsonObject로 변경하여 값을 꺼낼쓸 수 있는 형태로 변환
 			JsonObject convertedObj = new Gson().fromJson(message.getPayload(), JsonObject.class);
@@ -78,8 +78,6 @@ public class CalendarWebsocketHandler extends TextWebSocketHandler{
 			System.out.println("workNo : " + workNo);
 			
 			String status = convertedObj.get("status").toString().replaceAll("\"", "");
-
-			
 
 			
 			switch(status) {
@@ -96,16 +94,21 @@ public class CalendarWebsocketHandler extends TextWebSocketHandler{
 					int result = calendarService.insertList(cal);
 					
 					break;
-				case "delete" : 
-					int  listNo = Integer.parseInt(convertedObj.get("listNo").toString().replaceAll("\"", ""));
-					int dResult = calendarService.deleteList(listNo);
+
+				case "update" : 
+					
+					ObjectMapper objectMapper2 = new ObjectMapper();
+					Calendar cal2 = objectMapper2.readValue(convertedObj.toString(), Calendar.class);
+					int  listNo2 = Integer.parseInt(convertedObj.get("listNo").toString().replaceAll("\"", ""));
+					int uResult = calendarService.updateList(listNo2, cal2);
 					
 					break;
-				/*
-				 * case "update" : // int uResult = calendarService.updateList(cal);
-				 * 
-				 * break;
-				 */	
+				case "delete" : 
+					
+					int  listNo = Integer.parseInt(convertedObj.get("listNo").toString().replaceAll("\"", ""));
+					int dResult = calendarService.deleteList(listNo);
+					break;
+					
 			}
 			
 			

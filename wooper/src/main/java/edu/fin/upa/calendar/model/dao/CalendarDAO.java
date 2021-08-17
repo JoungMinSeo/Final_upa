@@ -33,10 +33,10 @@ public class CalendarDAO {
 	 * @param listNo
 	 * @return
 	 */
-	public int updateCalendar(int listNo) {
-		return sqlSession.update("calMapper.updateCalendar", listNo);
-	}
-
+	/*
+	 * public int updateCalendar(int listNo) { return
+	 * sqlSession.update("calMapper.updateCalendar", listNo); }
+	 */
 	/** 팀캘린더 조회 
 	 * @param map
 	 * @return
@@ -90,10 +90,27 @@ public class CalendarDAO {
 	 * @param cal
 	 * @return
 	 */
-	public int updateList(Calendar cal) {
+	public int updateList(int listNo, Calendar cal) {
 		return sqlSession.update("calMapper.updateList", cal);
 	}
 
+	/** 일정 상태 수정
+	 * @param cal
+	 * @return
+	 */
+	public int updateListDo(int listNo, Calendar cal) {
+		return sqlSession.update("calMapper.updateListDo", cal);
+	}
+	
+	/** 참여자 수정
+	 * @param cal
+	 * @return
+	 */
+	/*
+	 * public int updateListJoin(Calendar cal) { return
+	 * sqlSession.update("calMapper.updateListJoin", cal); }
+	 */	
+	
 	/** 일정 삭제
 	 * @param cal
 	 * @return
@@ -101,6 +118,7 @@ public class CalendarDAO {
 	public int deleteList(int listNo2) {
 		return sqlSession.update("calMapper.deleteList", listNo2);
 	}
+
 	
 
 

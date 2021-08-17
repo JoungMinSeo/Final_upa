@@ -9,12 +9,14 @@ public class Calendar {
 	private String cardNm;
 	private int listNo;
 	private String title;
-	private String listStatus;
+	private String status;
 	private String start;
 	private String end;
 	
 	private Timestamp listMDt;
 	private Timestamp listDDt;
+	
+	
 	private String textColor;
 	private String backgroundColor;
 	private String borderColor;
@@ -60,12 +62,14 @@ public class Calendar {
 		this.title = title;
 	}
 
-	public String getListStatus() {
-		return listStatus;
+
+
+	public String getStatus() {
+		return status;
 	}
 
-	public void setListStatus(String listStatus) {
-		this.listStatus = listStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getStart() {
@@ -167,11 +171,12 @@ public class Calendar {
 	@Override
 	public String toString() {
 		return "Calendar [cardNo=" + cardNo + ", cardNm=" + cardNm + ", listNo=" + listNo + ", title=" + title
-				+ ", listStatus=" + listStatus + ", start=" + start + ", end=" + end + ", listMDt=" + listMDt
-				+ ", listDDt=" + listDDt + ", textColor=" + textColor + ", backgroundColor=" + backgroundColor
-				+ ", borderColor=" + borderColor + ", workNo=" + workNo + ", workNm=" + workNm + ", doName=" + doName
-				+ ", selectMemNo=" + Arrays.toString(selectMemNo) + ", memberNo=" + memberNo + "]";
+				+ ", status=" + status + ", start=" + start + ", end=" + end + ", listMDt=" + listMDt + ", listDDt="
+				+ listDDt + ", textColor=" + textColor + ", backgroundColor=" + backgroundColor + ", borderColor="
+				+ borderColor + ", workNo=" + workNo + ", workNm=" + workNm + ", doName=" + doName + ", selectMemNo="
+				+ Arrays.toString(selectMemNo) + ", memberNo=" + memberNo + "]";
 	}
+
 
 
 

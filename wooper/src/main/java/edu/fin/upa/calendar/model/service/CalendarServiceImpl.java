@@ -12,26 +12,25 @@ import edu.fin.upa.calendar.model.vo.Calendar;
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.member.model.vo.Member;
 
-
 @Service
-public class CalendarServiceImpl implements CalendarService{
+public class CalendarServiceImpl implements CalendarService {
 
 	@Autowired
 	private CalendarDAO dao;
-	
-	// 개인 캘린더 조회 
+
+	// 개인 캘린더 조회
 	@Override
 	public List<Calendar> selectCalendar(Map<String, Object> map) {
 		return dao.selectCalendar(map);
 	}
 
-	// 개인캘린더 수정
-	@Override
-	public int updateCalendar(int listNo) {
-		return dao.updateCalendar(listNo);
-	}
-
-	// 팀캘린더 조회 
+	/*
+	 * // 개인캘린더 수정
+	 * 
+	 * @Override public int updateCalendar(int listNo) { return
+	 * dao.updateCalendar(listNo); }
+	 */
+	// 팀캘린더 조회
 	@Override
 	public List<Calendar> selectTeamCal(Map<String, Object> map) {
 		return dao.selectTeamCal(map);
@@ -53,36 +52,38 @@ public class CalendarServiceImpl implements CalendarService{
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertList(Calendar cal) {
-		int result =dao.insertList(cal); 
-		
-		if(result > 0) {
-			if(cal.getSelectMemNo().length != 0) {
+		int result = dao.insertList(cal);
+
+		if (result > 0) {
+			if (cal.getSelectMemNo().length != 0) {
 				result = dao.insertListJoin(cal);
 			}
 			result = dao.insertListDo(cal);
 		}
-		
-		return  result;
+
+		return result;
 	}
 
 	// 일정 수정
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int updateList(Calendar cal) {
-		return dao.updateList(cal);
+	public int updateList(int listNo, Calendar cal) {
+		int result = dao.updateList(listNo, cal);
+		/*
+		 * if(result > 0) { result = dao.updateListDo(listNo, cal);
+		 * 
+		 * if(result > 0) { result = dao.updateListJoin(cal); }
+		 * 
+		 * }
+		 */
+		return result;
 	}
 
-	// 일정 삭제 
+	// 일정 삭제
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteList(int listNo2) {
 		return dao.deleteList(listNo2);
 	}
 
-	
-	
-	
-
-
-	
 }

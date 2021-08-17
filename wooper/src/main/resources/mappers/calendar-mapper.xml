@@ -10,11 +10,15 @@
 		<result property="title" column="LIST_NM"/>
 		<result property="start" column="LIST_START_DT"/>
 		<result property="end" column="LIST_END_DT"/>
+		<result property="listMDt" column="LIST_MODIFY_DT"/>
+		<result property="listDDt" column="LIST_DELETE_DT"/>
 		<result property="textColor" column="LIST_TCOLOR"/>
 		<result property="backgroundColor" column="LIST_BGCOLOR"/>
 		<result property="borderColor" column="LIST_BDCOLOR"/>
 		<result property="workNo" column="WORK_NO"/>
 		<result property="workNm" column="WORK_NM"/>
+		<result property="doName" column="DO_NAME"/>
+		<result property="status" column="LIST_STATUS"/>
 	</resultMap>
 	
 	<resultMap type="Card" id="card_rm">
@@ -139,11 +143,35 @@
 	
 	<!-- 일정 수정 -->
 	<update id="updateList" parameterType="Calendar">
-		UPDATE LIST SET LIST_NM = #{listNm}, LIST_MODIFY_DT = SYSTIMESTAMP,
+		UPDATE LIST SET LIST_NM = #{title}, LIST_MODIFY_DT = SYSTIMESTAMP, LIST_START_DT = TO_DATE(#{start}, 'RRRR-MM-DD"T"HH24:MI:SS'), 
+								  LIST_END_DT = TO_DATE(#{end}, 'RRRR-MM-DD"T"HH24:MI:SS'),
 								  LIST_TCOLOR = #{textColor}, LIST_BGCOLOR = #{backgroundColor}, LIST_BDCOLOR = #{borderColor}
 		WHERE LIST_NO = #{listNo}
 	</update>
+	<!-- 일정 상태 수정 -->
+	<!-- do, doing, todo, blocked -->
+<!-- 	
+	<update id="updateListDo" parameterType="Calendar">
+		UPDATE LIST_DO SET DO_NAME=#{doName}
+		WHERE LIST_NO = #{listNo}
+	</update>
+ -->	
+	<!-- 참여자 수정 -->
 	
+<!-- 	
+	<update id="insertListJoin" parameterType="Calendar">
+		UPDATE LIST_JOIN SET
+		SELECT SEQ_LJOIN_NO.NEXTVAL, A.* FROM(
+			<foreach collection="selectMemNo" item="item" separator="UNION ALL">
+				SELECT #{listNo} LIST_NO, 
+							 #{item} MEMBER_NO, 
+							 #{workNo} WORK_NO
+				FROM DUAL
+			</foreach>
+		) A
+	</update> 
+ -->	
+ 
 	<!-- 일정 삭제 -->
 	<update id="deleteList" parameterType="Calendar">
 		UPDATE LIST SET LIST_STATUS = 'N', LIST_DELETE_DT = SYSTIMESTAMP
