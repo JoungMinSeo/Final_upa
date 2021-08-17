@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.fin.upa.calendar.model.vo.Card;
 import edu.fin.upa.list.model.vo.ListList;
+import edu.fin.upa.member.model.vo.Member;
 
 public interface ListService {
 
@@ -27,6 +28,30 @@ public interface ListService {
 	 * @param dlist
 	 */
 	void dropList(ListList dlist);
+
+	/** 단순 리스트 조회
+	 * @param dropListNo
+	 * @return list
+	 */
+	ListList selectListView(int dropListNo);
+
+	/** 리스트 참여자 멤버 삽입
+	 * @param llist
+	 */
+	void insertListJoin(ListList llist);
+
+	/** 리스트 삽입 상태
+	 * @param llist
+	 */
+	void insertListDo(ListList llist);
+
+	/** 리스트 참여 멤버 조회
+	 * @param dropListNo
+	 * @return joinMemList
+	 */
+	List<Member> selectMemList(int dropListNo);
+
+
 
 	
 	

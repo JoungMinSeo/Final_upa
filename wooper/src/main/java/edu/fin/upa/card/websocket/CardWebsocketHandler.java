@@ -4,6 +4,7 @@ package edu.fin.upa.card.websocket;
 import java.text.SimpleDateFormat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,16 +157,31 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			String statusCategory = convertedObj.get("statusCategory").toString();
 			statusCategory = statusCategory.substring(1, statusCategory.length()-1);
 			
+			//System.out.println(convertedObj.get("memList"));
+			String[] arr = convertedObj.get("memList").toString().replaceAll("\\[", "")
+					.replaceAll("]", "").replaceAll("\"", "").split(",");
+			
+			int[] memList = new int[arr.length];
+			
+			for(int i=0 ; i<arr.length ;i++) {
+				memList[i] = Integer.parseInt(arr[i]); 
+			}
+			
 			ListList Llist = new ListList();
 			Llist.setCardNo(addListCardNo);
 			Llist.setListNm(listNm);
 			Llist.setListStartDt(listStartDt);
 			Llist.setListEndDt(listEndDt);
-			Llist.setListStatus(listStartDt);
+			Llist.setDoName(statusCategory);
 			Llist.setMemberNo(memberNo);
-			
+			Llist.setMemList(memList);
+			Llist.setWorkNo(workNo);
 			
 			listService.insertLlist(Llist);
+			// 리스트 참여자 멤버 삽입
+			listService.insertListJoin(Llist);
+			// 리스트 삽입 상태
+			listService.insertListDo(Llist);
 			
 			convertedObj.addProperty("listNo", Llist.getCardNo());
 			
@@ -191,14 +207,22 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			
 			listService.dropList(Dlist);
 			
+			ListList SDlist = listService.selectListView(dropListNo);
+			//System.out.println(SDlist);
+			
+			// 리스트 참여 멤버 조회
+			List<Member> joinMemList = listService.selectMemList(dropListNo);
+			//System.out.println(joinMemList);
+			
+			convertedObj.addProperty("listNm", SDlist.getListNm());
+			convertedObj.addProperty("listStartDt", SDlist.getListStartDt());
+			convertedObj.addProperty("listEndDt", SDlist.getListEndDt());
+			convertedObj.addProperty("doName", SDlist.getDoName());
+			/* convertedObj.add("joinMemList", joinMemList); */
+			
 		break;
 			
-			
 		}
-		
-		
-		
-		
 		
 		
 		// 화면에 보이게.... 
@@ -207,6 +231,7 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			int joinWorkNo = ((Workspace)s.getAttributes().get("work")).getWorkNo();
 			
 			if(workNo == joinWorkNo) {
+				
 				// 서버에서 클라이언트로 메세지 전달 
 				s.sendMessage(new TextMessage(new Gson().toJson(convertedObj)));
 				
