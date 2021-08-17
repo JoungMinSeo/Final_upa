@@ -328,6 +328,7 @@ public class MemberController {
 	@RequestMapping(value="sendSMS",method=RequestMethod.POST)
 	public String sendSMS(@RequestParam("memberPhone") String memberPhone) {
 		
+		System.out.println("휴대폰 인증 " + memberPhone);
 		
 		Random rand = new Random();
 		String numStr = "";

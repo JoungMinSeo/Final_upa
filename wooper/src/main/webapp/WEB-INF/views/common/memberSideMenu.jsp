@@ -16,13 +16,13 @@
     <div class="sideMenu-container">
         <ul>
         	<br>
-            <h1>우파루파</h1>
+            <h1><a class="aTag" href="${pageContext.request.contextPath}/calendar/calendar">우파루파</a></h1>
             <br> <br>
             <hr id="hr">
             <h3>마이페이지</h3>
-            <li class="sidMenu"><a href="myPage">내정보</a></li>
-            <li class="sidMenu"><a href="changePwd">비밀번호 변경</a></li>
-            <li class="sidMenu"><a href="secession">회원 탈퇴</a></li>
+            <li class="sidMenu"><a class="aTag" href="myPage">내정보</a></li>
+            <li class="sidMenu"><a class="aTag" href="changePwd">비밀번호 변경</a></li>
+            <li class="sidMenu"><a class="aTag" href="secession">회원 탈퇴</a></li>
         </ul>
     </div>
 </body>
