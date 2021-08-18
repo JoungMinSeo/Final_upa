@@ -153,7 +153,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="button" class="btn btn-secondary font" data-dismiss="modal">취소</button>
-	                    <button type="button" class="btn btn-primary font createList" onclick="createList();">리스트 추가하기</button>
+	                    <button type="button" class="btn btn-info font createList" onclick="createList();">리스트 추가하기</button>
 	                </div>
 	            </div>
         </div>
@@ -216,7 +216,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="button" class="btn btn-secondary font" data-dismiss="modal">취소</button>
-	                    <button type="button" class="btn btn-primary font createList" onclick="updateList();">리스트 수정하기</button>
+	                    <button type="button" class="btn btn-info font createList" onclick="updateList();">리스트 수정하기</button>
 	                </div>
 	            </div>
         </div>
