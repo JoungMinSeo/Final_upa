@@ -52,14 +52,14 @@
 				            </div> 
 				             --%>
 				            
-				            <c:forEach items="${loginMember }" var = "member">
-				            	<c:if test="${member.memberRank == 1  &&  member.memberId == loginMember.memberId}">
+				            <c:forEach items="${member}" var = "member">
+				            	<c:if test="${member.memberRank == 1  &&  member.memberId == member.memberId}">
 				            		<c:set var="flag" value="true"/>
 				            	</c:if>
 				            </c:forEach>
 				            
   				            <c:forEach items="${memberList }" var = "member">
-				            	<c:if test="${member.memberRank != 1  &&  member.memberNo == loginMember.memberNo}">
+				            	<c:if test="${member.memberRank != 1  &&  member.memberNo == member.memberNo}">
 				            		<c:set var="flag2" value="true"/>
 				            	</c:if>
 				            </c:forEach>
