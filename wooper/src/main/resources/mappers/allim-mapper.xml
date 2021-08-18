@@ -12,16 +12,15 @@
 	</resultMap>
 	
 	<!-- 알림추가 -->
-	<insert id="insertAllim" parameterType="Allim">
-		INSERT INTO ALLIM
-		SELECT SEQ_ALLIM_NO.NEXTVAL, A.* FROM (
+	<insert id="insertAllim" parameterType="Allim">		
+		INSERT INTO ALLIM(ALLIM_NO, ALLIM_DT, ALLIM_CONTENT, ALLIM_STATUS, MEMBER_NO)
+		SELECT SEQ_ALLIM_NO.NEXTVAL,SYSTIMESTAMP, A.* FROM (
 			SELECT  #{allimContent} ALLIM_CONTENT, 
-							'N' ALLIM_STATUS,
+							'N' ALLIM_STATUS, 
 							MEMBER_NO 
 							FROM WORKSPACE_JOIN 
 							WHERE WORK_NO = #{workNo}
 							AND MEMBER_NO != #{memberNo}
-						
 		) A
 	</insert>
 
