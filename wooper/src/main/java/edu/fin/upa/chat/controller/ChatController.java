@@ -1,6 +1,7 @@
 package edu.fin.upa.chat.controller;
 
 
+import java.nio.file.spi.FileSystemProvider;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,14 +67,14 @@ public class ChatController {
 	// 채팅방 생성
 	@RequestMapping(value="/chat/createChatRoom",method=RequestMethod.POST)
 	public String createChatRoom(HttpServletRequest request, Model model,
-								@RequestParam("memberNo") int[] joinMemberNo,
+								@RequestParam("joinMemberNo") int[] joinMemberNo,
 								ChatRoomJoin join,ChatRoom room,@RequestParam("chatTitle") String chatTitle,
 								@ModelAttribute("loginMember") Member loginMember) {
 		
-		room.setChatRoomNo(loginMember.getMemberNo());
+		room.setMemberNo(loginMember.getMemberNo());
 		room.setTitle(chatTitle);
 		
-		System.out.println("조인 멤버 넘버 : " + joinMemberNo);
+		System.out.println("room : " + room);
 		
 		// 채팅방 먼저 개설
 		int chatRoomNo = service.createChatRoom(room);
@@ -85,12 +86,14 @@ public class ChatController {
 			for(int i =0; i<joinMemberNo.length; i++) {
 				
 				int memberJoinNo = joinMemberNo[i];
+				System.out.println("잘 나오니 멤버 넘버야? : " + memberJoinNo);
 				
 				service.insertChatRoom(memberJoinNo,chatRoomNo);
 				
 			}
 		}
 		
+		System.out.println("이후 로그인 멤버 번호 : " + loginMember.getMemberNo());
 		
 		return "redirect:/chat/chatRoom";
 	}
