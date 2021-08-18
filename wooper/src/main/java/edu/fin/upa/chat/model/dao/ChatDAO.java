@@ -19,8 +19,10 @@ public class ChatDAO {
 	private SqlSessionTemplate sqlSession;
 
 	// 채팅방 리스트 조회
-	public List<ChatRoom> selectRoomList() {
-		return sqlSession.selectList("chatMapper.selectChatRoomList");
+	public List<ChatRoom> selectRoomList(int memberNo) {
+		
+		System.out.println(memberNo);
+		return sqlSession.selectList("chatMapper.selectChatRoomList", memberNo);
 	}
 
 	// 멤버 조회

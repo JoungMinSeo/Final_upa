@@ -81,6 +81,7 @@
 					</div>
                 </div>
                 <hr class="mb-4">
+                <a href="${pageContext.request.contextPath}/login"><button class="btn btn-lg f-btn" type="button">메인페이지로 이동</button></a>
                 <button class="btn btn-lg f-btn" type="submit" id="login">아이디 찾기</button>
             </form>
         </div>

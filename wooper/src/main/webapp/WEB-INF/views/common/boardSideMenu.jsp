@@ -116,6 +116,7 @@
 	</style>
 </head>
 <body>
+
     <div class="upasidemenucontainer">
         <div class="left_menu_container" >
         
@@ -130,6 +131,7 @@
             <div class="workspacemove">
                 <a href="${contextPath}/workspace/${workNo}/boardMain">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/workspace.png" style="height:50px;">
+					<input type="hidden" value="${workNo}">
                 </a>
             </div>   
             
