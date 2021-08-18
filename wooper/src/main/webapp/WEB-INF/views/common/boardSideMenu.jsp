@@ -164,12 +164,13 @@
               --%>
              
             <!-- 도움말 -->
+<%--             
             <div class="informationmove">
                 <a href="#">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/information.png" style="height:40px;">
                 </a>
             </div>
-                 
+ --%>                 
             <!-- 프로필(마이페이지 + 로그아웃) -->   
             <div class="mypagemove" >
                 <div class="btn-group dropright">
