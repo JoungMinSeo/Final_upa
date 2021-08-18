@@ -606,7 +606,7 @@
     	// wjdalstj812@naver.com
 		// 정민서님이 일정을 수정하였습니다.
 		const allimContent = "${loginMember.memberId}<br>${loginMember.memberNm}님이 일정을 수정하였습니다.";
-		const allimObj = {"allimContent" : allimContent, "status" : "allimUpdate" }
+		const allimObj = {"allimContent" : allimContent, "status" : "newAllim" }
     	
     	allimSock.send(JSON.stringify(allimObj));
 	    
