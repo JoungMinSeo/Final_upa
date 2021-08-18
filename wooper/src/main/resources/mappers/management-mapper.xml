@@ -99,6 +99,10 @@
 		AND MEMBER_NO = #{memberNo}
 	</select>
 	
+	<!-- 회원삭제 전 리스트 먼저 삭제 -->
+	<delete id= "deleteListJoin" parameterType="Management">
+		DELETE FROM LIST_JOIN WHERE MEMBER_NO = #{memberNo}
+	</delete>
 
 
 </mapper>

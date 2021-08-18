@@ -163,9 +163,14 @@ public class ManagementServiceImpl implements ManagementService{
 		int result = 0;
 		
 		for(Management m : list) {
-			result=mDao.deleteJoinMember(m);
+			result=mDao.deleteListJoin(m);
 			if(result ==0) {
 				break;
+			}else if(result > 0) {
+				result=mDao.deleteJoinMember(m);
+				if(result ==0) {
+					break;
+				}
 			}
 		}
 		

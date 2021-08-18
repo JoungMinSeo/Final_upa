@@ -52,7 +52,7 @@
 				            </div> 
 				             --%>
 				            
-				            <c:forEach items="${memberList }" var = "member">
+				            <c:forEach items="${loginMember }" var = "member">
 				            	<c:if test="${member.memberRank == 1  &&  member.memberId == loginMember.memberId}">
 				            		<c:set var="flag" value="true"/>
 				            	</c:if>
