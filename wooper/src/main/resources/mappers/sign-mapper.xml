@@ -157,13 +157,13 @@
 	</select>
 	
 	<!-- 팀 문서 수 조회 -->
-	<select id="getTeamDocuListCount" parameterType="map" resultMap="pg_rm">
+	<!-- <select id="getTeamDocuListCount" parameterType="map" resultMap="pg_rm">
 		SELECT COUNT(*) DOCU_COUNT
 		FROM DOCUMENT_LIST
 		WHERE WORK_NO = #{workNo} 
 		AND DOCUMENT_STATUS = 'Y'
 		AND MEMBER_NO = #{memberNo}
-	</select>
+	</select> -->
 	
 	<!-- 팀 문서 목록 조회 -->
 	

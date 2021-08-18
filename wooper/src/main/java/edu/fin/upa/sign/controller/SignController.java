@@ -54,8 +54,11 @@ public class SignController {
 		List<Document> myDocumentList = service.selectMyDocumentList(myDocuPagination, loginMember);
 		Pagination signDocuPagination = service.getSignDocuPagination(pg, loginMember); 
 		List<Document> signDocumentList = service.selectSignDocumentList(signDocuPagination, loginMember);
-		Pagination teamDocuPagination = service.getTeamDocuPagination(pg, loginMember);
-		List<Document> teamDocumentList = service.selectTeamDocumentList(teamDocuPagination, loginMember);
+		/*
+		 * Pagination teamDocuPagination = service.getTeamDocuPagination(pg,
+		 * loginMember); List<Document> teamDocumentList =
+		 * service.selectTeamDocumentList(teamDocuPagination, loginMember);
+		 */
 		Pagination myTempDocuPagination = service.getMyTempDocuPagination(pg, loginMember);
 		List<Document> myTempDocumentList = service.selectMyTempDocumentList(myTempDocuPagination, loginMember);
 		
@@ -63,8 +66,10 @@ public class SignController {
 		model.addAttribute("myDocumentList", myDocumentList);
 		model.addAttribute("signDocuPagination", signDocuPagination);
 		model.addAttribute("signDocumentList", signDocumentList);
-		model.addAttribute("teamDocuPagination", teamDocuPagination);
-		model.addAttribute("teamDocumentList", teamDocumentList);
+		/*
+		 * model.addAttribute("teamDocuPagination", teamDocuPagination);
+		 * model.addAttribute("teamDocumentList", teamDocumentList);
+		 */
 		model.addAttribute("myTempDocuPagination", myTempDocuPagination);
 		model.addAttribute("myTempDocumentList", myTempDocumentList);
 		
