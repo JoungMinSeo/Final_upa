@@ -221,7 +221,6 @@ $("#listEndDt").on("change", function(){
 
 /* 리스트 추가 */
 function  createList(){
-
    
    console.log(addListCardNo);
    console.log($("#listNm").val()); //리스트 이름 
@@ -260,7 +259,6 @@ function  createList(){
    
    cardSock.send(JSON.stringify(obj));
    
-
 }
 /* 리스트 삭제 버튼 */
 function deleteList(e){
