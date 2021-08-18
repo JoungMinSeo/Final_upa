@@ -73,7 +73,7 @@
 									<div>
 										<h2>${chatRoom.title}</h2>
 										<h3>
-											<span class="status orange"></span> 마지막 내용
+											<span class="status orange"></span>
 										</h3>
 									</div>
 								</li>

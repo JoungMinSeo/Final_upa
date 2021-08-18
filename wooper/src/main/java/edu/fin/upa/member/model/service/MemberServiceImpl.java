@@ -214,6 +214,8 @@ public class MemberServiceImpl implements MemberService{
 				if (result > 0) {
 					try {
 						img.transferTo(new File(savePath + map.get("fileName")));
+						
+						
 					} catch (Exception e) {
 						e.printStackTrace();
 						throw new SaveFileException();

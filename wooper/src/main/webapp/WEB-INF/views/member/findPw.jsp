@@ -67,6 +67,7 @@
                     <span id="showId">&nbsp;</span>
                 </div>
                 <hr class="mb-4">
+                <a href="${pageContext.request.contextPath}/login"><button class="btn btn-lg f-btn" type="button">메인페이지로 이동</button></a>
                 <button class="btn btn-lg f-btn" type="button" id="login">임시 비밀번호 발급</button>
             </form>
         </div>

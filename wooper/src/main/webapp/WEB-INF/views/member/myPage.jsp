@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +39,17 @@
 		<div class="bg-white rounded shadow-sm container p-2" id="content">
 			<form action="update" method="POST" enctype="multipart/form-data">
 				<div class="img-class">
-					<img src="${pageContext.request.contextPath}/resources/img/member/${loginMember.memberImg}" id="img"
-						onclick="document.all.file.click()" onchange="LoadImg" accept="img/*"> 
-						<input type="file" id="file" name="img" style="display: none;"
-						onchange="LoadImg(this,0)" accept="img/*">
+					
+					<c:if test="${loginMember.kakaoId != 0}">
+						<img class="img" src="${loginMember.memberImg}">
+					</c:if>
+					
+					<c:if test="${loginMember.kakaoId == 0}">
+						<img src="${pageContext.request.contextPath}/resources/img/member/${loginMember.memberImg}" class="img"
+							onclick="document.all.file.click()" onchange="LoadImg" accept="img/*"> 
+							<input type="file" id="file" name="img" style="display: none;"
+							onchange="LoadImg(this,0)" accept="img/*">
+					</c:if>
 				</div>
 				<br>
 				<div class="area">

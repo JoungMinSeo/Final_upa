@@ -36,7 +36,7 @@
 	<insert id="signUp" parameterType="Member">
 		INSERT INTO MEMBER
 		VALUES( SEQ_MNO.NEXTVAL , #{memberId} , #{memberPw} ,#{memberNm}, #{memberPhone}, 
-				DEFAULT, DEFAULT, DEFAULT, #{memberNick}, NULL, NULL, 'NONE', NULL, NULL)
+				DEFAULT, DEFAULT, DEFAULT, #{memberNick}, 'user.png', NULL, 'NONE', NULL, NULL)
 	</insert>
 	
 	<select id="getMemberSessionId" parameterType="string" resultMap="member_rm">

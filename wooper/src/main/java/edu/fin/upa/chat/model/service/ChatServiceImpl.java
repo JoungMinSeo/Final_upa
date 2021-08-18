@@ -22,8 +22,8 @@ public class ChatServiceImpl implements ChatService{
 
 	// 채팅방 목록 조회
 	@Override
-	public List<ChatRoom> selectRoomList() {
-		return dao.selectRoomList();
+	public List<ChatRoom> selectRoomList(int memberNo) {
+		return dao.selectRoomList(memberNo);
 	}
 	
 	// 멤버 조회

@@ -33,13 +33,16 @@ public class ChatController {
 	
 	// 채팅 목록 조회
 	@RequestMapping(value="/chat/chatRoom")
-	public String charRoomList(Model model) {
+	public String charRoomList(Model model,@ModelAttribute("loginMember") Member loginMember) {
 		
+		// 프로젝트 끝
+		int memberNo = loginMember.getMemberNo();
 		//채팅룸 목록을 조회하여 화면으로 요청 위임
-		List<ChatRoom> chatRoomList = service.selectRoomList();
+		List<ChatRoom> chatRoomList = service.selectRoomList(memberNo);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
 		
+		System.out.println("chatRoomList" + chatRoomList);
 		
 		return "chat/chatRoom";
 	}
@@ -69,6 +72,8 @@ public class ChatController {
 		
 		room.setChatRoomNo(loginMember.getMemberNo());
 		room.setTitle(chatTitle);
+		
+		System.out.println("조인 멤버 넘버 : " + joinMemberNo);
 		
 		// 채팅방 먼저 개설
 		int chatRoomNo = service.createChatRoom(room);

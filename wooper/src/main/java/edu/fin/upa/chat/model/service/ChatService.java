@@ -10,7 +10,7 @@ import edu.fin.upa.member.model.vo.Member;
 public interface ChatService {
 	
 	// 채팅방 목록 조회
-	List<ChatRoom> selectRoomList();
+	List<ChatRoom> selectRoomList(int memberNo);
 
 	// 멤버 조회
 	List<Member> selectMemberList(Search search);
