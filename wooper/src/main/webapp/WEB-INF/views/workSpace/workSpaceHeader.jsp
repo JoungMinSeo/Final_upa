@@ -36,10 +36,10 @@
         <h5 class="font">${work.workInfo}</h5>
 
       </div>
-      <div class="col py-3 px-lg-5">
-
-        <div class="dropdown">
-          <button class="btn btn-info dropdown-toggle font dbutton" type="button" id="dropdownMenuButton"
+     
+    </div>
+  </div>
+  		<button class="btn btn-info dropdown-toggle font dbutton" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             더보기
           </button>
@@ -48,11 +48,6 @@
             <a class="dropdown-item font" href="${contextPath}/sign/${workNo}/signMain">전자 결재</a>
             <a class="dropdown-item font" href="${contextPath}/management/${workNo}/member/list">멤버</a>
           </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
 </body>
 

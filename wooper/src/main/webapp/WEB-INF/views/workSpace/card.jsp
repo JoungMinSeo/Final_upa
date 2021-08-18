@@ -88,7 +88,10 @@
 					
 				</c:forEach>
   
-        <div class="addCard font" onclick="addCard();"> 카드 추가하기</div>
+        <div class="addCard font" onclick="addCard();"> 
+        	<img class="profileMemImg" src = "/wooper/resources/img/icon/check.png">
+        	카드 추가하기
+        </div>
     </div>
 
 
@@ -96,7 +99,7 @@
     <!-- 리스트 추가  modal -->
 
     <div class="modal fade modalList" id="addList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl listSize">
+        <div class="modal-dialog modal-dialog-centered listSize">
             <div class="modal-content listmodal">
 	                <div class="modal-header">
 	                    <input class="lName font" type="text" placeholder="리스트이름" id="listNm"></input>
@@ -107,13 +110,14 @@
 	                <div class="modal-body">
 	                
 	                    <div class="profile">
-	
+							<img class="profileMemImg" src = "/wooper/resources/img/icon/group1_1.png">
 	                        <span class="profileMem font"> 참여 멤버 </span>
 							
 							  <div class="memTag"></div>
 							  
 							  <select id="modal-memberList"> 
 							  		<option selected class="font">더보기</option>
+							  		
 							  		<c:forEach items="${memList}" var="item" varStatus="vs">
 					               		<option class="font" id="${item.memberNo}">${item.memberNm}</option>
 					               	</c:forEach>    
@@ -123,21 +127,24 @@
 	                    </div>
 	
 	                    <div class="startDate">
+	                    	<img class="listStartImg" src = "/wooper/resources/img/icon/calendar1.png">
 	                        <span class="font listStart"> 시작날짜 </span>
 	                        <input class="font listStartDt" type="datetime-local" id="listStartDt">
 	                    </div>
 	
 	                    <div class="endDate">
+	                    	<img class="listStartImg" src = "/wooper/resources/img/icon/calendar1.png">
 	                        <span class="font listEnd"> 마감날짜 </span>
 	                        <input class="font listEndDt" type="datetime-local" id="listEndDt">
 	                    </div>
 	
 	                    <div class="listStatus">
+	                   		<img class="statusImg" src = "/wooper/resources/img/icon/status1.png">
 	                        <span class="font status"> 상태 </span>
 	
 	                        <select class="form-select form-select-lg mb-3 font statusCategory" id="statusCategory">
-	                            <option selected value="doing" class="font">하는 중</option>
-	                            <option value="todo" class="font">해야할 일</option>
+	                            <option selected value="doing" class="font">해야하는일</option>
+	                            <option value="todo" class="font">하는중</option>
 	                            <option value="blocked" class="font">막힘</option>
 	                            <option value="complete" class="font">완료</option>
 	                        </select>
@@ -156,7 +163,7 @@
 <!-- 리스트 수정 모달  -->
 
 <div class="modal fade modalList" id="updateList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl listSize">
+        <div class="modal-dialog modal-dialog-centered listSize">
             <div class="modal-content listmodal">
 	                <div class="modal-header">
 	                    <input class="lName font upListNm" type="text" id="upListNm"></input>
@@ -167,7 +174,7 @@
 	                <div class="modal-body">
 	                
 	                    <div class="profile">
-	
+							<img class="profileMemImg" src = "/wooper/resources/img/icon/group1_1.png">
 	                        <span class="profileMem font"> 참여 멤버 </span>
 							
 							  <div class="upMemTag"></div>
@@ -183,21 +190,24 @@
 	                    </div>
 	
 	                    <div class="startDate">
+	                    	<img class="listStartImg" src = "/wooper/resources/img/icon/calendar1.png">
 	                        <span class="font listStart"> 시작날짜 </span>
 	                        <input class="font listStartDt" type="datetime-local" id="upListStartDt">
 	                    </div>
 	
 	                    <div class="endDate">
+	                    	<img class="listStartImg" src = "/wooper/resources/img/icon/calendar1.png">
 	                        <span class="font listEnd"> 마감날짜 </span>
 	                        <input class="font listEndDt" type="datetime-local" id="upListEndDt">
 	                    </div>
 	
 	                    <div class="upListStatus">
+	                    	<img class="statusImg" src = "/wooper/resources/img/icon/status1.png">
 	                        <span class="font status"> 상태 </span>
 	
 	                        <select class="form-select form-select-lg mb-3 font statusCategory" id="upStatusCategory">
-	                            <option selected value="doing" class="font">하는 중</option>
-	                            <option value="todo" class="font">해야할 일</option>
+	                            <option selected value="doing" class="font">해야하는일</option>
+	                            <option value="todo" class="font">하는중</option>
 	                            <option value="blocked" class="font">막힘</option>
 	                            <option value="complete" class="font">완료</option>
 	                        </select>

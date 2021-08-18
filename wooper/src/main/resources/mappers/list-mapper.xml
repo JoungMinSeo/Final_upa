@@ -129,8 +129,8 @@
 	<update id="updateList" parameterType="list">
 		UPDATE LIST SET
 		LIST_NM = #{listNm}, 
-		LIST_START_DT = TO_DATE(#{listStartDt}, 'RRRR-MM-DD"T"HH24:MI'),
-		LIST_END_DT = TO_DATE(#{listEndDt}, 'RRRR-MM-DD"T"HH24:MI')
+		LIST_START_DT = TO_DATE(#{listStartDt}, 'RRRR-MM-DD"T"HH24:MI:SS'),
+		LIST_END_DT = TO_DATE(#{listEndDt}, 'RRRR-MM-DD"T"HH24:MI:SS')
  		WHERE LIST_NO = #{listNo}
 	</update>
 	
