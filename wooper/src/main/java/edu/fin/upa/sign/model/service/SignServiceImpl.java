@@ -18,6 +18,7 @@ import edu.fin.upa.sign.model.vo.Document;
 import edu.fin.upa.sign.model.vo.MeetingJoin;
 import edu.fin.upa.sign.model.vo.PurchaseList;
 import edu.fin.upa.sign.model.vo.SignLine;
+import edu.fin.upa.sign.model.vo.Viewer;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 @Service
@@ -48,6 +49,47 @@ public class SignServiceImpl implements SignService {
 		return dao.selectMyDocumentList(myDocuPagination, loginMember);
 	}
 
+	// 결재할 문서 수 조회
+	@Override
+	public Pagination getSignDocuPagination(Pagination pg, Member loginMember) {
+		
+		// 1) 결재할 문서 수 조회
+		Map<String , Object> signDocuMap = new HashMap<String, Object>();
+		signDocuMap.put("workNo", pg.getWorkNo());
+		signDocuMap.put("memberNo", loginMember.getMemberNo());
+		
+		Pagination selectPg = dao.getSignDocuListCount(signDocuMap);
+		
+		// 2) 계산이 완료된 Pagination 객체 생성 후 반환
+		return new Pagination(pg.getCurrentPage(), selectPg.getListCount(), pg.getWorkNo());
+	}
+
+	// 결재할 문서 목록 조회
+	@Override
+	public List<Document> selectSignDocumentList(Pagination signDocuPagination, Member loginMember) {
+		return dao.selectSignDocumentList(signDocuPagination, loginMember);
+	}
+	
+	// 팀 문서 수 조회
+	@Override
+	public Pagination getTeamDocuPagination(Pagination pg, Member loginMember) {
+		// 1) 결재할 문서 수 조회
+		Map<String , Object> teamDocuMap = new HashMap<String, Object>();
+		teamDocuMap.put("workNo", pg.getWorkNo());
+		teamDocuMap.put("memberNo", loginMember.getMemberNo());
+				
+		Pagination selectPg = dao.getTeamDocuListCount(teamDocuMap);
+				
+		// 2) 계산이 완료된 Pagination 객체 생성 후 반환
+		return new Pagination(pg.getCurrentPage(), selectPg.getListCount(), pg.getWorkNo());
+	}
+
+	// 팀 문서 목록 조회
+	@Override
+	public List<Document> selectTeamDocumentList(Pagination teamDocuPagination, Member loginMember) {
+		return dao.selectTeamDocumentList(teamDocuPagination, loginMember);
+	}
+	
 	// 임시보관함 문서 수 조회
 	@Override
 	public Pagination getMyTempDocuPagination(Pagination pg, Member loginMember) {
@@ -266,15 +308,34 @@ public class SignServiceImpl implements SignService {
 	
 	
 	// 결재선 지정
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int insertSignLine(Document document, List<SignLine> signLineList, Member loginMember) {
+	public int insertSignLine(Document document, int[] signLine, int[] viewer) {
 
-		Map<String , Object> slMap = new HashMap<String, Object>();
-		slMap.put("documentNo", document.getDocumentNo());
-		slMap.put("memberNo", loginMember.getMemberNo());
-		slMap.put("workNo", document.getWorkNo());
+		List<SignLine> signLineList = new ArrayList<SignLine>();
 		
-		return dao.insertSignLine(slMap, signLineList);
+		for(int i = 0 ; i < signLine.length ; i ++) {
+			
+			SignLine s = new SignLine();
+			s.setMemberNo(signLine[i]);
+			s.setWorkNo(document.getWorkNo());
+			s.setSignOrder(i+1);
+			
+			signLineList.add(s);
+		}
+		
+		List<Viewer> viewerList = new ArrayList<Viewer>();
+		
+		for(int i = 0 ; i < viewer.length ; i ++) {
+			
+			Viewer v = new Viewer();
+			v.setMemberNo(viewer[i]);
+			v.setWorkNo(document.getWorkNo());
+			
+			viewerList.add(v);
+		}
+
+		return dao.insertSignLine(document, signLineList, viewerList);
 	}
 
 	
@@ -318,6 +379,8 @@ public class SignServiceImpl implements SignService {
 				
 		return result;
 	}
+
+
 
 
 }

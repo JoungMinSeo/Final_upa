@@ -223,7 +223,7 @@
                             <tbody>
                             	<c:choose>
 									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
-									<c:when test="${empty documentList}">
+									<c:when test="${empty signDocumentList}">
 										<tr>
 											<td colspan="6">작성된 문서가 없습니다.</td>
 										</tr>								
@@ -232,7 +232,7 @@
 									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
 									<c:otherwise>
                             	
-		                                <c:forEach items="${documentList}" var="document">
+		                                <c:forEach items="${signDocumentList}" var="document">
 		                                    <tr class="item" id="document-list-body">
 		                                        <!-- No. -->
 		                                        <td>${document.signNo}</td>
@@ -292,8 +292,8 @@
                     <%-- 2) pagination --%>
                     <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
                     <c:set var="pageURL" value="signMain"  />
-                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
-                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+                    <c:set var="prev" value="${pageURL}?cp=${signDocuPagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${signDocuPagination.nextPage}" />
     
                     <div class="pagebutton">
                         <nav class="pagebtn" aria-label="Page navigation example">
@@ -301,22 +301,22 @@
     
                                 <%-- 현재 페이지가 10페이지 초과인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    test="${signDocuPagination.currentPage > signDocuPagination.pageSize}">
                                     <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 2페이지 초과인 경우 --%>
-                                <c:if test="${pagination.currentPage > 2}">
+                                <c:if test="${signDocuPagination.currentPage > 2}">
                                     <li class="page-item">
-                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                        <a class="pagelink" href="${pageURL}?cp=${signDocuPagination.currentPage - 1}">&lt;</a>
                                     </li>
                                 </c:if>
     
     
                                 <%-- 페이지 목록 --%>
-                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                <c:forEach var="p" begin="${signDocuPagination.startPage}" end="${signDocuPagination.endPage}">
                                     <c:choose>
-                                        <c:when test="${p == pagination.currentPage}">
+                                        <c:when test="${p == signDocuPagination.currentPage}">
                                             <li class="page-item active">
                                                 <a class="pagelink">${p}</a>
                                             </li>
@@ -333,14 +333,14 @@
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    test="${signDocuPagination.currentPage < signDocuPagination.maxPage}">
                                     <li class="page-item">
-                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    	<a class="pagelink" href="${pageURL}?cp=${signDocuPagination.currentPage + 1}">&gt;</a>
                                     </li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
-                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                <c:if test="${signDocuPagination.currentPage - signDocuPagination.maxPage + signDocuPagination.pageSize < 0}">
                                     <li class="page-item">
                                         <a class="pagelink" href="${next}">&gt;&gt;</a>
                                     </li>
@@ -732,7 +732,7 @@
         </div>
     </div>
 
- 
+ 	
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>

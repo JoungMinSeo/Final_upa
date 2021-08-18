@@ -380,6 +380,7 @@
     
     
     <%-- Modal --%>
+    <form action="sign" method="post" name="signResultForm" >
     <div class="modal fade" id="signResultModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="signResultLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" id="signResult-modal-dialog">
             <div class="modal-content" id="signResult">
@@ -414,19 +415,20 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="signResult-cancel-btn">취소</button>
-                    <button type="button" class="btn btn-primary" id="signResult-confirm-btn">결재</button>
+                    <button type="submit" class="btn btn-primary" id="signResult-confirm-btn">결재</button>
                 </div>
             </div>
         </div>
     </div>
+    
+    </form>
     
     <form name="requestForm" method="POST">
     	<input type="hidden" name="documentNo" value="${document.documentNo}">
     </form>
     
     <form action="signLine" name="signForm" id="signForm" method="post">
-    	
-    
+    	<input type="hidden" name="documentNo" value="${document.documentNo}">
     </form>
 
 	<script>

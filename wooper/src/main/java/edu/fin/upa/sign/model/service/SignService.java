@@ -27,6 +27,32 @@ public interface SignService {
 	 */
 	List<Document> selectMyDocumentList(Pagination myDocuPagination, Member loginMember);
 
+	/** 결재할 문서 수 조회
+	 * @param pg
+	 * @param loginMember
+	 * @return signDocuPagination
+	 */
+	Pagination getSignDocuPagination(Pagination pg, Member loginMember);
+	
+	/** 결재할 문서 목록 조회 
+	 * @param myTempDocuPagination
+	 * @return signDocumentList
+	 */
+	List<Document> selectSignDocumentList(Pagination signDocuPagination, Member loginMember);
+	
+	/** 팀 문서 수 조회
+	 * @param pg
+	 * @param loginMember
+	 * @return teamDocuPagination
+	 */
+	Pagination getTeamDocuPagination(Pagination pg, Member loginMember);
+	
+	/** 팀 문서 목록 조회 
+	 * @param myTempDocuPagination
+	 * @return documentList
+	 */
+	List<Document> selectTeamDocumentList(Pagination teamDocuPagination, Member loginMember);
+
 	/** 임시보관함 문서 수 조회
 	 * @param pg
 	 * @param loginMember
@@ -120,17 +146,19 @@ public interface SignService {
 
 	/** 결재선 지정
 	 * @param document
-	 * @param signLineList
-	 * @param loginMember 
-	 * @return signNo
+	 * @param signLine
+	 * @param viewer
+	 * @return result
 	 */
-	int insertSignLine(Document document, List<SignLine> signLineList, Member loginMember);
+	int insertSignLine(Document document, int[] signLine, int[] viewer);
+	
 
 	/** 결재 진행
 	 * @param document
 	 * @param loginMember
 	 */
 	void signDocument(Document document, Member loginMember);
+
 
 
 

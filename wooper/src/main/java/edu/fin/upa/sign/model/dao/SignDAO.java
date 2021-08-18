@@ -16,6 +16,7 @@ import edu.fin.upa.sign.model.vo.Document;
 import edu.fin.upa.sign.model.vo.MeetingJoin;
 import edu.fin.upa.sign.model.vo.PurchaseList;
 import edu.fin.upa.sign.model.vo.SignLine;
+import edu.fin.upa.sign.model.vo.Viewer;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 @Repository
@@ -48,10 +49,65 @@ public class SignDAO {
 		myDocuMap.put("workNo", myDocuPagination.getWorkNo());
 		myDocuMap.put("memberNo", loginMember.getMemberNo());
 		
-		return sqlSession.selectList("signMapper.selectMyDocumentList", myDocuMap, rowBounds);
+		return sqlSession.selectList("signMapper.selectMyDocumentList", myDocuMap);
+	}
+	
+	
+	/** 결재할 문서 수 조회
+	 * @param myDocuMap
+	 * @return selectPg
+	 */
+	public Pagination getSignDocuListCount(Map<String, Object> signDocuMap) {
+		return sqlSession.selectOne("signMapper.getSignDocuListCount", signDocuMap);
+	}
+	
+	
+	/** 결재할 문서 목록 조회
+	 * @param myDocuPagination
+	 * @return myDocumentList
+	 */
+	public List<Document> selectSignDocumentList(Pagination signDocuPagination, Member loginMember) {
+		
+		int offset = (signDocuPagination.getCurrentPage() - 1) * signDocuPagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, signDocuPagination.getLimit());
+		
+		Map<String , Object> signDocuMap = new HashMap<String, Object>();
+		signDocuMap.put("workNo", signDocuPagination.getWorkNo());
+		signDocuMap.put("memberNo", loginMember.getMemberNo());
+		
+		return sqlSession.selectList("signMapper.selectSignDocumentList", signDocuMap);
 	}
 
 
+	/** 팀 문서 수 조회
+	 * @param teamDocuMap
+	 * @return teamDocuPagination
+	 */
+	public Pagination getTeamDocuListCount(Map<String, Object> teamDocuMap) {
+		return sqlSession.selectOne("signMapper.getTeamDocuListCount", teamDocuMap);
+	}
+
+
+	/** 팀 문서 목록 조회
+	 * @param teamDocuPagination
+	 * @param loginMember
+	 * @return teamDocumentList
+	 */
+	public List<Document> selectTeamDocumentList(Pagination teamDocuPagination, Member loginMember) {
+		
+		int offset = (teamDocuPagination.getCurrentPage() - 1) * teamDocuPagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, teamDocuPagination.getLimit());
+		
+		Map<String , Object> teamDocuMap = new HashMap<String, Object>();
+		teamDocuMap.put("workNo", teamDocuPagination.getWorkNo());
+		teamDocuMap.put("memberNo", loginMember.getMemberNo());
+		
+		return sqlSession.selectList("signMapper.selectTeamDocumentList", teamDocuMap);
+	}
+	
+	
 	/** 임시보관함 문서 수 조회
 	 * @param myTempDocuMap
 	 * @return selectPg
@@ -75,7 +131,7 @@ public class SignDAO {
 		myTempMap.put("workNo", myTempDocuPagination.getWorkNo());
 		myTempMap.put("memberNo", loginMember.getMemberNo());
 		
-		return sqlSession.selectList("signMapper.selectMyTempDocumentList", myTempMap, rowBounds);
+		return sqlSession.selectList("signMapper.selectMyTempDocumentList", myTempMap);
 	}
 	
 	
@@ -330,16 +386,22 @@ public class SignDAO {
 	
 	/** 결재선 지정
 	 * @param slMap
-	 * @param signLineList 
+	 * @param viewerList 
 	 * @return result
 	 */
-	public int insertSignLine(Map<String, Object> slMap1, List<SignLine> signLineList) {
+	public int insertSignLine(Document document, List<SignLine> signLineList, List<Viewer> viewerList) {
 		
-		int result1 = sqlSession.insert("signMapper.insertSignLine1", slMap1);
+		System.out.println(document.getMemberNo());
+		System.out.println(document.getWorkNo());
+		System.out.println(document.getDocumentNo());
+		
+		int result1 = sqlSession.insert("signMapper.insertSignLine1", document);
 		int result2 = sqlSession.insert("signMapper.insertSignLine2", signLineList);
-		
-		if(result1 > 0 && result2 > 0) {
-			return 0;
+		int result3 = sqlSession.insert("signMapper.insertSignLine3", viewerList);
+
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			sqlSession.update("signMapper.insertSignLine4", document.getDocumentNo());
+			return result1+result2+result3;
 		}else {
 			return 0;
 		}
@@ -353,6 +415,8 @@ public class SignDAO {
 	public void signDocument(Map<String, Object> sMap) {
 		sqlSession.update("signMapper.signDocument", sMap);
 	}
+
+
 
 
 
