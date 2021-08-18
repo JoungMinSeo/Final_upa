@@ -39,12 +39,12 @@
 			<div class="mmcontends">
 			    <div class="managementcontainer">
 			        <div class="teamNamearea">
-			            <p><br></p><!-- 팀명중복으로 제거 -->
+			            <h4><br></h4><!-- 팀명중복으로 제거 -->
 			        </div>
 
 				        <div class="insertmember">
 				            <div class="memberinformation">
-				                <p class="teammember">팀원정보</p>
+				                <h4 class="teammember">팀원정보</h4>
 				            </div>
 <%-- 				            
 				            <div class="memberadd">
@@ -68,7 +68,7 @@
 				            
 				            <c:if test="${flag == true }">
 					            <div class="memberaddarea" id="memberaddarea">
-					                <p class="memberadd">
+					                <h4 class="memberadd">
 					                    팀원추가
 					                    <select id="memberaddRank">
 					                        <option value="1">왕도롱뇽</option>
@@ -79,14 +79,14 @@
 					                    <input type="email" id="memberaddEmail" placeholder="이메일을 입력해주세요">
 					                    <!-- <span id="checkEmail">&nbsp;</span> -->
 					                    <button id="memberaddbtn">초대요청</button>
-					                </p>
+					                </h4>
 					            </div>
 				            </c:if>
 				            
 				            
 				            
 				            <div class="loginmemberemail">
-				                <p class="teammember" id="loginmemberemail">${loginMember.memberId }</p>
+				                <h4 class="teammember" id="loginmemberemail">${loginMember.memberId }</h4>
 				            </div>
 				        </div>
 			        
@@ -94,7 +94,7 @@
 						<c:choose>
 							<%-- 조회된 멤버가 없을 경우 --%>
 							<c:when test="${empty memberList}">
-								<p>멤버가 존재하지 않습니다.</p>
+								<h4>멤버가 존재하지 않습니다.</h4>
 							</c:when>
 						
 							<%-- 조회된 멤버가 있을경우 --%>
@@ -117,11 +117,11 @@
 										</c:when>
 									</c:choose>
 									
-						            <div class="membername"><p>${member.memberNm}</p></div>
-						            <div class="memberemail"><p>${member.memberId}</p></div>
-						            <div class="memberphone"><p>${member.memberPhone}</p></div>
+						            <div class="membername"><h4>${member.memberNm}</h4></div>
+						            <div class="memberemail"><h4>${member.memberId}</h4></div>
+						            <div class="memberphone"><h4>${member.memberPhone}</h4></div>
 						            <div class="membergrade">
-						                <p>
+						                <h4>
 										<c:choose>
 						                	<c:when test="${member.memberRank == null}">
 	   						                    <select class="changeRank">
@@ -166,7 +166,7 @@
 						                    </c:when>
 										</c:choose>
 
-						                </p>    
+						                </h4>    
 						            </div>
 								
 						        </div>
@@ -177,21 +177,23 @@
 		           
 		           				<c:if test="${flag == true }">
 						            <div class="memberdelete">
-						                <button   type = "submit"  class="mdeletebtn" id="memberDelete"><p>회원삭제</p></button>
+						                <button   type = "submit"  class="mdeletebtn" id="memberDelete"><h4>회원삭제</h4></button>
 						            </div>
 						            <div class="memberupdate">
-						                <button  type = "submit" class="mupdatebtn" id="memberUpdate"><p>회원등급수정</p></button>
+						                <button  type = "submit" class="mupdatebtn" id="memberUpdate"><h4>회원등급수정</h4></button>
 						            </div>
 					            </c:if>
 					            
 					            
 		           				<c:if test="${flag2 == true }">
 						            <div class="memberdelete">
-						                <button   type = "submit"  class="mdeletebtn" id="selfDelete"><p>팀 나가기</p></button>
+						                <button   type = "submit"  class="mdeletebtn" id="selfDelete"><h4>팀 나가기</h4></button>
 						            </div>
+<!-- 						            
 						            <div class=chatinvite>
-						                <button  type = "submit" class="chat-Invite-btn" id="chatInvite"><p>채팅방개설</p></button>
+						                <button  type = "submit" class="chat-Invite-btn" id="chatInvite"><h4>채팅방개설</h4></button>
 						            </div>
+ -->						            
 					            </c:if>
 						            
 

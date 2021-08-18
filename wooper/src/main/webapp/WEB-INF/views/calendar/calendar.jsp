@@ -65,9 +65,7 @@
 				
 				</div>
 				<div class="modal-footer">
-	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">취소</button>
-	               <button type="button" class="btn btn-primary" id="calListUpdate">수정</button>
-	               <button type="button" class="btn btn-primary" id="calListDelete">삭제</button>
+	               <button type="button" class="btn btn-secondary" id="calListCancel" data-dismiss="modal">닫힘</button>
 				</div>
 			</div>
 		</div>
@@ -162,7 +160,7 @@
 					const li5 = $("<li>").text( $(info.el).attr("listNo") ); // 리스트번호
 
 					const title = $("<h5>").attr({"id" : "title"}).text(info.event.title);
-					const li6 = $("<li>").text( "리스트타이틀 : ").append(title); // 리스트이름
+					const li6 = $("<li>").text( "").append(title); // 리스트이름
 					// attr : attribute
 					// 2021-08-05T23:11:00+09:00 
 					
