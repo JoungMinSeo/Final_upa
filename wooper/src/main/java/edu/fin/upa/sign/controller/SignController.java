@@ -52,11 +52,19 @@ public class SignController {
 		
 		Pagination myDocuPagination = service.getMyDocuPagination(pg, loginMember);
 		List<Document> myDocumentList = service.selectMyDocumentList(myDocuPagination, loginMember);
+		Pagination signDocuPagination = service.getSignDocuPagination(pg, loginMember); 
+		List<Document> signDocumentList = service.selectSignDocumentList(signDocuPagination, loginMember);
+		Pagination teamDocuPagination = service.getTeamDocuPagination(pg, loginMember);
+		List<Document> teamDocumentList = service.selectTeamDocumentList(teamDocuPagination, loginMember);
 		Pagination myTempDocuPagination = service.getMyTempDocuPagination(pg, loginMember);
 		List<Document> myTempDocumentList = service.selectMyTempDocumentList(myTempDocuPagination, loginMember);
 		
 		model.addAttribute("myDocuPagination", myDocuPagination);
 		model.addAttribute("myDocumentList", myDocumentList);
+		model.addAttribute("signDocuPagination", signDocuPagination);
+		model.addAttribute("signDocumentList", signDocumentList);
+		model.addAttribute("teamDocuPagination", teamDocuPagination);
+		model.addAttribute("teamDocumentList", teamDocumentList);
 		model.addAttribute("myTempDocuPagination", myTempDocuPagination);
 		model.addAttribute("myTempDocumentList", myTempDocumentList);
 		
@@ -349,4 +357,34 @@ public class SignController {
 		
 	}
 	
+	
+	// 결재선 지정
+	@RequestMapping(value="{workNo}/signLine", method=RequestMethod.POST)
+	public String insertSignLine(int documentNo, int[] signLine, int[] viewer,
+								 @ModelAttribute("loginMember") Member loginMember,
+								 HttpServletRequest request) {
+		
+		System.out.println(Arrays.toString(signLine));
+		System.out.println(Arrays.toString(viewer));
+		
+		Document document = service.selectDocument(documentNo);
+		
+		int result = service.insertSignLine(document, signLine, viewer);
+		
+		return "redirect:/sign/{workNo}/signMain";
+	}
+	
+	
+	// 결재 진행
+	@RequestMapping(value="{workNo}/sign", method=RequestMethod.POST)
+	public String signDocument(@ModelAttribute Document document,
+							   @ModelAttribute SignLine signLine,
+							   @ModelAttribute("loginMember") Member loginMember,
+							   HttpServletRequest request) {
+		
+		
+		service.signDocument(document, loginMember);
+		
+		return "redirect:" + request.getHeader("referer");
+	}
 }
