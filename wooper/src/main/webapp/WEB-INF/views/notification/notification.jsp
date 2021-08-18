@@ -134,6 +134,6 @@
  */		
 		
     </script>
-      <jsp:include page="../common/allim.jsp"/>    
+     	<jsp:include page="../common/allim.jsp"/>
 </body>
 </html>
