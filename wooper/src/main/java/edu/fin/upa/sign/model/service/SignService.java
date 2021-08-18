@@ -2,12 +2,13 @@ package edu.fin.upa.sign.model.service;
 
 import java.util.List;
 
+import edu.fin.upa.chat.model.vo.Search;
 import edu.fin.upa.management.model.vo.Pagination;
 import edu.fin.upa.member.model.vo.Member;
 import edu.fin.upa.sign.model.vo.Document;
-import edu.fin.upa.sign.model.vo.ExpenseReport;
-import edu.fin.upa.sign.model.vo.Meeting;
-import edu.fin.upa.sign.model.vo.Vacation;
+import edu.fin.upa.sign.model.vo.MeetingJoin;
+import edu.fin.upa.sign.model.vo.PurchaseList;
+import edu.fin.upa.sign.model.vo.SignLine;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
 
 public interface SignService {
@@ -39,6 +40,12 @@ public interface SignService {
 	 */
 	List<Document> selectMyTempDocumentList(Pagination myTempDocuPagination, Member loginMember);
 
+	/** 결재 문서 상세 조회
+	 * @param documentNo
+	 * @return document
+	 */
+	Document selectDocument(int documentNo);
+	
 	/** 워크스페이스 참가자 목록 조회
 	 * @param workNo
 	 * @return workspaceJoin
@@ -53,25 +60,81 @@ public interface SignService {
 	String selectRank(int workNo, int memberNo);
 
 	/** 품의서 작성
-	 * @param expenseReport
 	 * @param document
 	 * @return documentNo
 	 */
-	int insertExpenseReport(ExpenseReport expenseReport, Document document);
+	int insertExpenseReport(Document document);
 
 	/** 회의록 작성
-	 * @param meeting
 	 * @param document
 	 * @return documentNo
 	 */
-	int insertMeeting(Meeting meeting, Document document);
+	int insertMeeting(Document document);
 
 	/** 휴가신청서 작성
-	 * @param vacation
 	 * @param document
 	 * @return documentNo
 	 */
-	int insertVacation(Vacation vacation, Document document);
+	int insertVacation(Document document);
+
+	/** 게시글 수정용 상세 조회
+	 * @param documentNo
+	 * @return document
+	 */
+	Document selectUpdateDocument(int documentNo);
+
+	/** 품의서 수정
+	 * @param document
+	 * @param plist
+	 * @param deletedpList
+	 * @return result
+	 */
+	int updateExpenseReport(Document document, List<PurchaseList> pList, List<PurchaseList> deletedpList);
+
+	/** 회의록 수정
+	 * @param document
+	 * @param meetingJoin
+	 * @param deletedMeetingJoin
+	 * @return result
+	 */
+	int updateMeeting(Document document, List<MeetingJoin> meetingJoin, List<MeetingJoin> deletedMeetingJoin);
+
+	/** 휴가신청서 수정
+	 * @param document
+	 * @return result
+	 */
+	int updateVacation(Document document);
+
+	/** 전자결재 문서 삭제
+	 * @param documentNo
+	 * @return result
+	 */
+	int deleteDocument(int documentNo);
+
+	/** 결재 회원 검색
+	 * @param search
+	 * @param workNo 
+	 * @return signMemList
+	 */
+	List<WorkspaceJoin> selectSignMemList(Search search, int workNo);
+
+	/** 결재선 지정
+	 * @param document
+	 * @param signLineList
+	 * @param loginMember 
+	 * @return signNo
+	 */
+	int insertSignLine(Document document, List<SignLine> signLineList, Member loginMember);
+
+	/** 결재 진행
+	 * @param document
+	 * @param loginMember
+	 */
+	void signDocument(Document document, Member loginMember);
+
+
+
+
 
 
 

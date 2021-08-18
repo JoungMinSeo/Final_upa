@@ -1,5 +1,5 @@
 body{
-	background-color: rgb(213, 232, 243);
+	background-color: rgb(213, 232, 243) !important;
 }
 
 .sideMenu{
@@ -29,15 +29,15 @@ input[type="radio"] + label{
     font-size: 20px;
     color: #000;
     cursor: pointer;
-    border: 1px solid rgb(42, 111, 154);
-    background-color: rgb(213, 232, 243);
+    border: 1px solid rgb(42, 111, 154) !important;
+    background-color: rgb(213, 232, 243) !important;
     border-bottom: none;
     margin-top: 36px;
     margin-bottom: 0;
 }
 
 input[type="radio"]:checked + label{
-    background-color: rgb(42, 111, 154);
+    background-color: rgb(42, 111, 154) !important;
     color: white;
 }
 
@@ -47,8 +47,8 @@ input[type="radio"]:checked + label{
     padding-left: 2%;
     padding-right: 2%;
     display: none;
-    border: 1px solid rgb(42, 111, 154);
-    background-color: rgb(213, 232, 243);
+    border: 1px solid rgb(42, 111, 154) !important;
+    background-color: rgb(213, 232, 243) !important;
     position: relative;
     margin-bottom: 0;
 }
@@ -85,8 +85,8 @@ input[id="tab04"]:checked ~ .con4{
     float: right;
     margin: 1%;
     font-size: 18px;
-    background-color: rgb(42, 111, 154);
-    border: 1px solid rgb(42, 111, 154);
+    background-color: rgb(42, 111, 154) !important;
+    border: 1px solid rgb(42, 111, 154) !important;
 }
 
 #document-list-content{
@@ -97,11 +97,11 @@ input[id="tab04"]:checked ~ .con4{
 }
 
 .table thead th {
-    border-bottom: 2px solid rgb(42, 111, 154);
+    border-bottom: 2px solid rgb(42, 111, 154) !important;
 }
 
 .table td, .table th {
-	border-top: 1px solid rgb(42, 111, 154);
+	border-top: 1px solid rgb(42, 111, 154) !important;
 }
 
 .document-list-table{

@@ -1,0 +1,75 @@
+div{
+    box-sizing: border-box;
+}
+
+#viewer-modal-dialog{
+    width: 400px;
+    height: 600px;
+}
+
+#viewer-img, #viewer-close-btn{
+    font-size: 40px;
+}
+
+#viewer-container{
+    height: 650px;
+    text-align: center;
+}
+
+.viewer-container{
+    width: 300px;
+    height: 600px;
+    display: inline-block;
+}
+
+.viewer-search{
+    width: 100%;
+    height: 7%;
+    border-bottom: 1px solid gray;
+}
+
+.viewer, #viewer-info-content{
+    width: 100%;
+    height: 94%;
+    border: 1px solid gray;
+}
+
+#viewer-title, #viewer-info-title{
+    width: fit-content;
+}
+
+#viewer-info-content{
+    border: 1px solid gray;
+}
+
+#viewer-search-option{
+    width: 27%;
+    float: left;
+}
+
+#viewerSearch{
+    width: 60%;
+    float: left;
+}
+
+.viewerSearchBtn{
+    background-color: white;
+    border-style: hidden;
+}
+
+#viewer-name{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+#viewer-confirm-btn{
+    margin-right: 30px;
+    width: 100px;
+    font-size: 20px;
+}
+
+#viewer-cancel-btn{
+    margin-right: 20px;
+    width: 100px;
+    font-size: 20px;
+}

@@ -1,0 +1,70 @@
+div{
+    box-sizing: border-box;
+}
+
+#signResult-modal-dialog{
+    width: 1100px;
+}
+
+#signResultLabel{
+    width: 94%;
+}
+
+#signResult-img{
+    font-size: 40px;
+}
+
+.table th{
+    background-color: lightgray;
+    border: 1px solid gray;
+    vertical-align: middle;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.table td{
+    border: 1px solid gray;
+    padding: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+#signResult-table th, #signResult-table td{
+    border: 1px solid gray;
+}
+
+#signYes, #signNo{
+    margin-left: 20px;
+}
+
+.signResult-label{
+    margin-bottom: 0;
+}
+
+#signResult-comment{
+    height: 200px;
+}
+
+#sign-comment{
+    min-height: 200px;
+    width: 100%;
+}
+
+.textB{
+    box-sizing: border-box;
+    vertical-align: middle;
+    width: auto;
+    resize: none;
+}
+
+#signResult-confirm-btn{
+    margin-right: 10px;
+    width: 100px;
+    font-size: 20px;
+}
+
+#signResult-cancel-btn{
+    margin-right: 20px;
+    width: 100px;
+    font-size: 20px;
+}

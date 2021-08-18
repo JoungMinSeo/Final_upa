@@ -63,7 +63,7 @@
                             <tbody>
                             	<c:choose>
 									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
-									<c:when test="${empty documentList}">
+									<c:when test="${empty myDocumentList}">
 										<tr>
 											<td colspan="6">작성된 문서가 없습니다.</td>
 										</tr>								
@@ -72,17 +72,29 @@
 									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
 									<c:otherwise>
                             	
-		                                <c:forEach items="${documentList}" var="document">
+		                                <c:forEach items="${myDocumentList}" var="document">
 		                                    <tr class="item" id="document-list-body">
 		                                        <!-- No. -->
 		                                        <td>${document.signNo}</td>
 		    
 		                                        <%-- 문서 유형 --%>
-		                                        <td>${document.documentType}</td>
+		                                        <td>
+		                                        	<c:choose>
+				                                		<c:when test='${document.documentType == "1"}'>
+				                                			품의서
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "2"}'>
+				                                			회의록
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "3"}'>
+				                                			휴가신청서
+				                                		</c:when>
+				                                	</c:choose>
+		                                        </td>
 		    
 		                                        <%-- 제목 --%>
 		                                        <td class="documentTitle">
-		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                            <a href="${document.documentNo}?cp=${myDocuPagination.currentPage}" style="color: black;">${document.documentTitle}</a>
 		                                        </td>
 		    
 		                                        <%-- 기안자 --%>
@@ -120,8 +132,8 @@
                     <%-- 2) pagination --%>
                     <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
                     <c:set var="pageURL" value="signMain"  />
-                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
-                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+                    <c:set var="prev" value="${pageURL}?cp=${myDocuPagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${myDocuPagination.nextPage}" />
     
                     <div class="pagebutton">
                         <nav class="pagebtn" aria-label="Page navigation example">
@@ -129,22 +141,22 @@
     
                                 <%-- 현재 페이지가 10페이지 초과인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    test="${myDocuPagination.currentPage > myDocuPagination.pageSize}">
                                     <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 2페이지 초과인 경우 --%>
-                                <c:if test="${pagination.currentPage > 2}">
+                                <c:if test="${myDocuPagination.currentPage > 2}">
                                     <li class="page-item">
-                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                        <a class="pagelink" href="${pageURL}?cp=${myDocuPagination.currentPage - 1}">&lt;</a>
                                     </li>
                                 </c:if>
     
     
                                 <%-- 페이지 목록 --%>
-                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                <c:forEach var="p" begin="${myDocuPagination.startPage}" end="${myDocuPagination.endPage}">
                                     <c:choose>
-                                        <c:when test="${p == pagination.currentPage}">
+                                        <c:when test="${p == myDocuPagination.currentPage}">
                                             <li class="page-item active">
                                                 <a class="pagelink">${p}</a>
                                             </li>
@@ -161,14 +173,14 @@
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    test="${myDocuPagination.currentPage < myDocuPagination.maxPage}">
                                     <li class="page-item">
-                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    	<a class="pagelink" href="${pageURL}?cp=${myDocuPagination.currentPage + 1}">&gt;</a>
                                     </li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
-                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                <c:if test="${myDocuPagination.currentPage - myDocuPagination.maxPage + myDocuPagination.pageSize < 0}">
                                     <li class="page-item">
                                         <a class="pagelink" href="${next}">&gt;&gt;</a>
                                     </li>
@@ -191,7 +203,6 @@
                         </div>
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
-                            <button type="button" class="btn btn-primary" id="signAllDocument">일괄 결재</button>
                         </div>
                     </div>
                     <div id="document-list-content">
@@ -227,7 +238,19 @@
 		                                        <td>${document.signNo}</td>
 		    
 		                                        <%-- 문서 유형 --%>
-		                                        <td>${document.documentType}</td>
+		                                        <td>
+		                                        	<c:choose>
+				                                		<c:when test='${document.documentType == "1"}'>
+				                                			품의서
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "2"}'>
+				                                			회의록
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "3"}'>
+				                                			휴가신청서
+				                                		</c:when>
+				                                	</c:choose>
+		                                        </td>
 		    
 		                                        <%-- 제목 --%>
 		                                        <td class="documentTitle">
@@ -375,7 +398,19 @@
 		                                        <td>${document.signNo}</td>
 		    
 		                                        <%-- 문서 유형 --%>
-		                                        <td>${document.documentType}</td>
+		                                        <td>
+		                                        	<c:choose>
+				                                		<c:when test='${document.documentType == "1"}'>
+				                                			품의서
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "2"}'>
+				                                			회의록
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "3"}'>
+				                                			휴가신청서
+				                                		</c:when>
+				                                	</c:choose>
+		                                        </td>
 		    
 		                                        <%-- 제목 --%>
 		                                        <td class="documentTitle">
@@ -488,8 +523,6 @@
                         </div>
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
-                            <button type="button" class="btn btn-primary" id="deleteDocument">문서 삭제</button>
-                            <button type="button" class="btn btn-primary" id="deleteAllDocument">전체 삭제</button>
                         </div>
                     </div>
                     <div id="document-list-content">
@@ -510,7 +543,7 @@
                             <tbody>
                             	<c:choose>
 									<%-- 조회된 결재 문서 목록이 없는 경우 --%>
-									<c:when test="${empty documentList}">
+									<c:when test="${empty myTempDocumentList}">
 										<tr>
 											<td colspan="6">작성된 문서가 없습니다.</td>
 										</tr>								
@@ -519,17 +552,29 @@
 									<%-- 조회된 결재 문서 목록이 있을 경우 --%>
 									<c:otherwise>
                             	
-		                                <c:forEach items="${documentList}" var="document">
+		                                <c:forEach items="${myTempDocumentList}" var="document">
 		                                    <tr class="item" id="document-list-body">
 		                                        <!-- No. -->
 		                                        <td>${document.signNo}</td>
 		    
 		                                        <%-- 문서 유형 --%>
-		                                        <td>${document.documentType}</td>
+		                                        <td>
+		                                        	<c:choose>
+				                                		<c:when test='${document.documentType == "1"}'>
+				                                			품의서
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "2"}'>
+				                                			회의록
+				                                		</c:when>
+				                                		<c:when test='${document.documentType == "3"}'>
+				                                			휴가신청서
+				                                		</c:when>
+				                                	</c:choose>
+		                                        </td>
 		    
 		                                        <%-- 제목 --%>
 		                                        <td class="documentTitle">
-		                                            <a href="${document.documentNo}?cp=${pagination.currentPage}" style="color: black;">${document.documentTitle}</a>
+		                                            <a href="${document.documentNo}?cp=${myTempDocuPagination.currentPage}" style="color: black;">${document.documentTitle}</a>
 		                                        </td>
 		    
 		                                        <%-- 기안자 --%>
@@ -567,8 +612,8 @@
                     <%-- 2) pagination --%>
                     <%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
                     <c:set var="pageURL" value="signMain"  />
-                    <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
-                    <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+                    <c:set var="prev" value="${pageURL}?cp=${myTempDocuPagination.prevPage}" />
+                    <c:set var="next" value="${pageURL}?cp=${myTempDocuPagination.nextPage}" />
     
                     <div class="pagebutton">
                         <nav class="pagebtn" aria-label="Page navigation example">
@@ -576,22 +621,22 @@
     
                                 <%-- 현재 페이지가 10페이지 초과인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage > pagination.pageSize}">
+                                    test="${myTempDocuPagination.currentPage > myTempDocuPagination.pageSize}">
                                     <li class="page-item"><a class="pagelink" href="${prev}">&lt;&lt;</a></li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 2페이지 초과인 경우 --%>
-                                <c:if test="${pagination.currentPage > 2}">
+                                <c:if test="${myTempDocuPagination.currentPage > 2}">
                                     <li class="page-item">
-                                        <a class="pagelink" href="${pageURL}?cp=${pagination.currentPage - 1}">&lt;</a>
+                                        <a class="pagelink" href="${pageURL}?cp=${myTempDocuPagination.currentPage - 1}">&lt;</a>
                                     </li>
                                 </c:if>
     
     
                                 <%-- 페이지 목록 --%>
-                                <c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
+                                <c:forEach var="p" begin="${myTempDocuPagination.startPage}" end="${myTempDocuPagination.endPage}">
                                     <c:choose>
-                                        <c:when test="${p == pagination.currentPage}">
+                                        <c:when test="${p == myTempDocuPagination.currentPage}">
                                             <li class="page-item active">
                                                 <a class="pagelink">${p}</a>
                                             </li>
@@ -608,14 +653,14 @@
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
                                 <c:if
-                                    test="${pagination.currentPage < pagination.maxPage}">
+                                    test="${myTempDocuPagination.currentPage < myTempDocuPagination.maxPage}">
                                     <li class="page-item">
-                                    	<a class="pagelink" href="${pageURL}?cp=${pagination.currentPage + 1}">&gt;</a>
+                                    	<a class="pagelink" href="${pageURL}?cp=${myTempDocuPagination.currentPage + 1}">&gt;</a>
                                     </li>
                                 </c:if>
     
                                 <%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
-                                <c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+                                <c:if test="${myTempDocuPagination.currentPage - myTempDocuPagination.maxPage + myTempDocuPagination.pageSize < 0}">
                                     <li class="page-item">
                                         <a class="pagelink" href="${next}">&gt;&gt;</a>
                                     </li>

@@ -1,3 +1,16 @@
+body{
+	background-color: rgb(213, 232, 243);
+}
+
+input{
+	background-color: rgb(213, 232, 243);
+	border: hidden;
+}
+
+textarea{
+	background-color: rgb(213, 232, 243);
+}
+
 div{
     box-sizing: border-box;
     text-align: center;
