@@ -286,9 +286,10 @@ function  createList(){
 			"listStartDt" : $("#listStartDt").val(),
 			"listEndDt" : $("#listEndDt").val(),
 			"statusCategory" : $("#statusCategory").val(),
-			"status" : "insertList", // insertList : list 추가 
 			"memList" : memList,
-			"memNmList" : memNmList
+			"memNmList" : memNmList,
+			"status" : "insertList" // insertList : list 추가 
+			
 	}
 	
 	$("#addList").modal("hide");
@@ -309,6 +310,106 @@ function deleteList(e){
 	}
 	
 	cardSock.send(JSON.stringify(obj));
+	
+}
+
+/* 리스트 수정 */
+$(document).on("click", ".fill", function(){
+	
+	const listNo = $(this).attr("id");
+	const listNm = $(this).find(".listNm").text();
+	const memImg = $(this).find(".memImg");
+	const listStartDt = $(this).find(".listStartDt").text().replace(" ", "T");
+	const listEndDt = $(this).find(".listEndDt").text().replace(" ", "T");
+	const statusCategory = $(this).find(".statusCategory").text();
+	
+	console.log(listNo);
+	console.log(listNm);
+	console.log(memImg);
+	console.log(listStartDt);
+	console.log(listEndDt);
+	console.log(statusCategory);
+	
+	//const participantsArr = [];
+	
+	$(".upMemTag").empty();
+	$.each(memImg, function(index, item){
+		$(item).attr("id"); // 멤버 번호
+		$(item).text(); // 멤버 이름
+		
+		const div1 = $('<div class="participants">');
+		const div2 = $('<div class="memNm">').attr("id", $(item).attr("id") ).text($(item).text());
+		const div3 = $('<div class="cancel">').text("x");
+		
+		div1.append(div2).append(div3);
+		
+		//participantsArr.push(div1);
+		$(".upMemTag").append(div1);
+	});
+	
+	$("#upListNm").val(listNm).attr("listNo", listNo);
+	$("#upListStartDt").val(listStartDt);
+	$("#upListEndDt").val(listEndDt);
+	
+	$("#upStatusCategory > option").each(function(index, item){
+		if( $(item).val() == statusCategory){
+			$(item).prop("selected", true);
+		}
+	})
+	
+});
+
+
+/* 리스트 수정 멤버 추가 */
+ $("#upmemberList").change(function(){
+   	const selectMemNo = $("#upmemberList option:selected").attr("id");
+   	const selectMemNm = $("#upmemberList option:selected").text();
+	console.log(selectMemNo);
+	console.log(selectMemNm);
+
+   
+   	var participants = $("<div>").addClass("participants");
+   	var memNm = $("<div>").addClass("memNm").text(selectMemNm).attr("id", selectMemNo);
+   	var cancel = $("<div>").addClass("cancel").text("x");
+   	
+   	participants.append(memNm).append(cancel);
+   	
+   	$(".upMemTag").append(participants);
+   	
+   
+}); 
+ 
+ 
+/* 리스트 수정 모달안의 리스트 수정버튼 클릭 시  */ 
+function updateList(){
+	
+	const upMemList = [];
+	const upMemNmList = [];
+	$(".memNm").each(function(){
+		upMemList.push($(this).attr("id"));
+		upMemNmList.push($(this).text());
+	});
+	
+	
+	var obj = {
+			"workNo" : workNo,
+			"memberNo" : memberNo,
+			"upListNo" : $("#upListNm").attr("listNo"),
+			"upListNm" : $("#upListNm").val(),
+			"upListStartDt" : $("#upListStartDt").val(),
+			"upListEndDt" : $("#upListEndDt").val(),
+			"upStatusCategory" : $("#upStatusCategory").val(),
+			"upMemList" : upMemList,
+			"upMemNmList" : upMemNmList,
+			"status" : "updateList" // updateList : list 추가 
+			
+	}
+	
+	$("#updateList").modal("hide");
+	
+	cardSock.send(JSON.stringify(obj));
+	
+	
 	
 }
 
@@ -425,6 +526,25 @@ cardSock.onmessage = function(event){
 			
 		break;
 		
+		case "updateList" : 
+			
+			$("#" + obj.upListNo).find(".listNm").text(obj.upListNm);
+			$("#" + obj.upListNo).find(".listStartDt").text(obj.upListStartDt);
+			$("#" + obj.upListNo).find(".listEndDt").text(obj.upListEndDt);
+			$("#" + obj.upListNo).find(".statusCategory").text(obj.upStatusCategory);
+			
+			
+			$("#" + obj.upListNo).find(".memTag").html("");
+			
+			//console.log($("#" + obj.upListNo).find(".memImg"));
+			for(let i = 0; i < obj.upMemList.length; i++){
+				const upMemDiv = $("<div class='memImg'>").attr("id", obj.upMemList[i]).text(obj.upMemNmList[i]);
+				console.log(upMemDiv);
+				$("#" + obj.upListNo).find(".memTag").append(upMemDiv);
+			}
+						
+		break;
+		
 		case "deleteList" : 
 			
 			$("#" + obj.listNo).remove();
@@ -433,9 +553,10 @@ cardSock.onmessage = function(event){
 		
 		case "dropList" :
 			
-			console.log(obj);
+			//console.log(obj);
 			
 			if(obj.memberNo != "${loginMember.memberNo}"){
+				
 				
 				$("#" + obj.listNo).remove();
 				
@@ -454,7 +575,6 @@ cardSock.onmessage = function(event){
 					const joinmemNm = $("<div>").addClass("memImg").text(obj.memJoinNmList[i]).attr("id", obj.memJoinList[i]);
 					memInfo.append(joinmemNm);
 				}
-				
 				
 				var createInfo = $("<div>").addClass("createInfo");
 				var LcreateDt = $("<div>").addClass("LcreateDt").text("시작날짜");
@@ -482,9 +602,7 @@ cardSock.onmessage = function(event){
 				fill.append(listHeader).append(memInfo).append(createInfo).append(endInfo).append(statusInfo);
 				
 				
-				
 				$("#"+ obj.dropCardNo).find(".list").append(fill);
-				
 				
 				
 			}
@@ -496,6 +614,7 @@ cardSock.onmessage = function(event){
 	} // switch end
 	
 } // onmessage end
+
 
 /* 파일 업로드
 function listFileUpload(input){

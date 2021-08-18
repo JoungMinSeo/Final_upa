@@ -56,7 +56,6 @@
 		<div class="row mx-lg-n5">
 			<div class="col py-3 px-lg-5 ">
 				<h1 class="font projectName">${sessionScope.loginMember.memberNm}님의 프로젝트</h1>
-				<h2 class="font">나의 프로젝트</h2>
 
 			</div>
 			
@@ -73,6 +72,7 @@
 				</c:when>
 	
 				<c:otherwise>
+					<h3 class="font">나의 프로젝트</h3>
 					<c:forEach items="${workList}" var="item" varStatus="vs">
 						<div class="project">
 							<div class="projectListName" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">${item.workNm }</div>
@@ -161,8 +161,10 @@
 				
 				$("#workListView").html("");
 				const addProject = $("<button>").addClass("addProject").attr("data-toggle", "modal").attr("data-target", "#addWorkspace").text("프로젝트 생성하기");
+				const h3 = $("<h3>").addClass("font").text("나의 프로젝트");
 				
 				if(wList != null){
+					
 					
 					$.each(wList, function(index, item){
 						
@@ -176,10 +178,10 @@
 					})
 					
 					$("#workListView").append(addProject);
+					$("#workListView").prepend(h3);
 					
 				}
-				if(wList == null){
-					/* 화면에 나타나지 않는 현상 발생 */
+				if(wList == ""){
 					var none = $("<h3>").addClass("font").text("참여중인 워크스페이스가 존재하지 않습니다.");
 					
 					$("#workListView").append(none).append(addProject);

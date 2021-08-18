@@ -26,9 +26,10 @@
 	
 	<!-- 해당 카드에 대한 리스트 조회 -->
 	<select id="selectList" parameterType="list" resultMap="list_rm">
-		SELECT CARD_NO, CARD_NM, LIST_NO, LIST_NM, LIST_START_DT, LIST_END_DT
+		SELECT CARD_NO, CARD_NM, LIST_NO, LIST_NM, LIST_START_DT, LIST_END_DT, DO_NAME
 		FROM CARD C
 		JOIN LIST USING(CARD_NO)
+		JOIN LIST_DO USING (LIST_NO)
 		WHERE C.WORK_NO = #{list[0].workNo}
 		AND LIST_STATUS ='Y'
 		AND CARD_NO in 
@@ -112,5 +113,26 @@
 			</foreach>
 		
 	</select>
+	
+	<!-- 리스트 참여자 업데이트시 기존 참여자 삭제 -->
+	<delete id="deleteListJoin" parameterType="_int">
+		DELETE FROM LIST_JOIN WHERE LIST_NO = #{listNo}
+	</delete>
+	
+	<!-- 리스트 상태 업데이트 -->
+	<update id="updateListStatus" parameterType="list">
+		UPDATE LIST_DO SET DO_NAME = #{doName}
+		WHERE LIST_NO = #{listNo}
+	</update>
+	
+	<!-- 리스트 바뀐 내용 업데이트 -->
+	<update id="updateList" parameterType="list">
+		UPDATE LIST SET
+		LIST_NM = #{listNm}, 
+		LIST_START_DT = TO_DATE(#{listStartDt}, 'RRRR-MM-DD"T"HH24:MI'),
+		LIST_END_DT = TO_DATE(#{listEndDt}, 'RRRR-MM-DD"T"HH24:MI')
+ 		WHERE LIST_NO = #{listNo}
+	</update>
+	
 
 </mapper>

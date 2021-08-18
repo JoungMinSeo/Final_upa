@@ -186,6 +186,64 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			convertedObj.addProperty("listNo", Llist.getCardNo());
 			
 		break;
+		
+		case "updateList" :
+			
+			int upListNo = Integer.parseInt(convertedObj.get("upListNo").toString().replaceAll("\"", ""));
+			
+			String upListNm = convertedObj.get("upListNm").toString();
+			upListNm = upListNm.substring(1, upListNm.length()-1);
+			
+			String upListStartDt = convertedObj.get("upListStartDt").toString();
+			upListStartDt = upListStartDt.substring(1, upListStartDt.length()-1);
+			
+			String upListEndDt = convertedObj.get("upListEndDt").toString();
+			upListEndDt = upListEndDt.substring(1, upListEndDt.length()-1);
+			
+			String upStatusCategory = convertedObj.get("upStatusCategory").toString();
+			upStatusCategory = upStatusCategory.substring(1, upStatusCategory.length()-1);
+			
+			//System.out.println(convertedObj.get("memList"));
+			String[] upArr = convertedObj.get("upMemList").toString().replaceAll("\\[", "")
+					.replaceAll("]", "").replaceAll("\"", "").split(",");
+			
+			int[] upMemList = new int[upArr.length];
+			
+			for(int i=0 ; i<upArr.length ;i++) {
+				upMemList[i] = Integer.parseInt(upArr[i]); 
+			}
+			
+			ListList upLlist = new ListList();
+			upLlist.setListNo(upListNo);
+			upLlist.setListNm(upListNm);
+			upLlist.setListStartDt(upListStartDt);
+			upLlist.setListEndDt(upListEndDt);
+			upLlist.setDoName(upStatusCategory);
+			upLlist.setMemberNo(memberNo);
+			upLlist.setMemList(upMemList);
+			upLlist.setWorkNo(workNo);
+			
+			// 기존에 있던 리스트 참여자 삭제
+			listService.deleteListJoin(upListNo);
+			// 리스트 참여자 수정( 수정된 멤버 삽입)
+			listService.insertListJoin(upLlist);
+			// 바뀐 리스트 참여자 조회 
+			List<Member> updateMemList = listService.selectMemList(upListNo);
+			// 리스트 상태 업데이트
+			listService.updateListStatus(upLlist);
+			// 리스트 바뀐 내용 업데이트
+			listService.updateList(upLlist);
+			
+			// 바뀐 내역 조회
+			ListList upList = listService.selectListView(upListNo);
+			
+			convertedObj.addProperty("listNm", upList.getListNm());
+			convertedObj.addProperty("listStartDt", upList.getListStartDt());
+			convertedObj.addProperty("listEndDt", upList.getListEndDt());
+			convertedObj.addProperty("doName", upList.getDoName());
+			/* convertedObj.addProperty("upMemList", updateMemList); */
+			
+		break;
 			
 		case "deleteList" : 
 			
@@ -221,6 +279,8 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			/* convertedObj.add("joinMemList", joinMemList); */
 			
 		break;
+		
+		
 			
 		}
 		
