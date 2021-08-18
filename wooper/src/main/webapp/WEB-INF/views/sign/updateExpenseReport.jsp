@@ -72,10 +72,10 @@
                             <th width="120px">제목</th>
                             <td colspan="3"><input type="text" style="width: 880px;" id="expense-report-title" name="documentTitle" value="${document.documentTitle}" required></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>열람자</th>
                             <td colspan="3"></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>목적</th>
                             <td colspan="3"><input type="text" style="width: 880px;" id="expense-report-purpose" name="expensePurpose" value="${document.expensePurpose}" required></td>

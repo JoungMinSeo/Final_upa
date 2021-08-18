@@ -68,9 +68,10 @@ public interface SignService {
 
 	/** 결재 문서 상세 조회
 	 * @param documentNo
+	 * @param memberNo
 	 * @return document
 	 */
-	Document selectDocument(int documentNo);
+	Document selectDocument(int documentNo, int memberNo);
 	
 	/** 워크스페이스 참가자 목록 조회
 	 * @param workNo
@@ -155,9 +156,8 @@ public interface SignService {
 
 	/** 결재 진행
 	 * @param document
-	 * @param loginMember
 	 */
-	void signDocument(Document document, Member loginMember);
+	void signDocument(SignLine signLine);
 
 
 

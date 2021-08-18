@@ -34,13 +34,13 @@
             <div id="document-written" class="conbox con1">
                 <div id="document-list-container">
                     <div id="document-view-menubar">
-                        <div id="document-view-optionbar">
+                        <!-- <div id="document-view-optionbar">
                             <select name="document-view-option" class="form-control" id="document-view-option">
                                 <option value="titleOrder">제목순</option>
                                 <option value="timeOrder">최신순</option>
                                 <option selected hidden>조회 방법</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
@@ -194,13 +194,13 @@
             <div id="document-sign" class="conbox con2">
                 <div id="document-list-container">
                     <div id="document-view-menubar">
-                        <div id="document-view-optionbar">
+                        <!-- <div id="document-view-optionbar">
                             <select name="document-view-option" class="form-control" id="document-view-option">
                                 <option value="titleOrder">제목순</option>
                                 <option value="timeOrder">최신순</option>
                                 <option selected hidden>조회 방법</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
@@ -354,13 +354,13 @@
             <div id="team-document" class="conbox con3">
                 <div id="document-list-container">
                     <div id="document-view-menubar">
-                        <div id="document-view-optionbar">
+                        <!-- <div id="document-view-optionbar">
                             <select name="document-view-option" class="form-control" id="document-view-option">
                                 <option value="titleOrder">제목순</option>
                                 <option value="timeOrder">최신순</option>
                                 <option selected hidden>조회 방법</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
@@ -514,13 +514,13 @@
             <div id="temp-document" class="conbox con4">
                 <div id="document-list-container">
                     <div id="document-view-menubar">
-                        <div id="document-view-optionbar">
+                        <!-- <div id="document-view-optionbar">
                             <select name="document-view-option" class="form-control" id="document-view-option">
                                 <option value="titleOrder">제목순</option>
                                 <option value="timeOrder">최신순</option>
                                 <option selected hidden>조회 방법</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div id="document-written-btn-area">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentTypeModal" id="newDocument">신규 작성</button>
                         </div>
@@ -691,7 +691,7 @@
 	                        	<div class="card">
 	                            	<input type="hidden" name="documentType" value="1" />
 	                            	<button class="documentTypeBtn">
-	                            		<img src="#" class="card-img-top" alt="품의서">
+	                            		<img src="${contextPath}/resources/img/sign/품의서.png"" class="card-img-top" alt="품의서">
 	                            	</button>
 	                           		<div class="card-body">
 	                              		<h5 class="card-title">품의서</h5>
@@ -704,7 +704,7 @@
 		                    	<div class="card">
 			                        <input type="hidden" name="documentType" value="2" />
 		                          	<button class="documentTypeBtn">
-		                            	<img src="#" class="card-img-top" alt="회의록">
+		                            	<img src="${contextPath}/resources/img/sign/회의록.png" class="card-img-top" alt="회의록">
 		                            </button>
 		                            <div class="card-body">
 		                            	<h5 class="card-title">회의록</h5>
@@ -717,7 +717,7 @@
 	                        	<div class="card">
 		                          	<input type="hidden" name="documentType" value="3" />
 	                          		<button class="documentTypeBtn">
-	                            		<img src="#" class="card-img-top" alt="휴가신청서">
+	                            		<img src="${contextPath}/resources/img/sign/휴가신청서.png"" class="card-img-top" alt="휴가신청서">
 	                            	</button>
 	                            	<div class="card-body">
 	                              		<h5 class="card-title">휴가신청서</h5>

@@ -150,9 +150,11 @@
 		                                            WHERE MEMBER_NO = #{memberNo}
 		                                            AND WORK_NO = #{workNo}
 		                                            AND ( (SIGN_ORDER = 1 AND SIGN_STATUS IN (0,1) )
-		                                            OR ( SIGN_ORDER != 1  AND (SELECT SIGN_STATUS FROM SIGN_LINE WHERE SIGN_NO = A.SIGN_NO - 1) = 3 ))
+		                                            OR ( SIGN_ORDER != 1  AND (SELECT SIGN_STATUS FROM SIGN_LINE 
+					                                                        WHERE SIGN_NO = A.SIGN_NO 
+					                                                        AND SIGN_ORDER = A.SIGN_ORDER - 1) = 3 ))
 		                        ))
-		
+		AND SIGN_RESULT = 'S'
 		ORDER BY DOCUMENT_NO DESC
 	</select>
 	
@@ -432,12 +434,85 @@
 
 	<!-- 결재 진행 -->
 	<update id="signDocument">
-		UPDATE SIGNLINE SET
-			SIGN_STATUS = #{signStatus}
-			SIGN_COMMENT = #{signComment}
-			SIGN_DT = #{signDt}
+		UPDATE SIGN_LINE SET
+			SIGN_STATUS = #{signStatus},
+			SIGN_COMMENT = #{signComment},
+			SIGN_DT = SYSDATE
 		WHERE SIGN_NO = #{signNo}
 		AND MEMBER_NO = #{memberNo}
 	</update>
 
+
+	<!-- 결재 문서 타입 조회 -->
+	<select id="selectDocumentType" parameterType="_int" resultMap="document_rm">
+		SELECT DOCUMENT_TYPE, SIGN_NO FROM DOCUMENT
+		LEFT JOIN SIGN USING(DOCUMENT_NO)
+		WHERE DOCUMENT_NO = #{documentNo}
+	</select>
+
+
+	<select id="selectER" parameterType="Document" resultMap="document_rm">
+        SELECT ER.*,  (SELECT MEMBER_NM FROM DOCUMENT_VIEW
+                              WHERE DOCUMENT_NO = #{documentNo}
+                              AND DOCUMENT_STATUS IN('S', 'Y')
+                              AND ROWNUM = 1
+                              AND MEMBER_RANK = (  SELECT MEMBER_RANK FROM WORKSPACE_JOIN
+                                                               WHERE (MEMBER_NO, WORK_NO) = ( SELECT MEMBER_NO, WORK_NO FROM DOCUMENT
+                                                                                                              WHERE DOCUMENT_NO =1186) ) ) MEMBER_NM,
+                      (SELECT MEMBER_RANK FROM DOCUMENT_VIEW
+                              WHERE DOCUMENT_NO = #{documentNo}
+                              AND DOCUMENT_STATUS IN('S', 'Y')
+                              AND ROWNUM = 1
+                              AND MEMBER_RANK = (  SELECT MEMBER_RANK FROM WORKSPACE_JOIN
+                                                               WHERE (MEMBER_NO, WORK_NO) = ( SELECT MEMBER_NO, WORK_NO FROM DOCUMENT
+                                                                                                              WHERE DOCUMENT_NO =1186) ) ) MEMBER_RANK                                                                                                                
+        FROM ER_VIEW ER
+        WHERE DOCUMENT_NO = #{documentNo}
+        AND ROWNUM = 1
+	
+        <!-- SELECT * FROM ER_VIEW, (SELECT MEMBER_NM, MEMBER_RANK FROM DOCUMENT_VIEW
+                                WHERE DOCUMENT_NO = #{documentNo}
+                                AND DOCUMENT_STATUS IN('S', 'Y')
+                                AND ROWNUM = 1
+                                AND MEMBER_RANK = (  SELECT MEMBER_RANK FROM WORKSPACE_JOIN
+                                                                 WHERE (MEMBER_NO, WORK_NO) = ( SELECT MEMBER_NO, WORK_NO FROM DOCUMENT
+                                                                                                                WHERE DOCUMENT_NO = #{documentNo}) ) )
+		WHERE MEMBER_NO = #{memberNo}
+		
+		<if test="signNo != 0">
+	        AND SIGN_NO = #{signNo}
+		</if> -->
+	</select>
+
+	<!-- <select id="selectM" parameterType="Document" resultMap="document_rm">
+		SELECT * FROM M_VIEW
+        WHERE SIGN_NO = #{signNo}
+		AND MEMBER_NO = #{memberNo}
+	</select>
+
+	<select id="selectV" parameterType="Document" resultMap="document_rm">
+		SELECT * FROM V_VIEW
+        WHERE SIGN_NO = #{signNo}
+		AND MEMBER_NO = #{memberNo}
+	</select> -->
+
+
+	<!-- 결재 반려 -->
+	<update id="endSign" parameterType="SignLine">
+		UPDATE SIGN SET
+		SIGN_RESULT = 'N'
+		WHERE SIGN_NO = #{signNo}
+	</update>
+
+	<!-- 결재 승인 -->
+	<update id="endSignYes" parameterType="SignLine">
+		UPDATE SIGN SET
+		SIGN_RESULT = 'Y'
+		WHERE SIGN_NO = #{signNo}
+		AND 1 = (SELECT COUNT(*) FROM SIGN_LINE
+		                WHERE SIGN_NO = #{signNo}
+		                AND MEMBER_NO = #{memberNo}
+		                AND SIGN_ORDER = (SELECT COUNT(*) FROM SIGN_LINE WHERE SIGN_NO = #{signNo}) )
+	
+	</update>
 </mapper>

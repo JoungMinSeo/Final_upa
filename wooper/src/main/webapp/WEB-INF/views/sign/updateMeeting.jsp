@@ -71,10 +71,10 @@
                             <th width="90px">제목</th>
                             <td><input type="text" style="width: 909px;" id="meeting-title" name="documentTitle" value="${document.documentTitle}" required></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>열람자</th>
                             <td></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>참석자</th>
                             <td><textarea class="textA" id="meeting-member" name="meetingMember" required>${document.meetingJoin}</textarea></td>

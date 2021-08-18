@@ -18,6 +18,7 @@ import edu.fin.upa.sign.model.vo.PurchaseList;
 import edu.fin.upa.sign.model.vo.SignLine;
 import edu.fin.upa.sign.model.vo.Viewer;
 import edu.fin.upa.workspace.model.vo.WorkspaceJoin;
+import oracle.net.aso.d;
 
 @Repository
 public class SignDAO {
@@ -412,11 +413,63 @@ public class SignDAO {
 	 * @param document
 	 * @param loginMember
 	 */
-	public void signDocument(Map<String, Object> sMap) {
-		sqlSession.update("signMapper.signDocument", sMap);
+	public void signDocument(SignLine signLine) {
+		sqlSession.update("signMapper.signDocument", signLine);
 	}
 
 
+	/** 결재 문서 타입 조회
+	 * @param documentNo
+	 * @return documentType
+	 */
+	public Document selectDocumentType(int documentNo) {
+		return sqlSession.selectOne("signMapper.selectDocumentType", documentNo);
+	}
+
+
+	/** 품의서 상세 조회
+	 * @param temp
+	 * @return
+	 */
+	public Document selectER(Document temp) {
+		return sqlSession.selectOne("signMapper.selectER",temp);
+	}
+
+
+	/** 회의록 상세 조회
+	 * @param temp
+	 * @return
+	 */
+	public Document selectM(Document temp) {
+		return sqlSession.selectOne("signMapper.selectM", temp);
+	}
+
+
+	/** 휴가신청서 상세 조회
+	 * @param temp
+	 * @return
+	 */
+	public Document selectV(Document temp) {
+		return sqlSession.selectOne("signMapper.selectV", temp);
+		
+	}
+
+
+	/** 결재 반려
+	 * @param signLine
+	 */
+	public void endSign(SignLine signLine) {
+		sqlSession.update("signMapper.endSign", signLine);
+	}
+
+
+	public void endSignYes(SignLine signLine) {
+		sqlSession.update("signMapper.endSignYes", signLine);
+	}
+
+
+	
+	
 
 
 
