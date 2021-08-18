@@ -23,7 +23,7 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<style>
-		#calendarc {
+		#calendar {
 		   /* background-color:white;  */
 		   /* background-color:rgb(235, 244, 249); */
 		   background-color: rgb(236, 245, 250);
@@ -75,6 +75,7 @@
 			});
 		</script>
 	</c:if>
+
    
       <div class="side">
          <jsp:include page="../common/boardSideMenu.jsp"/>
@@ -244,6 +245,8 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
    <script>
+   let calendarSock = new SockJS("<c:url value='/calSock' />");
+   
       let calendar; // 만들어진 Full Calendar 달력을 저장할 변수
 
       // calendar.view : 달력의 정보를 보여주는 객체 (view.title : 상단 제목을 얻어옴)
@@ -366,7 +369,42 @@
 				
 				ul.append(li1, li4, li6, li7, li8, li9, li10, li11);
 				$("#detailBody").append(ul);
-
+/* 
+            },  eventDragStart : function(info) { // 드래그 시 동작 
+                // Where I want the magic to happen I guess ???
+                var evenement = info.event;
+                console.log(evenement);
+                
+            		const formData = new FormData(document.getElementById("detail-form"));
+                	//console.log($("#detail-form").serializeArray());
+                	
+                	const listNo = $("#title").attr("listNo");
+                
+                	const obj = {};
+            		const arr = $("#detail-form").serializeArray();
+            		
+                	for(let key in arr){
+                		//console.log( arr[key]);
+                		obj[ arr[key].name ] = arr[key].value;
+                	}
+            		
+                	obj.listNo = listNo;
+                	obj.status = "update";
+                	//console.log(obj);
+                	
+                	// 캘린더 일정 수정
+                	calendarSock.send(JSON.stringify(obj));
+                	
+                	$("#calendarDetail").modal("hide");
+            		
+                	// wjdalstj812@naver.com
+            		// 정민서님이 일정을 수정하였습니다.
+            		const allimContent = "${loginMember.memberId}<br>${loginMember.memberNm}님이 일정을 수정하였습니다.";
+            		const allimObj = {"allimContent" : allimContent, "status" : "allimUpdate" }
+                	
+                	allimSock.send(JSON.stringify(allimObj));
+ */            	    
+            	
             },
 
             dateClick : function(info) { // 날짜 빈칸 클릭 시
@@ -493,7 +531,7 @@
 	    
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 일정 등록 웹소켓
-	let calendarSock = new SockJS("<c:url value='/calSock' />");
+
 
 	$("#calInsert").on("click", function(){
 		    	
@@ -571,24 +609,6 @@
 		const allimObj = {"allimContent" : allimContent, "status" : "allimUpdate" }
     	
     	allimSock.send(JSON.stringify(allimObj));
-		
-		
-		
-	/* 	
-	    var ckMemberNo = [];     // 배열 초기화
-	    var changeRank= [];     // 배열 초기화
-	    $.each( $("[name='ckMemberNo']:checked"), function(){
-	    	ckMemberNo.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-	    	
-	    	const idx = $("[name='ckMemberNo']").index( $(this) );
-	    	
-	    	changeRank.push(   $(".changeRank").eq(   idx    ).val()   )  ;     // 체크된 것만 값을 뽑아서 배열에 push
-	    	
-	    });
-	    
-    	console.log(ckMemberNo);
-    	console.log(changeRank);
-    	 */
 	    
 	});
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	

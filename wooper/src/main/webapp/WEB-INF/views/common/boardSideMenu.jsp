@@ -174,11 +174,21 @@
             <div class="mypagemove" >
                 <div class="btn-group dropright">
 					<button type="button" id="profile" class="btn myprofile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<c:choose>
+							<c:when test="${loginMember.memberImg == null}">
+					                <img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="width:100%;">
+							</c:when>
+							<c:when test="${loginMember.memberImg != null}">
+					                <img src="${pageContext.request.contextPath}/resources/img/member/${loginMember.memberImg}" style="width:100%;">
+							</c:when>
+						</c:choose>
 <%-- 							
+
+
 							<c:choose>
 								<c:when test="${loginMember.memberImg == null}">
 								 --%>
-					    			<img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;">
+					    			<%-- <img src="${pageContext.request.contextPath}/resources/img/icon/mypage.png" style="height:50px;"> --%>
 <%-- 					    			
 					    		</c:when>
 								<c:when test="${loginMember.memberImg != null}">

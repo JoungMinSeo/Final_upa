@@ -265,6 +265,8 @@ $("#listEndDt").on("change", function(){
 /* 리스트 추가 */
 function  createList(){
 	
+	$("#addList")[0].reset();
+	
 	console.log(addListCardNo);
 	console.log($("#listNm").val()); //리스트 이름 
 	console.log($("#listStartDt").val()); // 시작날짜 
@@ -296,6 +298,7 @@ function  createList(){
 	
 	cardSock.send(JSON.stringify(obj));
 	
+	$("#addList").html("");
 }
 
 /* 리스트 삭제 버튼 */
