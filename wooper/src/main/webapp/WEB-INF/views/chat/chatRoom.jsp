@@ -365,7 +365,7 @@ $("#signLine-forward-btn").click(
 				
 				
 				var email = $("<div>").addClass("Email").text($(this).children().eq(1).text());
-				var input = $("<input>").attr("type","hidden").attr("name","memberNo").attr("value",$(this).attr("id"));
+				var input = $("<input>").attr("type","hidden").attr("name","joinMemberNo").attr("value",$(this).attr("id"));
 				var cencle = $("<div>").addClass("cencle").text("X");
 
 				email.append(input).append(cencle);
