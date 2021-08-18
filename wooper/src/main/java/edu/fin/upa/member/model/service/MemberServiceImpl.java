@@ -92,8 +92,8 @@ public class MemberServiceImpl implements MemberService{
 	// 휴대폰 인증
 	public void certifiedPhoneNumber(String phoneNumber, String cerNum) {
 
-        String api_key = "";
-        String api_secret = "";
+        String api_key = "NCS2TCL8HEJMVX1M";
+        String api_secret = "Z1BNSFR8SCSCPFJC4IPWCUPHMST0YWYC";
         Message coolsms = new Message(api_key, api_secret);
 
         // 4 params(to, from, type, text) are mandatory. must be filled
@@ -101,7 +101,7 @@ public class MemberServiceImpl implements MemberService{
         params.put("to", phoneNumber);    // 수신전화번호
         params.put("from", "010-9070-3879");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
         params.put("type", "SMS");
-        params.put("text", "우파루파에서 보낸 메세지 입니다. 인증번호는" + "["+cerNum+"]" + "입니다.");
+        params.put("text", "자기얌 힘내. 인증번호는" + "["+cerNum+"]" + "입니다.");
         params.put("app_version", "test app 1.2"); // application name and version
 
         try {

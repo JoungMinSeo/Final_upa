@@ -86,6 +86,14 @@ public class ManagementDAO {
 		return sqlSession.update("managementMapper.updateMemberRank", m);
 	}
 
+	/** 회원 탈퇴 시 참여중인 리스트에서 모두 나가기...
+	 * @param m
+	 * @return
+	 */
+	public int deleteListJoin(Management m) {
+		return sqlSession.delete("managementMapper.deleteListJoin", m);
+	}
+
 	/** 팀 회원 삭제
 	 * @param workNo
 	 * @param management
@@ -102,6 +110,7 @@ public class ManagementDAO {
 	public int checkWorkspceMember(Management management) {
 		return sqlSession.selectOne("managementMapper.checkWorkspceMember", management);
 	}
+
 	
 	
 	

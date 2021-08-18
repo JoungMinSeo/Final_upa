@@ -304,7 +304,7 @@
                left : 'prev,next today', // 왼쪽에 보여질 버튼
                center : 'title', // 가운데 보여질 내용(xxxx년 oo월)
                right : 'dayGridMonth,timeGridWeek,timeGridDay' // 오른쪽에 보여질 버튼
-            // 월 단위 , 주 단위,    일 단위 
+            // 월 단위 , 주 단위, 일 단위 
             },
 
             initialDate : startDate, // 달력 첫 화면이 오늘날짜
@@ -312,7 +312,7 @@
             navLinks : true, // 달력에서 일, 주를 나타내는 텍스트를 클릭 가능하게함. -> 클릭 시 해당 일 단위로 이동
             nowIndicator : true, // 일 단위 화면에서 현재 시간을 표시
 
-            editable : true, // 달력 이벤트 수정 가능 여부 -> 일정을 드래그해서 옮길 수 있음
+            editable : false, // 일정을 드래그해서 옮길 수 있음
             selectable : true, // 클릭하면 그 날짜가 파랗게 변함
             dayMaxEvents : true, // allow "more" link when too many events
 
