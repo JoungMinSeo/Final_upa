@@ -34,24 +34,24 @@ public class AllimDAO {
 	 * @param allim
 	 * @return
 	 */
-	public List<Integer> selectAllim(Allim allim) {
-		return sqlSession.selectList("allimMapper.selectAllim", allim);
+	public List<Allim> selectAllim(int memberNo) {
+		return sqlSession.selectList("allimMapper.selectAllim", memberNo);
 	}
 
 	/** 알림 조회 시 읽음 처리
 	 * @param allim
 	 * @return
 	 */
-	public int readAllim(Allim allim) {
-		return sqlSession.update("allimMapper.readAllim", allim);
+	public int readAllim(int allimNo) {
+		return sqlSession.update("allimMapper.readAllim", allimNo);
 	}
 
 	/** 알림 조회 시 읽지않음 처리
 	 * @param allim
 	 * @return
 	 */
-	public int unreadAllim(Allim allim) {
-		return sqlSession.update("allimMapper.unreadAllim", allim);
+	public int unreadAllim(int allimNo) {
+		return sqlSession.update("allimMapper.unreadAllim", allimNo);
 	}
 
 	/** 알림삭제 
@@ -61,6 +61,5 @@ public class AllimDAO {
 	public int deleteAllim(Allim allim) {
 		return sqlSession.update("allimMapper.deleteAllim", allim);
 	}
-
 
 }

@@ -92,10 +92,18 @@ public class AllimWebsocketHandler extends TextWebSocketHandler {
 			}
 			break;
 			
-//		case "selectAllim" : 
-//			List<Integer> selectAllim = allimService.selectAllim(allim);
-//			break;
-//			
+		/*case "selectAllim" : 
+			String allimContent2 = convertedObj.get("allimContent").toString();
+			
+			Allim allim2 = new Allim();
+			allim2.setAllimContent(allimContent2);
+			allim2.setWorkNo(workNo);
+			allim2.setMemberNo(memberNo);
+
+			List<Integer> selectAllim = allimService.selectAllim(allim2);
+			
+			break;*/
+			
 //			// 알림 조회 시 읽음 처리
 //			 case "readAllim" :
 //				 int read = allimService.readAllim(allim);

@@ -6,6 +6,7 @@ public class Allim {
 	private String allimStatus;
 	private int memberNo;
 	private int workNo;
+	private String allimDt;
 	
 	public Allim() {}
 
@@ -48,14 +49,20 @@ public class Allim {
 	public void setWorkNo(int workNo) {
 		this.workNo = workNo;
 	}
+	
+	public String getAllimDt() {
+		return allimDt;
+	}
+
+	public void setAllimDt(String allimDt) {
+		this.allimDt = allimDt;
+	}
 
 	@Override
 	public String toString() {
 		return "Allim [allimNo=" + allimNo + ", allimContent=" + allimContent + ", allimStatus=" + allimStatus
-				+ ", memberNo=" + memberNo + ", workNo=" + workNo + "]";
+				+ ", memberNo=" + memberNo + ", workNo=" + workNo + ", allimDt=" + allimDt + "]";
 	}
 
-
-	
 	
 }
