@@ -90,10 +90,10 @@
                             <th width="90px">제목</th>
                             <td>${document.documentTitle}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>열람자</th>
                             <td></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>휴가 종류</th>
                             <td style="text-align: left;">

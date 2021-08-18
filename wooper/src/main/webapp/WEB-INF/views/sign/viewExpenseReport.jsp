@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/expenseReport.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/signLine.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/viewer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sign/signResult.css">
 
 	<style>
 	.pick, .pick2 {
@@ -81,7 +82,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="signInfo">
+                <!-- <div class="signInfo">
                     <table class="table table-sm">
                         <tbody>
                             <tr>
@@ -101,7 +102,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
             <div class="expense-report-content">
                 <table class="table table-sm" id="expense-report-content-info">
@@ -110,10 +111,10 @@
                             <th width="120px">제목</th>
                             <td colspan="3">${document.documentTitle}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>열람자</th>
                             <td colspan="3"></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>목적</th>
                             <td colspan="3">${document.expensePurpose}</td>
@@ -136,7 +137,7 @@
                     <tbody>
                         <tr style="border-top: hidden;">
                             <th width="40px">No.</th>
-                            <th width="457px">품명</th>
+                            <th width="459px">품명</th>
                             <th width="80px">단위</th>
                             <th width="80px">수량</th>
                             <th width="110px">단가</th>
@@ -181,13 +182,13 @@
             	<c:choose>
 					<c:when test="${(loginMember.memberNo == document.memberNo) && document.signNo == 0}">
 			        	<button type="button" class="btn btn-primary document-submit" data-toggle="modal" data-target="#signLineModal">결재선 지정</button>
-			            <button type="button" class="btn btn-secondary document-cancel" onclick="history.go(-1)">취소</button>
+			            <button type="button" class="btn btn-secondary document-cancel" onclick="location.href='${contextPath}/sign/${workNo}/signMain'">취소</button>
 			            <button type="button" class="btn btn-secondary document-cancel" name="requestForm" onclick="fnRequest('update');">수정</button>
 			            <button type="button" class="btn btn-secondary document-cancel" name="requestForm" onclick="fnRequest('delete');">삭제</button>
 					</c:when>
 					<c:otherwise>
 			            <button type="button" class="btn btn-primary document-submit" data-toggle="modal" data-target="#signResultModal">결재</button>
-			            <button class="btn btn-secondary document-cancel" name="signResult" value="2">보류</button>
+			            <button type="button" class="btn btn-secondary document-cancel" onclick="history.go(-1)">취소</button>
 					</c:otherwise>
 				</c:choose>
             </div>
@@ -380,25 +381,24 @@
     
     
     <%-- Modal --%>
-    <form action="sign" method="post" name="signResultForm" >
+    <form action="${document.documentNo}/sign" method="post" name="signResultForm" >
     <div class="modal fade" id="signResultModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="signResultLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" id="signResult-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered" id="signResult-modal-dialog">
             <div class="modal-content" id="signResult">
                 <div class="modal-header" id="signResultTitle">
-                    <ion-icon name="newspaper" id="signResult-img"></ion-icon>
+                    <ion-icon name="newspaper" id="signResult-img" style="font-size: 40px;"></ion-icon>
                     <h3 class="modal-title" id="signResultLabel">결재 처리</h3>
                 </div>
-                <div class="modal-body" id="viewer-container">
+                <div class="modal-body" id="signResult-container">
                     <div class="signResult-container">
-                        <form>
                             <table class="table table-bordered signResult-table">
                                 <tbody>
                                     <tr>
                                         <th style="width: 150px;">결재 처리</th>
                                         <td>
-                                            <input type="radio" id="signYes" name="signType" value="3">
+                                            <input type="radio" id="signYes" name="signStatus" value="3">
                                             <label for="signYes" class="signResult-label">승인</label>
-                                            <input type="radio" id="signNo" name="signType" value="2">
+                                            <input type="radio" id="signNo" name="signStatus" value="2">
                                             <label for="signNo" class="signResult-label">반려</label>
                                         </td>
                                     </tr>
@@ -409,17 +409,18 @@
                                 </tbody>
 
                             </table>
-                        </form>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="signResult-cancel-btn">취소</button>
+                    <button type="button" class="btn btn-secondary" id="signResult-cancel-btn" class="close" data-dismiss="modal" aria-label="Close">취소</button>
                     <button type="submit" class="btn btn-primary" id="signResult-confirm-btn">결재</button>
                 </div>
             </div>
         </div>
     </div>
+    
+    <input type="hidden" name="signNo" value="${document.signNo }">
     
     </form>
     
@@ -430,6 +431,8 @@
     <form action="signLine" name="signForm" id="signForm" method="post">
     	<input type="hidden" name="documentNo" value="${document.documentNo}">
     </form>
+
+
 
 	<script>
 		function calculateSum() {

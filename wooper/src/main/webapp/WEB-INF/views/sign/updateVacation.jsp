@@ -67,10 +67,10 @@
                             <th width="90px">제목</th>
                             <td><input type="text" style="width: 909px;" id="vacation-title" name="documentTitle" value="${document.documentTitle}" autofocus required></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>열람자</th>
                             <td></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>휴가 종류</th>
                             <td style="text-align: left;">

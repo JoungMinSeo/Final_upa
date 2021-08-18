@@ -114,8 +114,32 @@ public class SignServiceImpl implements SignService {
 	// 결재 문서 상세 조회
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Document selectDocument(int documentNo) {
-		return dao.selectDocument(documentNo);
+	public Document selectDocument(int documentNo, int memberNo) {
+		
+		// 결재 문서문서 타입 조회
+		Document temp = dao.selectDocumentType(documentNo);
+		
+		temp.setDocumentNo(documentNo);
+		temp.setMemberNo(memberNo);
+		
+		System.out.println("------------------------");
+		System.out.println(temp.getSignNo());
+		System.out.println(temp.getMemberNo());
+		System.out.println(temp.getDocumentNo());
+		
+		
+		Document document = null;
+		
+		switch(temp.getDocumentType()) {
+		case "1" : document= dao.selectER(temp); 
+				System.out.println("ER");
+				System.out.println(document);
+				break;
+		case "2" : document= dao.selectM(temp); break;
+		case "3" : document= dao.selectV(temp);  break;
+		}
+		
+		return document;
 	}
 
 	// 워크스페이스 참가자 목록 조회
@@ -341,13 +365,14 @@ public class SignServiceImpl implements SignService {
 	
 	// 결재 진행
 	@Override
-	public void signDocument(Document document, Member loginMember) {
+	public void signDocument(SignLine signLine) {
+		dao.signDocument(signLine);
 		
-		Map<String , Object> sMap = new HashMap<String, Object>();
-		sMap.put("document", document);
-		sMap.put("memberNo", loginMember.getMemberNo());
-
-		dao.signDocument(sMap);
+		if(signLine.getSignStatus().equals("2")) {
+			dao.endSign(signLine);
+		}else {
+			dao.endSignYes(signLine);
+		}
 	}
 	
 	

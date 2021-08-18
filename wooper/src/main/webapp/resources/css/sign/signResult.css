@@ -3,34 +3,35 @@ div{
 }
 
 #signResult-modal-dialog{
-    width: 1100px;
+    width: 1000px;
+}
+
+#signResult{
+	width: 1000px;
 }
 
 #signResultLabel{
-    width: 94%;
+	width: 100%;
+	text-align: left;
 }
 
-#signResult-img{
-    font-size: 40px;
-}
-
-.table th{
-    background-color: lightgray;
-    border: 1px solid gray;
+.signResult-table th{
+    background-color: rgb(213, 232, 243);
+    border: 1px solid rgb(42, 111, 154);
     vertical-align: middle;
     box-sizing: border-box;
     text-align: center;
 }
 
-.table td{
-    border: 1px solid gray;
+.signResult-table td{
+    border: 1px solid rgb(42, 111, 154);
     padding: 0;
     vertical-align: middle;
     box-sizing: border-box;
 }
 
-#signResult-table th, #signResult-table td{
-    border: 1px solid gray;
+.signResult-table th, .signResult-table td{
+    border: 1px solid rgb(42, 111, 154);
 }
 
 #signYes, #signNo{
@@ -50,10 +51,14 @@ div{
     width: 100%;
 }
 
+.signResult-table textarea{
+	background-color: white;
+}
+
 .textB{
     box-sizing: border-box;
     vertical-align: middle;
-    width: auto;
+    width: 100%;
     resize: none;
 }
 

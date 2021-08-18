@@ -2,6 +2,7 @@ package edu.fin.upa.sign.model.vo;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 public class Document {
@@ -496,6 +497,29 @@ public class Document {
 
 	public void setMemberRank(String memberRank) {
 		this.memberRank = memberRank;
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Document [documentNo=" + documentNo + ", signNo=" + signNo + ", documentType=" + documentType
+				+ ", documentTitle=" + documentTitle + ", documentEtc=" + documentEtc + ", documentStatus="
+				+ documentStatus + ", signDraftingDt=" + signDraftingDt + ", signResult=" + signResult + ", memberNo="
+				+ memberNo + ", memberNm=" + memberNm + ", workNo=" + workNo + ", expenseDept=" + expenseDept
+				+ ", expensePurpose=" + expensePurpose + ", accountPhone=" + accountPhone + ", accountDt=" + accountDt
+				+ ", deliveryStartDt=" + deliveryStartDt + ", deliveryEndDt=" + deliveryEndDt + ", paymentMethod="
+				+ paymentMethod + ", pList=" + pList + ", itemNm=" + Arrays.toString(itemNm) + ", itemUnit="
+				+ Arrays.toString(itemUnit) + ", itemAmount=" + Arrays.toString(itemAmount) + ", unitPrice="
+				+ Arrays.toString(unitPrice) + ", totalPrice=" + Arrays.toString(totalPrice) + ", meetingDt="
+				+ meetingDt + ", meetingDept=" + meetingDept + ", meetingPurpose=" + meetingPurpose
+				+ ", meetingContent=" + meetingContent + ", meetingJoin=" + meetingJoin + ", vacationType="
+				+ vacationType + ", vacationStartDt=" + vacationStartDt + ", vacationEndDt=" + vacationEndDt
+				+ ", vacationReason=" + vacationReason + ", signStatus=" + signStatus + ", signComment=" + signComment
+				+ ", signDt=" + signDt + ", signOrder=" + signOrder + ", memberSign=" + memberSign + ", memberRank="
+				+ memberRank + "]";
 	}
 
 

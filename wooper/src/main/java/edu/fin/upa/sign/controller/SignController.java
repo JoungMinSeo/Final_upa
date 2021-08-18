@@ -81,11 +81,11 @@ public class SignController {
 	@RequestMapping("{workNo}/{documentNo}")
 	public String viewDocument(@PathVariable("workNo") int workNo,
 							   @PathVariable("documentNo") int documentNo,
+							   @ModelAttribute("loginMember") Member loginMember,
 							   @RequestParam(value="cp", required=false, defaultValue="1") int cp,
 							   Model model, HttpServletRequest request) {
 		
-		Document document = service.selectDocument(documentNo);
-		
+		Document document = service.selectDocument(documentNo, loginMember.getMemberNo() );
 		
 		if(document != null) {
 			model.addAttribute("document", document);
@@ -337,9 +337,11 @@ public class SignController {
 	
 	// 결재 문서 삭제
 	@RequestMapping(value="{workNo}/delete")
-	public String deleteDocument(int documentNo, HttpServletRequest request) {
+	public String deleteDocument(int documentNo, 
+								@ModelAttribute("loginMember") Member loginMember,
+								HttpServletRequest request) {
 		
-		Document document = service.selectDocument(documentNo);
+		Document document = service.selectDocument(documentNo, loginMember.getMemberNo());
 		
 		if(document != null) {
 			service.deleteDocument(documentNo);
@@ -366,14 +368,15 @@ public class SignController {
 	// 결재선 지정
 	@RequestMapping(value="{workNo}/signLine", method=RequestMethod.POST)
 	public String insertSignLine(int documentNo, int[] signLine, int[] viewer,
+								 @PathVariable("workNo") int workNo,
 								 @ModelAttribute("loginMember") Member loginMember,
 								 HttpServletRequest request) {
 		
 		System.out.println(Arrays.toString(signLine));
 		System.out.println(Arrays.toString(viewer));
 		
-		Document document = service.selectDocument(documentNo);
-		
+		Document document = service.selectDocument(documentNo, loginMember.getMemberNo() );
+		document.setWorkNo(workNo);
 		int result = service.insertSignLine(document, signLine, viewer);
 		
 		return "redirect:/sign/{workNo}/signMain";
@@ -381,15 +384,19 @@ public class SignController {
 	
 	
 	// 결재 진행
-	@RequestMapping(value="{workNo}/sign", method=RequestMethod.POST)
-	public String signDocument(@ModelAttribute Document document,
+	@RequestMapping(value="{workNo}/{documentNo}/sign", method=RequestMethod.POST)
+	public String signDocument(@PathVariable("workNo") int workNo,
 							   @ModelAttribute SignLine signLine,
 							   @ModelAttribute("loginMember") Member loginMember,
 							   HttpServletRequest request) {
 		
+		signLine.setMemberNo(loginMember.getMemberNo());
+		signLine.setWorkNo(workNo);
 		
-		service.signDocument(document, loginMember);
+		System.out.println(signLine);
 		
-		return "redirect:" + request.getHeader("referer");
+		service.signDocument(signLine);
+		
+		return "redirect:/sign/{workNo}/signMain";
 	}
 }
