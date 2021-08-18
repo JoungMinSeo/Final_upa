@@ -349,34 +349,4 @@ public class SignController {
 		
 	}
 	
-	
-	// 결재선 지정
-	@RequestMapping(value="{workNo}/signLine", method=RequestMethod.POST)
-	public String insertSignLine(@ModelAttribute Document document,
-								 @ModelAttribute SignLine signLine,
-								 @ModelAttribute Viewer viewer,
-								 @ModelAttribute("loginMember") Member loginMember,
-								 HttpServletRequest request) {
-		
-		System.out.println(signLine);
-		System.out.println(viewer);
-		
-		/* int result = service.insertSignLine(document, signLine, loginMember); */
-		
-		return "redirect:" + request.getHeader("referer");
-	}
-	
-	
-	// 결재 진행
-	@RequestMapping(value="{workNo}/sign", method=RequestMethod.POST)
-	public String signDocument(@ModelAttribute Document document,
-							   @ModelAttribute SignLine signLine,
-							   @ModelAttribute("loginMember") Member loginMember,
-							   HttpServletRequest request) {
-		
-		
-		service.signDocument(document, loginMember);
-		
-		return "redirect:" + request.getHeader("referer");
-	}
 }
