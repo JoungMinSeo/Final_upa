@@ -5,8 +5,6 @@
 
 
 <script>
-
-
 /* 드래그앤드랍 */
 const fills = document.querySelectorAll('.fill');
 const empties = document.querySelectorAll('.empty');
