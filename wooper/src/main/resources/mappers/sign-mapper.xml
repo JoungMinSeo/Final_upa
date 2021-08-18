@@ -87,23 +87,7 @@
 		<result property="documentNo" column="DOCUMENT_NO"/>
 	</resultMap>
 
-	<resultMap type="SignLine" id="signLine_rm">
-		<id property="signNo" column="SIGN_NO"/>
-		
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="workNo" column="WORK_NO"/>
-		<result property="signStatus" column="SIGN_STATUS"/>
-		<result property="signComment" column="SIGN_COMMENT"/>
-		<result property="signDt" column="SIGN_DT"/>
-		<result property="signOrder" column="SIGN_ORDER"/>
-	</resultMap>
 
-	<resultMap type="Viewer" id="viewer_rm">
-		<id property="signNo" column="SIGN_NO"/>
-	
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="workNo" column="WORK_NO"/>
-	</resultMap>
 	
 	
 	<select id="selectMemberNm" parameterType="_int" resultType="string">
@@ -354,39 +338,7 @@
 		ORDER BY MEMBER_RANK
 	</select>
 
-	<!-- 결재선 지정 -->
-	<insert id="insertSignLine1" parameterType="map" useGeneratedKeys="true">
-		<selectKey keyProperty="signNo" resultType="_int" order="BEFORE">
-			SELECT SEQ_S_NO.NEXTVAL FROM DUAL
-		</selectKey>
-		
-		INSERT INTO SIGN VALUES
-			( #{signNo}, SYSDATE, DEFAULT, #{memberNo}, #{workNo} #{documentNo} )
-	</insert>
-	<insert id="insertSignLine2" parameterType="map">
-		INSERT INTO SIGN_LINE 
-		SELECT SEQ_S_NO, SL.* FROM (
-			
-			<foreach collection="list" item="sl" separator=" UNION ALL ">
-				SELECT SEQ_S_NO SIGN_NO,
-					   #{sl.memberNo} MEMBER_NO,
-					   #{sl.workNo} WORK_NO,
-					   DEFAULT SIGN_STATUS,
-					   #{sl.signComment} SIGN_COMMENT,
-					   #{sl.signDt} SIGN_COMMENT,
-					   #{sl.signOrder} SIGN_ORDER FROM DUAL
-			</foreach>
-		) SL
-	</insert>
 
-	<!-- 결재 진행 -->
-	<update id="signDocument">
-		UPDATE SIGNLINE SET
-			SIGN_STATUS = #{signStatus}
-			SIGN_COMMENT = #{signComment}
-			SIGN_DT = #{signDt}
-		WHERE SIGN_NO = #{signNo}
-		AND MEMBER_NO = #{memberNo}
-	</update>
+
 
 </mapper>
