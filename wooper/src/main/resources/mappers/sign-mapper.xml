@@ -6,34 +6,18 @@
 	<!-- Pagination용 resultMap -->
 	<resultMap type="Pagination" id="pg_rm">
 		<result property="listCount" column="DOCU_COUNT" />
+		<result property="workNo" column="WORK_NO" />
 	</resultMap>
 
-	<!-- 전자 결재 문서 목록 조회용 resultMap -->
+	<!-- 전자 결재 문서 목록, 상세 조회용 resultMap -->
 	<resultMap type="Document" id="document_rm">
 		<id property="documentNo" column="DOCUMENT_NO"/>
 		
 		<result property="signNo" column="SIGN_NO"/>
 		<result property="documentType" column="DOCUMENT_TYPE"/>
 		<result property="documentTitle" column="DOCUMENT_TITLE"/>
+		<result property="documentEtc" column="DOCUMENT_ETC"/>
 		<result property="documentStatus" column="DOCUMENT_STATUS"/>
-		<result property="signDraftingDt" column="SIGN_DRAFTING_DT"/>
-		<result property="signResult" column="SIGN_RESULT"/>
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="memberNm" column="MEMBER_NM"/>
-		<result property="workNo" column="WORK_NO"/>
-	</resultMap>	
-	
-	<!-- 워크스페이스 참가자 목록 조회용 resultMap -->
-	<resultMap type="Management" id="workJoin_rm">
-		<id property="memberNo" column="MEMBER_NO"/>
-		<id property="workNo" column="WORK_NO"/>
-		
-		<result property="memberRank" column="MEMBER_RANK"/>
-	</resultMap>
-	
-	<resultMap type="ExpenseReport" id="expenseReport_rm">
-		<id property="documentNo" column="DOCUMENT_NO"/>
-		
 		<result property="expenseDept" column="EXPENSE_DEPT"/>
 		<result property="expensePurpose" column="EXPENSE_PURPOSE"/>
 		<result property="accountPhone" column="ACCOUNT_PHONE"/>
@@ -41,21 +25,48 @@
 		<result property="deliveryStartDt" column="DELIVERY_START_DT"/>
 		<result property="deliveryEndDt" column="DELIVERY_END_DT"/>
 		<result property="paymentMethod" column="PAYMENT_METHOD"/>
-		
-		<collection property="pList" column="ITEM_NO" javaType="java.util.ArrayList" ofType="PurchaseList" select="selectPurchaseList" />
-	</resultMap>
-	
-	<resultMap type="Meeting" id="meeting_rm">
-		<id property="documentNo" column="DOCUMENT_NO"/>
-		
 		<result property="meetingDt" column="MEETING_DT"/>
 		<result property="meetingDept" column="MEETING_DEPT"/>
 		<result property="meetingPurpose" column="MEETING_PURPOSE"/>
 		<result property="meetingContent" column="MEETING_CONTENT"/>
-		
-		<collection property="meetingJoin" column="JOIN_NO" javaType="java.util.ArrayList" ofType="MeetingJoin" select="selectMeetingJoinList"></collection>
-	</resultMap>
+		<result property="vacationType" column="VACATION_TYPE"/>
+		<result property="vacationStartDt" column="VACATION_START_DT"/>
+		<result property="vacationEndDt" column="VACATION_END_DT"/>
+		<result property="vacationReason" column="VACATION_REASON"/>
+		<result property="signDraftingDt" column="SIGN_DRAFTING_DT"/>
+		<result property="signResult" column="SIGN_RESULT"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="signStatus" column="SIGN_STATUS"/>
+		<result property="signComment" column="SIGN_COMMENT"/>
+		<result property="signDt" column="SIGN_DT"/>
+		<result property="signOrder" column="SIGN_ORDER"/>
+		<result property="memberNm" column="MEMBER_NM"/>
+		<result property="memerSign" column="MEMBER_SIGN"/>
+		<result property="memberRank" column="MEMBER_RANK"/>
+		<collection property="pList" column="DOCUMENT_NO" ofType="PurchaseList"  javaType="java.util.List"
+			select="selectPurchaseList"/>
+		<collection property="meetingJoin" column="DOCUMENT_NO" ofType="MeetingJoin"  javaType="java.util.List"
+			select="selectMeetingJoinList"/>
+	</resultMap>	
 	
+	
+	<!-- 워크스페이스 참가자 목록 조회용 resultMap -->
+	<resultMap type="Management" id="workJoin_rm">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<id property="workNo" column="WORK_NO"/>
+		
+		<result property="memberRank" column="MEMBER_RANK"/>
+		<association property="memberNm" column="MEMBER_NO" javaType="string"  select="selectMemberNm"/>
+	</resultMap>
+
+	<resultMap type="Member" id="mem_rm">
+		<id property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="memberNm" column="MEMBER_NM"/>
+	</resultMap>	
+	
+	<!-- 구매 목록 조회용 resultMap -->
 	<resultMap type="PurchaseList" id="purchaseList_rm">
 		<id property="itemNo" column="ITEM_NO"/>
 		
@@ -66,7 +77,16 @@
 		<result property="totalPrice" column="TOTAL_PRICE"/>
 		<result property="documentNo" column="DOCUMENT_NO"/>
 	</resultMap>
-	
+
+	<!-- 회의 참석자 조회용 resultMap -->	
+	<resultMap type="MeetingJoin" id="meetingJoin_rm">
+		<id property="joinNo" column="JOIN_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="documentNo" column="DOCUMENT_NO"/>
+	</resultMap>
+
 	<resultMap type="SignLine" id="signLine_rm">
 		<id property="signNo" column="SIGN_NO"/>
 		
@@ -77,15 +97,6 @@
 		<result property="signDt" column="SIGN_DT"/>
 		<result property="signOrder" column="SIGN_ORDER"/>
 	</resultMap>
-	
-	<resultMap type="Vacation" id="vacation_rm">
-		<id property="documentNo" column="DOCUMENT_NO"/>
-		
-		<result property="vacationType" column="VACATION_TYPE"/>
-		<result property="vacationStartDt" column="VACATION_START_DT"/>
-		<result property="vacationEndDt" column="VACATION_END_DT"/>
-		<result property="vacationReason" column="VACATION_REASON"/>
-	</resultMap>
 
 	<resultMap type="Viewer" id="viewer_rm">
 		<id property="signNo" column="SIGN_NO"/>
@@ -94,13 +105,10 @@
 		<result property="workNo" column="WORK_NO"/>
 	</resultMap>
 	
-	<resultMap type="MeetingJoin" id="meetingJoin_rm">
-		<id property="joinNo" column="JOIN_NO"/>
-		
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="workNo" column="WORK_NO"/>
-		<result property="documentNo" column="DOCUMENT_NO"/>
-	</resultMap>
+	
+	<select id="selectMemberNm" parameterType="_int" resultType="string">
+		SELECT MEMBER_NM FROM MEMBER WHERE MEMBER_NO = #{memberNo} 
+	</select>
 	
 	
 	<!-- 작성한 문서 수 조회 -->
@@ -139,6 +147,17 @@
 	 	ORDER BY DOCUMENT_NO DESC
 	</select>
 	
+	<!-- 결재 문서 상세 조회 -->
+	<select id="selectDocument" parameterType="_int" resultMap="document_rm">
+		 SELECT * FROM DOCUMENT_VIEW
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND DOCUMENT_STATUS IN('S', 'Y')
+        AND ROWNUM = 1
+        AND MEMBER_RANK = (  SELECT MEMBER_RANK FROM WORKSPACE_JOIN
+                                         WHERE (MEMBER_NO, WORK_NO) = ( SELECT MEMBER_NO, WORK_NO FROM DOCUMENT
+                                                                                        WHERE DOCUMENT_NO = #{documentNo}) ) 
+	</select>
+	
 	<!-- 워크스페이스 참가자 목록 조회 -->
 	<select id="selectWorkspaceJoin" parameterType="_int" resultMap="workJoin_rm">
 		SELECT * FROM WORKSPACE_JOIN 
@@ -160,24 +179,26 @@
 		</selectKey>
 		
 		INSERT INTO DOCUMENT VALUES
-			( #{documentNo}, 0, '1', #{documentTitle}, #{documentEtc}, DEFAULT )
+			( #{documentNo},'1', #{documentTitle}, #{documentEtc}, DEFAULT, #{memberNo}, #{workNo} )
 	</insert>
 	<insert id="insertExpenseReport2" parameterType="map">
-		INSERT INTO SIGN VALUES
-			( 0, SYSTIMESTAMP, 'S', #{memberNo}, #{workNo} )
-	</insert>
-	<insert id="insertExpenseReport3" parameterType="map">
 		INSERT INTO EXPENSE_REPORT VALUES
 				( #{documentNo}, #{expenseDept}, #{expensePurpose}, #{accountPhone}, #{accountDt}, 
 				  #{deliveryStartDt}, #{deliveryEndDt}, #{paymentMethod} )
 	</insert>
 	
+	<!-- 특정 품의서의 모든 구매 목록 정보 조회(collection 용) -->
+	<select id="selectPurchaseList" parameterType="_int" resultMap="purchaseList_rm">
+		SELECT * FROM PURCHASE_LIST
+		WHERE DOCUMENT_NO = #{documentNo}
+	</select>
+	
 	<!-- 구매 목록 삽입(List) -->
 	<insert id="insertPurchaseList" parameterType="list">
 		INSERT INTO PURCHASE_LIST
-		SELECT SEQ_PL_NO.NEXTVAL, P.* FROM {
+		SELECT SEQ_PL_NO.NEXTVAL, P.* FROM (
 			
-			<foreach collection="list" item="pl" separator="UNION ALL">
+			<foreach collection="list" item="pl" separator=" UNION ALL ">
 				SELECT #{pl.itemNm} ITEM_NM,
 					   #{pl.itemUnit} ITEM_UNIT,
 					   #{pl.itemAmount} ITEM_AMOUNT,
@@ -187,5 +208,185 @@
 			</foreach>
 		) P
 	</insert>
+
+	<!-- 회의록 작성 -->
+	<insert id="insertMeeting1" parameterType="map" useGeneratedKeys="true">
+		<selectKey keyProperty="documentNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_DOC_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO DOCUMENT VALUES
+			( #{documentNo}, '2', #{documentTitle}, #{documentEtc}, DEFAULT, #{memberNo}, #{workNo} )
+	</insert>
+	<insert id="insertMeeting2" parameterType="map">
+		INSERT INTO MEETING VALUES	
+			( #{documentNo}, #{meetingDt}, #{meetingDept}, #{meetingPurpose}, #{meetingContent} )
+	</insert>
+
+	<!-- 특정 회의록의 모든 회의 참가자 목록 정보 조회(collection 용) -->
+	<select id="selectMeetingJoinList" parameterType="_int" resultMap="workJoin_rm">
+		SELECT * FROM MEETING_JOIN
+		WHERE DOCUMENT_NO = #{documentNo}
+	</select>
+
+	<!-- 회의 참가자 목록 삽입(List) -->
+	<insert id="insertMeetingJoinList" parameterType="list">
+		INSERT INTO MEETING_JOIN
+		SELECT SEQ_MJ_NO.NEXTVAL, MJ.* FROM (
+		
+			<foreach collection="list" item="mj" separator=",">
+				SELECT #{mj.memberNo} MEMBER_NO,
+					   #{mj.workNo} WORK_NO,
+					   #{mj.documentNo} DOCUMENT_NO FROM DUAL
+			</foreach>
+		) MJ
+	</insert>
+
+	<!-- 휴가신청서 작성 -->
+	<insert id="insertVacation1" parameterType="map" useGeneratedKeys="true">
+		<selectKey keyProperty="documentNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_DOC_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO DOCUMENT VALUES
+			( #{documentNo}, '3', #{documentTitle}, #{documentEtc}, DEFAULT, #{memberNo}, #{workNo} )
+	</insert>
+	<insert id="insertVacation2" parameterType="map">
+		INSERT INTO VACATION VALUES	
+			( #{documentNo}, #{vacationType}, #{vacationStartDt}, #{vacationEndDt}, #{vacationReason} )
+	</insert>
+	
+	<!-- 품의서 수정 -->
+	<update id="updateExpenseReport1" parameterType="Document">
+		UPDATE DOCUMENT SET
+			DOCUMENT_TITLE = #{documentTitle}
+			DOCUMENT_ETC = #{documentEtc}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	<update id="updateExpenseReport2" parameterType="Document">
+		UPDATE EXPENSE_REPORT SET
+			EXPENSE_DEPT = #{expenseDept}
+			EXPENSE_PURPOSE = #{expensePurpose}
+			ACCOUNT_PHONE = #{accountPhone}
+			ACCOUNT_DT = #{accountDt}
+			DELIVERY_START_DT = #{deliveryStartDt}
+			DELIVERY_END_DT = #{deliveryEndDt}
+			PAYMENT_METHOD = #{paymentMethod}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 구매 목록 삭제 -->
+	<delete id="deletepList" parameterType="_int">
+		DELETE FROM PURCHASE_LIST
+		WHERE DOCUMENT_NO = #{documentNo}
+	</delete>
+	
+	<!-- 회의록 수정 -->
+	<update id="updateMeeting1" parameterType="Document">
+		UPDATE DOCUMENT SET
+			DOCUMENT_TITLE = #{documentTitle}
+			DOCUMENT_ETC = #{documentEtc}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	<update id="updateMeeting2" parameterType="Document">
+		UPDATE MEETING SET
+			MEETING_DT = #{meetingDt}
+			MEETING_DEPT = #{meetingDept}
+			MEETING_PURPOSE = #{meetingPurpose}
+			MEETING_CONTENT = #{meetingContent}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 회의 참가자 목록 삭제 -->
+	<delete id="deleteMeetingJoin" parameterType="_int">
+		DELETE FROM MEETING_JOIN
+		WHERE DOCUMENT_NO = #{documentNo}
+	</delete>
+	
+	<!-- 휴가신청서 수정 -->
+	<update id="updateVacation1" parameterType="Document">
+		UPDATE DOCUMENT SET
+			DOCUMENT_TITLE = #{documentTitle}
+			DOCUMENT_ETC = #{documentEtc}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	<update id="updateVacation2" parameterType="Document">
+		UPDATE VACATION SET
+			VACATION_TYPE = #{vacationType}
+			VACATION_START_DT = #{vacationStartDt}
+			VACATION_END_DT = #{vacationEndDt}
+			VACATION_REASON = #{vacationReason}
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 전자 결재 문서 삭제 -->
+	<update id="deleteDocument" parameterType="_int">
+		UPDATE DOCUMENT SET
+		DOCUMENT_STATUS = 'N'
+		WHERE DOCUMENT_NO = #{documentNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+
+	<!-- 결재 회원 검색 -->
+	<select id="selectSignMemList" parameterType="map" resultMap="workJoin_rm">
+		SELECT MEMBER_NO, WORK_NO, MEMBER_NM, MEMBER_RANK 
+		FROM WORKSPACE_JOIN
+		LEFT JOIN MEMBER USING(MEMBER_NO)
+		WHERE WORK_NO = #{workNo}
+		<if test="search.sv != ''">
+		AND 
+		<bind name="val" value="'%'+ search.sv +'%'"/>
+			<choose>
+				<when test="search.sk=='memberNm'">
+					MEMBER_NM LIKE #{val}
+				</when>
+				<when test="search.sk=='memberRank'">
+					MEMBER_RANK LIKE #{val}
+				</when>
+			</choose>
+		</if>
+		ORDER BY MEMBER_RANK
+	</select>
+
+	<!-- 결재선 지정 -->
+	<insert id="insertSignLine1" parameterType="map" useGeneratedKeys="true">
+		<selectKey keyProperty="signNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_S_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO SIGN VALUES
+			( #{signNo}, SYSDATE, DEFAULT, #{memberNo}, #{workNo} #{documentNo} )
+	</insert>
+	<insert id="insertSignLine2" parameterType="map">
+		INSERT INTO SIGN_LINE 
+		SELECT SEQ_S_NO, SL.* FROM (
+			
+			<foreach collection="list" item="sl" separator=" UNION ALL ">
+				SELECT SEQ_S_NO SIGN_NO,
+					   #{sl.memberNo} MEMBER_NO,
+					   #{sl.workNo} WORK_NO,
+					   DEFAULT SIGN_STATUS,
+					   #{sl.signComment} SIGN_COMMENT,
+					   #{sl.signDt} SIGN_COMMENT,
+					   #{sl.signOrder} SIGN_ORDER FROM DUAL
+			</foreach>
+		) SL
+	</insert>
+
+	<!-- 결재 진행 -->
+	<update id="signDocument">
+		UPDATE SIGNLINE SET
+			SIGN_STATUS = #{signStatus}
+			SIGN_COMMENT = #{signComment}
+			SIGN_DT = #{signDt}
+		WHERE SIGN_NO = #{signNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
 
 </mapper>

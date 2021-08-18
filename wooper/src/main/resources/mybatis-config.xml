@@ -20,12 +20,9 @@
 		<typeAlias type="edu.fin.upa.chat.model.vo.Search" alias="Search"/>
 
 		<typeAlias type="edu.fin.upa.sign.model.vo.Document" alias="Document" />
-		<typeAlias type="edu.fin.upa.sign.model.vo.ExpenseReport" alias="ExpenseReport" />
-		<typeAlias type="edu.fin.upa.sign.model.vo.Meeting" alias="Meeting" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.MeetingJoin" alias="MeetingJoin" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.PurchaseList" alias="PurchaseList" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.SignLine" alias="SignLine" />
-		<typeAlias type="edu.fin.upa.sign.model.vo.Vacation" alias="Vacation" />
 		<typeAlias type="edu.fin.upa.sign.model.vo.Viewer" alias="Viewer" />
 		
 		<!-- 함나현 vo임둥 -->

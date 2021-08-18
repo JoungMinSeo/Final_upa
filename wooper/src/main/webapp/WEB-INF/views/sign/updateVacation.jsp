@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>휴가 신청서</title>
+    <title>휴가신청서 작성하기</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -19,50 +21,40 @@
         <h2>휴가신청서</h2>
         <br>
 
-        <form>
+        <form action="update" method="post" onsubmit="return vacationValidate();">
             <div class="vacation-infobox">
                 <div class="vacation-writeInfo">
                     <table class="table table-sm">
                         <tbody>
                             <tr>
-                                <td colspan="2" style="border: hidden; border-bottom: initial; text-align: left;">no.</td>
+                                <td colspan="2" style="border: hidden; border-bottom: initial; text-align: left;"></td>
                             </tr>
                             <tr>
                                 <th width="90px">기안자</th>
-                                <td></td>
+                                <td>${loginMember.memberNm}</td>
                             </tr>
                             <tr>
                                 <th>직급</th>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>부서/소속</th>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>기안일</th>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="signInfo">
-                    <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <th width="100px">결재자 직급</th>
-                                <td width="100px"></td>
-                            </tr>
-                            <tr>
-                                <th>결재<br>및<br>결재자 이름</th>
                                 <td>
-                                    <img src="">
-                                    <p></p>
+                                	<c:choose>
+                                		<c:when test='${document.memberRank == "1"}'>
+                                			왕도롱뇽
+                                		</c:when>
+                                		<c:when test='${document.memberRank == "2"}'>
+                                			도롱뇽
+                                		</c:when>
+                                		<c:when test='${document.memberRank == "3"}'>
+                                			작은도롱뇽
+                                		</c:when>
+                                		<c:when test='${document.memberRank == "4"}'>
+                                			아기도롱뇽
+                                		</c:when>
+                                	</c:choose>
                                 </td>
                             </tr>
                             <tr>
-                                <th>결재 일자</th>
-                                <td></td>
+                                <th>기안일</th>
+                                <td id="today"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -73,11 +65,11 @@
                     <tbody>
                         <tr>
                             <th width="90px">제목</th>
-                            <td><input type="text" style="width: 909px;" id="vacation-title" name="documentTitle" autofocus required></td>
+                            <td><input type="text" style="width: 909px;" id="vacation-title" name="documentTitle" value="${document.documentTitle}" autofocus required></td>
                         </tr>
                         <tr>
                             <th>열람자</th>
-                            <td><input type="text" style="width: 909px;" id="viewer" name="viewer"></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>휴가 종류</th>
@@ -88,28 +80,21 @@
                                     <option value="2">병가</option>
                                     <option selected hidden>휴가 종류 선택</option>
                                 </select>
-
-                                <input type="radio" id="allDay" name="time" value="allDay">
-                                <label for="allDay" class="vacation-label">종일</label>
-                                <input type="radio" id="am" name="time" value="am">
-                                <label for="am" class="vacation-label">오전</label>
-                                <input type="radio" id="pm" name="time" value="pm">
-                                <label for="pm" class="vacation-label">오후</label>
                             </td>
                         </tr>
                         <tr>
                             <th>휴가 기간</th>
                             <td style="text-align: left;">
-                                <input type="date" id="vacation-start-dt" name="vacationStartDt" required>  ~  <input type="date" id="vacation-end-dt" name="vacationEndDt" required>
+                                <input type="date" id="vacation-start-dt" name="vacationStartDt" value="${document.vacationStartDt}" required>  ~  <input type="date" id="vacation-end-dt" name="vacationEndDt" value="${document.vacationEndDt}" required>
                             </td>
                         </tr>
                         <tr>
                             <th>휴가 사유</th>
-                            <td><textarea class="textA" id="vacation-reason" name="vacationReason" required></textarea></td>
+                            <td><textarea class="textA" id="vacation-reason" name="vacationReason" required>${document.vacationReason}</textarea></td>
                         </tr>
                         <tr>
                             <th>기타 사항</th>
-                            <td><textarea class="textA" id="vacation-etc" name="documentEtc"></textarea></td>
+                            <td><textarea class="textA" id="vacation-etc" name="documentEtc">${document.documentEtc}</textarea></td>
                         </tr>
                         <tr>
                             <td colspan="2" height="100px">
@@ -119,17 +104,27 @@
                     </tbody>
                 </table>
             </div>
-        </form>
-        <form>
+            
             <div class="document-write-buttons">
-                <button type="button" class="btn btn-primary document-submit">작성 완료</button>
-                <button type="button" class="btn btn-secondary document-cancel">작성 취소</button>
-                <button type="button" class="btn btn-secondary document-save">임시 저장</button>
+                <button type="submit" class="btn btn-primary document-submit">수정 완료</button>
+                <button type="button" class="btn btn-secondary document-cancel" onclick="history.go(-1)">수정 취소</button>
             </div>
         </form>
     </div>
 
     <script>
+	 	// 오늘 날짜 출력 
+		(function printToday() {
+			var today = new Date();
+			var month = (today.getMonth() + 1);
+			var date = today.getDate();
+	
+			var str = today.getFullYear() + "-"
+					+ (month < 10 ? "0" + month : month) + "-"
+					+ (date < 10 ? "0" + date : date);
+			$("#today").html(str);
+		})();
+    
         autosize($(".textA"));
 
      	// 유효성 검사 
@@ -144,15 +139,6 @@
 				return false;
 			}
 
-			if ($("#viewer").val().trim().length == 0) {
-				swal({
-					  title: "열람자를 지정해 주세요.",
-					  icon: "error",
-					  button: "확인",
-					});
-				$("#viewer").focus();
-				return false;
-			}
     </script>
 
 
