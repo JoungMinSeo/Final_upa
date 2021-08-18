@@ -27,7 +27,7 @@
 
 				<c:forEach items="${cardList}" var="item" varStatus="vs">
 					
-					<div class="empty" id="${item.cardNo}">
+					<div class="empty" id="${item.cardNo}" >
 						<div class="top">
 							<div class="name">
 								<input class="cardName" type="text" value="${item.cardNm}" onkeyup="if(window.event.keyCode==13){enter(event)}" onblur="cardNameBlur(event)" >
@@ -38,7 +38,7 @@
 							 <br><br>
 							 <c:forEach items="${listList}" var="list" varStatus="vs">
 							 	<c:if test="${item.cardNo == list.cardNo}">
-							 			<div class="fill" draggable="true" id="${list.listNo}">
+							 			<div class="fill" draggable="true" id="${list.listNo}"  data-toggle="modal" data-target="#updateList">
 							 				
 							 				<div class="listHeader">
 							 				<div class="listNm">${list.listNm }</div>
@@ -47,11 +47,13 @@
 
 									       <div class="memInfo">
 									            <div class="mem">참여멤버</div>
+									            <div class="memTag">
 									            <c:forEach items="${listJoinMemList}" var="joinList" varStatus="vs">
 									            	<c:if test="${list.listNo == joinList.listNo }">
 											            <div class="memImg" id="${joinList.memberNo }">${joinList.memberNm }</div>
 									            	</c:if>
 									            </c:forEach>
+									            </div>
 									        </div>
 									
 									        <div class="createInfo">
@@ -93,7 +95,6 @@
 
     <!-- 리스트 추가  modal -->
 
-
     <div class="modal fade modalList" id="addList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl listSize">
             <div class="modal-content listmodal">
@@ -112,7 +113,7 @@
 							  <div class="memTag"></div>
 							  
 							  <select id="modal-memberList"> 
-							  		
+							  		<option selected class="font">더보기</option>
 							  		<c:forEach items="${memList}" var="item" varStatus="vs">
 					               		<option class="font" id="${item.memberNo}">${item.memberNm}</option>
 					               	</c:forEach>    
@@ -151,6 +152,65 @@
         </div>
     </div>
 
+
+<!-- 리스트 수정 모달  -->
+
+<div class="modal fade modalList" id="updateList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl listSize">
+            <div class="modal-content listmodal">
+	                <div class="modal-header">
+	                    <input class="lName font upListNm" type="text" id="upListNm"></input>
+	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                        <span aria-hidden="true">&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-body">
+	                
+	                    <div class="profile">
+	
+	                        <span class="profileMem font"> 참여 멤버 </span>
+							
+							  <div class="upMemTag"></div>
+							  
+							  <select id="upmemberList"> 
+							  		<option selected class="font">더보기</option>
+							  		<c:forEach items="${memList}" var="item" varStatus="vs">
+					               		<option class="font" id="${item.memberNo}">${item.memberNm}</option>
+					               	</c:forEach>    
+							  
+							  </select>
+	
+	                    </div>
+	
+	                    <div class="startDate">
+	                        <span class="font listStart"> 시작날짜 </span>
+	                        <input class="font listStartDt" type="datetime-local" id="upListStartDt">
+	                    </div>
+	
+	                    <div class="endDate">
+	                        <span class="font listEnd"> 마감날짜 </span>
+	                        <input class="font listEndDt" type="datetime-local" id="upListEndDt">
+	                    </div>
+	
+	                    <div class="upListStatus">
+	                        <span class="font status"> 상태 </span>
+	
+	                        <select class="form-select form-select-lg mb-3 font statusCategory" id="upStatusCategory">
+	                            <option selected value="doing" class="font">하는 중</option>
+	                            <option value="todo" class="font">해야할 일</option>
+	                            <option value="blocked" class="font">막힘</option>
+	                            <option value="complete" class="font">완료</option>
+	                        </select>
+	                    </div>
+	
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary font" data-dismiss="modal">취소</button>
+	                    <button type="button" class="btn btn-primary font createList" onclick="updateList();">리스트 수정하기</button>
+	                </div>
+	            </div>
+        </div>
+    </div>
 
 
 <jsp:include page="cardScript.jsp"/>

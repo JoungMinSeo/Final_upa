@@ -57,6 +57,22 @@ public interface ListService {
 	 */
 	List<Member> listJoinMemList(List<ListList> listList);
 
+	/** 리스트 참여자 업데이트시 기존 참여자 삭제
+	 * @param upListNo
+	 */
+	void deleteListJoin(int upListNo);
+
+	/** 리스트 상태 업데이트
+	 * @param upLlist
+	 */
+	void updateListStatus(ListList upLlist);
+
+	/** 리스트 바뀐 내용 업데이트
+	 * @param upLlist
+	 */
+	void updateList(ListList upLlist);
+
+
 
 
 	
