@@ -106,8 +106,6 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			// 쌍따옴표 없애기
 			cardNm = cardNm.substring(1, cardNm.length()-1);
 			
-			
-			
 			System.out.println("카드 이름변경하는 멤버번호 " + memberNo);
 			System.out.println("카드 변경하는 이름 " + cardNm);
 			
@@ -122,7 +120,6 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			
 			// 카드를 DB에 삽입하는 service 호출
 			service.updateCard(card);
-			
 			
 			
 		break;
@@ -158,10 +155,11 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			statusCategory = statusCategory.substring(1, statusCategory.length()-1);
 			
 			//System.out.println(convertedObj.get("memList"));
-			String[] arr = convertedObj.get("memList").toString().replaceAll("\\[", "")
-					.replaceAll("]", "").replaceAll("\"", "").split(",");
+			String[] arr = convertedObj.get("memList").toString().replaceAll("\\[", "").replaceAll("]", "").replaceAll("\"", "").split(",");
 			
 			int[] memList = new int[arr.length];
+			
+			System.out.println("arr" + arr.length);
 			
 			for(int i=0 ; i<arr.length ;i++) {
 				memList[i] = Integer.parseInt(arr[i]); 
@@ -184,6 +182,8 @@ public class CardWebsocketHandler extends TextWebSocketHandler{
 			listService.insertListDo(Llist);
 			
 			convertedObj.addProperty("listNo", Llist.getCardNo());
+			
+			System.out.println(" 몇몇? " + memList.length);
 			
 		break;
 		

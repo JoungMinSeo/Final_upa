@@ -68,11 +68,11 @@
 		<div id="workListView">
 			<c:choose>
 				<c:when test="${empty workList }">
-					<h3 class="font">참여중인 워크스페이스가 존재하지 않습니다</h3>
+					<h3 class="font projectYN">참여중인 워크스페이스가 존재하지 않습니다</h3>
 				</c:when>
 	
 				<c:otherwise>
-					<h3 class="font">나의 프로젝트</h3>
+					<h3 class="font projectYN">나의 프로젝트</h3>
 					<c:forEach items="${workList}" var="item" varStatus="vs">
 						<div class="project">
 							<div class="projectListName" onclick="location.href='${contextPath}/workspace/${item.workNo}/boardMain'">${item.workNm }</div>
@@ -82,7 +82,10 @@
 				</c:otherwise>
 			</c:choose>
 			
-			<button type="button" class="addProject"  data-toggle="modal" data-target="#addWorkspace">프로젝트 생성하기</button>
+			<button type="button" class="addProject"  data-toggle="modal" data-target="#addWorkspace">
+				<img class="projectImg" src = "/wooper/resources/img/icon/project.png">
+				프로젝트 생성하기
+			</button>
 
 		</div>
 		
