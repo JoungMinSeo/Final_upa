@@ -28,12 +28,12 @@
         }
         .upasidemenucontainer{
             width:60px;
-            height:935px;
+            height:968px;
         }
         .left_menu_container{
             background-color:rgb(24,64,88);
             width:60px;
-            height:935px;
+            height:100%;
         }
         
         .mainmove, .workspacemove, .messagemove, .noticemove, .calendermove, .informationmove, .mypagemove{
@@ -142,16 +142,16 @@
             
             <!-- 알림 -->      
             <div class="noticemove">
-                <a href="${pageContext.request.contextPath}/notice/notice">
+                <a href="${pageContext.request.contextPath}/allimi/selectAllim">
                 	<img src="${pageContext.request.contextPath}/resources/img/icon/notice.png" style="height:40px;">
                 </a>
+                
                 
                 <!-- 새 알림이 왔을 때 노출시킬 것 알림 수 count or N -->
                 <span id="newAllim">N</span>
             
-            
             </div>    
-             
+ 
             <!-- 캘린더 지울 예정-->    
 <%--             
             <div class="calendermove">

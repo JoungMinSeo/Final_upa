@@ -8,6 +8,7 @@
 		<result property="allimContent" column="ALLIM_CONTENT"/>
 		<result property="allimStatus" column="ALLIM_STATUS"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="allimDt" column="ALLIM_DT"/>
 	</resultMap>
 	
 	<!-- 알림추가 -->
@@ -33,9 +34,10 @@
 	</select>
 	
 	<!-- 모든 알람내역 조회 -->
-	<select id="selectAllim" parameterType="Allim">
-		SELECT ALLIM_NO, ALLIM_CONTENT, ALLIM_STATUS, MEMBER_NO FROM ALLIM
+	<select id="selectAllim" parameterType="_int" resultMap="allim_rm">
+		SELECT ALLIM_NO, ALLIM_CONTENT, ALLIM_STATUS, MEMBER_NO, ALLIM_DT FROM ALLIM
 		WHERE MEMBER_NO = #{memberNo}
+		ORDER BY ALLIM_DT DESC
 	</select>
 
 	<!-- 알림상태변경 : 안읽음 -> 읽음 -->

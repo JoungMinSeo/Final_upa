@@ -46,7 +46,6 @@ public class CalendarController {
 		System.out.println(loginMember.getMemberNo());
 		System.out.println(workList);
 		
-		
 		return "/calendar/calendar";
 	}
 	

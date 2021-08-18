@@ -76,10 +76,10 @@
 		</script>
 	</c:if>
    
-   <div class="container">
       <div class="side">
          <jsp:include page="../common/boardSideMenu.jsp"/>
       </div>
+   <div class="container">
       <div>
          <div>
             <jsp:include page="../workSpace/workSpaceHeader.jsp" />

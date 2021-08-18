@@ -25,22 +25,22 @@ public class AllimServiceImpl implements AllimService{
 	
 	// 알림조회
 	@Override
-	public List<Integer> selectAllim(Allim allim) {
-		return allimDao.selectAllim(allim);
+	public List<Allim> selectAllim(int memberNo) {
+		return allimDao.selectAllim(memberNo);
 	}
 
 	// 알림 조회 시 읽음 처리
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int readAllim(Allim allim) {
-		return allimDao.readAllim(allim);
+	public int readAllim(int allimNo) {
+		return allimDao.readAllim(allimNo);
 	}
 
 	// 알림 조회 시 읽지않음 처리
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int unreadAllim(Allim allim) {
-		return allimDao.unreadAllim(allim);
+	public int unreadAllim(int allimNo) {
+		return allimDao.unreadAllim(allimNo);
 	}
 
 	// 알림삭제
@@ -49,5 +49,6 @@ public class AllimServiceImpl implements AllimService{
 	public int deleteAllim(Allim allim) {
 		return allimDao.deleteAllim(allim);
 	}
+
 
 }

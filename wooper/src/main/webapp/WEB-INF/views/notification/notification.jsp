@@ -10,14 +10,7 @@
     
     <link href='${pageContext.request.contextPath}/resources/css/notification/notification.css' rel='stylesheet' />
     
-    <style>
-    	.noticeSideMenu, .noticeContent{
-    		float:left;
-    	}
-    	.noticeContent{
-    		margin-left:50px; 
-    	}
-    </style>
+
 </head>
 <body>
 
@@ -52,17 +45,31 @@
 		
 		        <div class="notificationct">
 		            <div class="notificationmember">
+<!-- 		            
 		                <div class="memberpf">
 		                    <img src="../common/icon/mypage.png" style="width:50px;">
 		                </div>
+ -->		                
 		                <div class="memberinfo">
 		                    <div class="memberinfo1">
 		                    
-		                        <div class="memberinfoemail"><b>wjdalstj812@naver.com</b></div>
+		                    <c:forEach items="${allimList}" var = "allim">
+		                        <div class="memberinfoemail">${allim.allimContent}</div>
+		                        <div class="memberinfohms">${allim.allimDt}</div>
+<%-- 		                        
+		                        <c:if test="${allim.allimStatus == 'Y'}">
+		                        	<div class="allimstatus">
+		                        		<button class="allimstatus" type="button"  id="${allim.allimStatus}" name="allimstatus" >읽음</button>
+	                        		</div>
+		                        </c:if>
+		                        <c:if test="${allim.allimStatus == 'N'}">
+		                        	<div class="allimstatus">
+		                        		<button class="allimstatus" type="button"  id="${allim.allimStatus}" name="allimstatus">읽지않음</button>
+	                        		</div>
+		                        </c:if>
+ --%>		                        
+		                    </c:forEach>
 		                        
-<!-- 		                        
-		                        <div class="memberinfohms">1m</div>
- -->		                        
 		                    </div>
 		                    
 		                </div>
@@ -73,6 +80,33 @@
     </div>
     
     <script>
+/*    
+ 	 // 버튼 클릭 시 메시지 읽음, 안읽음 처리로 전환
+	$(document).on("click", ".allimstatus",function(){
+    	
+    	const allimStatus = $(".allimstatus").attr("id");
+    	
+    	console.log(allimStatus);
+        $.ajax({
+
+            url : 'readAllim', 
+            type : 'post',
+            data : {
+               'allimstatus' : allimstatus
+            }, 
+
+            success : function(list) {
+               console.log(list);
+               createCalendar(list);
+            }
+         });
+      });
+    
+    });
+ */    
+    
+ 
+ 
 /*     
 		let calendarSock = new SockJS("/calendar");
 		
