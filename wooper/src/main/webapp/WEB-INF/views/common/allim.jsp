@@ -58,7 +58,7 @@
 					}
 				});
 				
-				
+				$("#newAllim").show();
 				
 		break;
 		
