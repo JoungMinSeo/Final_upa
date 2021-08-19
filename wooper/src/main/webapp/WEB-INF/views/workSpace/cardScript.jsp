@@ -397,7 +397,7 @@ cardSock.onmessage = function(event){
          var br = $("<br>");
          
          var bottom = $("<div>").addClass("bottom");
-         var addList = $("<button>").addClass("addList").addClass("btn").addClass("font").attr("data-toggle","modal").attr("data-target","#addList").text("리스트추가");
+         var addList = $("<button>").addClass("addList").addClass("btn").addClass("font").attr("onclick","addList()").attr("data-toggle","modal").attr("data-target","#addList").text("리스트추가");
          var undo = $("<button>").addClass("undo").addClass("btn").addClass("font").text("x").attr("onclick", "deletecard(event)");
          
          name.append(cardName);
