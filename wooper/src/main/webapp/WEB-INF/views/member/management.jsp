@@ -51,15 +51,15 @@
 				                <button type="button" class="addmember" id="addmember" onclick="addmember(this);">팀원추가</button>
 				            </div> 
 				             --%>
-				            
-				            <c:forEach items="${member}" var = "member">
-				            	<c:if test="${member.memberRank == 1  &&  member.memberId == member.memberId}">
+				            <c:forEach items="${memberList}" var = "member">
+				            	<c:if test="${(member.memberRank == 1  &&  member.memberId == loginMember.memberId) || (superId ==  loginMember.memberId)     }">
+				            		<c:set var="superId" value="${ loginMember.memberId }" scope="session"/>
 				            		<c:set var="flag" value="true"/>
 				            	</c:if>
 				            </c:forEach>
 				            
   				            <c:forEach items="${memberList }" var = "member">
-				            	<c:if test="${member.memberRank != 1  &&  member.memberNo == member.memberNo}">
+				            	<c:if test="${member.memberRank != 1  &&  member.memberNo == loginMember.memberNo}">
 				            		<c:set var="flag2" value="true"/>
 				            	</c:if>
 				            </c:forEach>
