@@ -318,6 +318,8 @@ public class MemberController {
 		
 		Member member = service.selectPhone(memberPhone,memberName);
 		
+		System.out.println("멤버 정보 : " + memberPhone);
+		System.out.println(memberName);
 		
 		return member;
 	}
